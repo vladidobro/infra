@@ -1,7 +1,7 @@
-{ self, config, ... }:
+{ config, ... }:
 
 {
-  age.secrets.wireless-networks.file = self.mylib.mkSecret "wireless-networks";
+  age.secrets.wireless-networks.file = ../secrets/wireless-networks.age;
 
   networking.wireless = {
     environmentFile = config.age.secrets.wireless-networks.path;
