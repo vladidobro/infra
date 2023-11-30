@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ self, config, pkgs, ... }:
 
 {
   system.stateVersion = "23.05";
@@ -45,21 +45,15 @@
     tmux
   ];
 
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+
   users.users = {
     vladidobro = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-      packages = with pkgs; [
-        brave
-	dmenu-rs
-	alacritty
-        lf
-      ];
     };
   };
-
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
 
   home-manager.users = {
     vladidobro = import ../home/vladidobro;

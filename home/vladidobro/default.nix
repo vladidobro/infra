@@ -8,6 +8,10 @@
 
   home.packages = with pkgs; [
     ripgrep
+    brave
+    dmenu-rs
+    alacritty
+    lf
   ];
 
   programs.git = {
@@ -17,6 +21,18 @@
   };
 
   programs.ssh = {
+    enable = true;
+  };
+
+  programs.zsh = {
+    enable = true;
+  };
+
+  programs.nushell = {
+    enable = true;
+  };
+
+  programs.atuin = {
     enable = true;
   };
 }
