@@ -1,32 +1,27 @@
 { self, nixpkgs, home-manager, ... }@flake-inputs:
 
 let
+  lib = nixpkgs.lib;
   flake = self;
 in rec {
   mkOverlaysModule = overlays: { nixpkgs = { inherit overlays; }; };
 
-  mkUserModule = {name, home-config ? null }:
+  mkUserModule = {name, home ? null }:
   {
     users.users."${name}" = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
     };
 
-    home-manager.users."${name}" = home-config;
+    home-manager.users."${name}" = home;
   };
 
-  addSpecialArgsFlake = argname: fn: {"${argname}" ? {}, ... }@attrs: 
+  addSpecialArgsFlake = argname: fn: attrs: 
     let 
-      attrs-argname = if nixpkgs.lib.hasAttr "${argnanme}" attrs then attrs."${argname}" else {};
-    in 
-      fn (
-        attrs // 
-	{
-	  "${argname}" = (
-	    { inherit flake flake-inputs; } // attrs."${argname}"
-	  ); 
-	}
-      );
+      passedSpecialArgs = if lib.hasAttr argname attrs then lib.getAttr argname attrs else {};
+      extraSpecialArgs = { inherit flake flake-inputs; };
+      fullArgs = attrs // { "${argname}" = extraSpecialArgs // passedSpecialArgs; };
+    in fn fullArgs;
 
   mkNixosSystem = addSpecialArgsFlake "specialArgs" nixpkgs.lib.nixosSystem;
 
