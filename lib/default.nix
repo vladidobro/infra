@@ -1,9 +1,9 @@
-{ flake, nixpkgs }:
+{ self, nixpkgs, home-manager, ... }@flake-inputs:
 
-rec {
+let
+  flake = self;
+in rec {
   mkOverlaysModule = overlays: { nixpkgs = { inherit overlays; }; };
-
-  mkSecret = name: flake.secrets + ("/" + name + ".age");
 
   mkUserModule = {name, home-config ? null }:
   {
@@ -15,8 +15,20 @@ rec {
     home-manager.users."${name}" = home-config;
   };
 
-  addSpecialArgsFlake = fn: {specialArgs ? {}, ... }@attrs: 
-    fn ({ specialArgs = ({ inherit flake; } // specialArgs); } // attrs);
+  addSpecialArgsFlake = argname: fn: {"${argname}" ? {}, ... }@attrs: 
+    let 
+      attrs-argname = if nixpkgs.lib.hasAttr "${argnanme}" attrs then attrs."${argname}" else {};
+    in 
+      fn (
+        attrs // 
+	{
+	  "${argname}" = (
+	    { inherit flake flake-inputs; } // attrs."${argname}"
+	  ); 
+	}
+      );
 
-  mkNixosSystem = addSpecialArgsFlake nixpkgs.lib.nixosSystem;
+  mkNixosSystem = addSpecialArgsFlake "specialArgs" nixpkgs.lib.nixosSystem;
+
+  mkHomeManagerConfiguration = addSpecialArgsFlake "extraSpecialArgs" home-manager.lib.homeManagerConfiguration;
 }

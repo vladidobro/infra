@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 
 {
   nixpkgs.overlays = ../../overlays/nushell.nix;
