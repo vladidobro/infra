@@ -31,10 +31,7 @@
       system = "x86_64-linux";
       modules = [
 	./hardware/parok.nix
-	#home-manager.nixosModules.default
-	agenix.nixosModules.default
         ./nixos/parok.nix
-	(self.lib.mkOverlaysModule [ self.overlays.nushell ])
 	(self.lib.mkUserModule {
 	  name = "vladidobro"; 
 	  home = self.homeManagerModules.vladidobro;

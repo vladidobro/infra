@@ -1,6 +1,10 @@
 { flake, config, ... }:
 
 {
+  imports = [
+    flake.nixosModules.agenix
+  ];
+
   age.secrets.wireless-networks.file = flake.secrets.wireless-networks;
 
   networking.wireless = {

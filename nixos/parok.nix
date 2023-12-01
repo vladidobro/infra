@@ -4,6 +4,7 @@
   imports = [
     flake.nixosModules.wirelessNetworks
     flake.nixosModules.homeManager
+    flake.nixosModules.agenix
   ];
 
   system.stateVersion = "23.05";
@@ -15,8 +16,9 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
+  nixpkgs.overlays = [
+    flake.overlays.nushell
+  ];
 
   networking = {
     hostName = "parok";
