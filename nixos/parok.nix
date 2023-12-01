@@ -1,6 +1,11 @@
 { flake, config, pkgs, ... }:
 
 {
+  imports = [
+    flake.nixosModules.wirelessNetworks
+    flake.nixosModules.homeManager
+  ];
+
   system.stateVersion = "23.05";
 
   boot.loader.systemd-boot.enable = true;
@@ -9,6 +14,9 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };
+
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
 
   networking = {
     hostName = "parok";
@@ -39,14 +47,6 @@
 
   services.openssh.enable = true;
 
-  environment.systemPackages = with pkgs; [ 
-    git
-    neovim
-    tmux
-  ];
-
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";

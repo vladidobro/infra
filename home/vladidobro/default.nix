@@ -1,7 +1,7 @@
 { flake, config, pkgs, ... }:
 
 {
-  nixpkgs.overlays = ../../overlays/nushell.nix;
+  nixpkgs.overlays = [ flake.overlays.nushell ];
 
   home.username = "vladidobro";
   home.homeDirectory = "/home/vladidobro";

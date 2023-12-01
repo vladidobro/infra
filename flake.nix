@@ -15,7 +15,7 @@
     nixosModules = {
       wirelessNetworks = import ./modules/wireless-networks.nix;
       agenix = import ./modules/agenix.nix;
-      home-manager = import ./modules/home-manager.nix;
+      homeManager = import ./modules/home-manager.nix;
     };
 
     homeManagerModules.vladidobro = import ./home/vladidobro;
@@ -31,10 +31,9 @@
       system = "x86_64-linux";
       modules = [
 	./hardware/parok.nix
-	home-manager.nixosModules.default
+	#home-manager.nixosModules.default
 	agenix.nixosModules.default
         ./nixos/parok.nix
-        self.nixosModules.wirelessNetworks
 	(self.lib.mkOverlaysModule [ self.overlays.nushell ])
 	(self.lib.mkUserModule {
 	  name = "vladidobro"; 
