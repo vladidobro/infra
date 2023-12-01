@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs.overlays = ../../overlays/nushell.nix;
+
   home.username = "vladidobro";
   home.homeDirectory = "/home/vladidobro";
 
@@ -30,9 +32,19 @@
 
   programs.nushell = {
     enable = true;
+    package = pkgs.nushell-dfr;
   };
 
   programs.atuin = {
+    enable = true;
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
+  programs.helix = {
     enable = true;
   };
 }

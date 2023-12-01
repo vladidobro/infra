@@ -7,9 +7,11 @@
   let
     lib = nixpkgs.lib;
     mylib = self.mylib;
+    mkNixosSystem = mylib.mkNixosSystem;
   in 
   {
-    mylib = import ./lib;
+    secrets = ./secrets;
+    mylib = import ./lib { inherit self nixpkgs; };
 
     overlays = {
       nushell = import overlays/nushell.nix;
@@ -21,7 +23,7 @@
 
     homeManagerConfigurations.vladidobro = {};
 
-    nixosConfigurations.parok = lib.nixosSystem {
+    nixosConfigurations.parok = mkNixosSystem {
       system = "x86_64-linux";
       modules = [
 	./hardware/parok.nix

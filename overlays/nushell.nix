@@ -1,4 +1,4 @@
 self: super:
 {
-  asdf = super.zellij;
+  nushell-dfr = super.nushell;
 }
