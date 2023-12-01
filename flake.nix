@@ -4,14 +4,9 @@
   inputs.agenix.url = "github:ryantm/agenix";
 
   outputs = { self, nixpkgs, home-manager, agenix }:
-  let
-    lib = nixpkgs.lib;
-    mylib = self.mylib;
-    mkNixosSystem = mylib.mkNixosSystem;
-  in 
   {
     secrets = ./secrets;
-    mylib = import ./lib { inherit self nixpkgs; };
+    lib = import ./lib { flake = self; inherit nixpkgs; };
 
     overlays = {
       nushell = import overlays/nushell.nix;
@@ -23,7 +18,7 @@
 
     homeManagerConfigurations.vladidobro = {};
 
-    nixosConfigurations.parok = mkNixosSystem {
+    nixosConfigurations.parok = self.lib.mkNixosSystem {
       system = "x86_64-linux";
       modules = [
 	./hardware/parok.nix
@@ -31,7 +26,7 @@
 	agenix.nixosModules.default
         ./nixos/parok.nix
         self.nixosModules.wirelessNetworks
-	(mylib.mkOverlaysModule [ self.overlays.nushell ])
+	(self.lib.mkOverlaysModule [ self.overlays.nushell ])
       ];
     };
   };

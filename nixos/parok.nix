@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 
 {
   system.stateVersion = "23.05";

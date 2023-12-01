@@ -1,7 +1,7 @@
 { flake, nixpkgs }:
 
 rec {
-  mkOverlaysModule = overlays: { nixpkgs = { inherit overlays; } };
+  mkOverlaysModule = overlays: { nixpkgs = { inherit overlays; }; };
 
   mkSecret = name: flake.secrets + ("/" + name + ".age");
 
@@ -11,6 +11,8 @@ rec {
     
   };
 
-  mkNixosSystem = {specialArgs ? {}, ... }@attrs: 
-    nixpkgs.lib.nixosSystem ({ specialArgs = ({ inherit flake; } // specialArgs); } // attrs);
+  addSpecialArgsFlake = fn: {specialArgs ? {}, ... }@attrs: 
+    fn ({ specialArgs = ({ inherit flake; } // specialArgs); } // attrs);
+
+  mkNixosSystem = addSpecialArgsFlake nixpkgs.lib.nixosSystem;
 }
