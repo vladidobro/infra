@@ -5,10 +5,14 @@ rec {
 
   mkSecret = name: flake.secrets + ("/" + name + ".age");
 
-  mkUserModule = name:
-  { self, config, ... }:
+  mkUserModule = {name, home-config ? null }:
   {
-    
+    users.users."${name}" = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
+
+    home-manager.users."${name}" = home-config;
   };
 
   addSpecialArgsFlake = fn: {specialArgs ? {}, ... }@attrs: 

@@ -27,6 +27,7 @@
         ./nixos/parok.nix
         self.nixosModules.wirelessNetworks
 	(self.lib.mkOverlaysModule [ self.overlays.nushell ])
+	(self.lib.mkUserModule { name = "vladidobro"; home-config = import home/vladidobro; })
       ];
     };
   };
