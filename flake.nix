@@ -1,9 +1,30 @@
 {
   description = "vladidobro system configuration";
 
-  inputs.agenix.url = "github:ryantm/agenix";
+  inputs = {
+    nixpkgs = {
+      type = "indirect";
+      id = "nixpkgs";
+    };
+    nix-darwin = {
+      type = "indirect";
+      id = "nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      type = "indirect";
+      id = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    agenix = {
+      type = "github";
+      owner = "ryantm";
+      repo = "agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-  outputs = { self, nixpkgs, home-manager, agenix }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix }@inputs:
   {
     secrets = import ./secrets;
     lib = import ./lib inputs;
