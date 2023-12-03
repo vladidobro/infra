@@ -65,6 +65,6 @@
         ./hosts/mac.nix
       ];
       specialArgs = { flake = self; };
-    }
+    };
   };
 }
