@@ -9,7 +9,7 @@
     nix-darwin = {
       type = "indirect";
       id = "nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       type = "indirect";
@@ -52,12 +52,19 @@
       system = "x86_64-linux";
       modules = [
 	./hardware/parok.nix
-        ./nixos/parok.nix
+        ./hosts/parok.nix
 	(self.lib.mkUserModule {
 	  name = "vladidobro"; 
 	  home = self.homeManagerModules.vladidobro;
 	})
       ];
     };
+
+    darwinConfigurations.mac = nix-darwin.lib.darwinSystem {
+      modules = [
+        ./hosts/mac.nix
+      ];
+      specialArgs = { flake = self; };
+    }
   };
 }
