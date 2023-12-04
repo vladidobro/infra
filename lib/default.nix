@@ -1,4 +1,4 @@
-{ self, nixpkgs, home-manager, ... }@flake-inputs:
+{ self, nixpkgs, darwin, wsl, droid, home, ... }@flake-inputs:
 
 let
   lib = nixpkgs.lib;
@@ -25,5 +25,9 @@ in rec {
 
   mkNixosSystem = addSpecialArgsFlake "specialArgs" nixpkgs.lib.nixosSystem;
 
-  mkHomeManagerConfiguration = addSpecialArgsFlake "extraSpecialArgs" home-manager.lib.homeManagerConfiguration;
+  mkHomeManagerConfiguration = addSpecialArgsFlake "extraSpecialArgs" home.lib.homeManagerConfiguration;
+
+  mkDarwinSystem = addSpecialArgsFlake "specialArgs" darwin.lib.darwinSystem;
+
+  mkNixOnDroidConfiguration = addSpecialArgsFlake "specialArgs" droid.lib.nixOnDroidConfiguration;
 }

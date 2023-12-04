@@ -9,11 +9,14 @@
   home.stateVersion = "23.11";
 
   home.packages = with pkgs; [
+    tmux
     ripgrep
     brave
     dmenu-rs
     alacritty
     lf
+    transmission-qt
+    styx
   ];
 
   programs.git = {
