@@ -16,10 +16,6 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  nixpkgs.overlays = [
-    flake.overlays.nushell
-  ];
-
   networking = {
     hostName = "parok";
     wireless = {
