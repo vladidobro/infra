@@ -2,7 +2,7 @@
 
 {
   imports = [
-    flake-inputs.home-manager.nixosModules.default
+    flake-inputs.home.nixosModules.default
   ];
 
   home-manager.useUserPackages = true;
