@@ -4,7 +4,7 @@
   nixpkgs.overlays = [ flake.overlays.nushell ];
 
   home.username = "vladidobro";
-  home.homeDirectory = "/home/vladidobro";
+  home.homeDirectory = "/Users/vladidobro";
 
   home.stateVersion = "23.11";
 

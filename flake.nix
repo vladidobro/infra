@@ -60,11 +60,17 @@
       ];
     };
 
-    darwinConfigurations.mac = nix-darwin.lib.darwinSystem {
+    darwinConfigurations.mac = self.lib.mkDarwinSystem {
       modules = [
         ./hosts/mac.nix
+        home-manager.darwinModules.home-manager
+        {
+        home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
+        users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
+        home-manager.users.vladislavwohlrath = import ./home/vladidobro/darwin.nix;
+        }
       ];
-      specialArgs = { flake = self; };
     };
   };
 }
