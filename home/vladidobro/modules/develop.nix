@@ -1,4 +1,5 @@
 { pkgs, ... }:
+
 let
   lsps = with pkgs; {
     bash = nodePackages.bash-language-server;
@@ -17,6 +18,7 @@ let
    };
 in {
   home.packages = with pkgs; [
+    python311Packages.poetry
     ripgrep  
     cargo
     rustc
