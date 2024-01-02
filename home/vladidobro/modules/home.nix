@@ -44,7 +44,15 @@
 
   # Shell integration
 
-  programs.lf = {  # file manager
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = false;
+  };
+    
+  programs.lf = {
     enable = true;
     previewer.source = pkgs.writeShellScript "pv.sh" ''
       #!/bin/sh
@@ -60,21 +68,21 @@
     '';
   };
 
-  programs.zoxide = {  # smart cd
+  programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = false;  # TODO
   };
 
-  programs.atuin = {  # history
+  programs.atuin = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
 
-  programs.starship = {  # prompt
+  programs.starship = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
