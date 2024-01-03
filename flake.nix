@@ -38,16 +38,10 @@
     secrets = import ./secrets;
     lib = import ./lib inputs;
 
-    overlays = {
-      nushell = import ./overlays/nushell.nix;
-    };
-
-    homeManagerModules.vladidobro = import ./home/vladidobro;
-
     homeManagerConfigurations.vladidobro = self.lib.mkHomeManagerConfiguration {
       name = "vladidobro";
       modules = [
-        self.homeManagerModules.vladidobro
+        ./home/vladidobro
       ];
     };
 
@@ -61,12 +55,12 @@
     nixosConfigurations.parok = self.lib.mkNixosSystem {
       system = "x86_64-linux";
       modules = [
-	./hardware/parok.nix
+      	./hardware/parok.nix
         ./hosts/parok.nix
-	(self.lib.mkUserModule {
-	  name = "vladidobro"; 
-	  home = self.homeManagerModules.vladidobro;
-	})
+      	(self.lib.mkUserModule {
+      	  name = "vladidobro"; 
+      	  home = ./home/vladidobro;
+      	})
       ];
     };
 
