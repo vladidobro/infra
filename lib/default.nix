@@ -1,4 +1,4 @@
-{ self, nixpkgs, darwin, wsl, droid, home, ... }@flake-inputs:
+{ self, nixpkgs, darwin, wsl, droid, home, nix, ... }@flake-inputs:
 
 let
   lib = nixpkgs.lib;
