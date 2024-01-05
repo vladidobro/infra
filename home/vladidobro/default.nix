@@ -1,7 +1,12 @@
-{ flake, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  nixpkgs.overlays = [ flake.overlays.nushell ];
+  imports = [
+    ./modules/minimal.nix
+    ./modules/home.nix
+    ./modules/gui.nix
+    ./modules/develop.nix
+  ];
 
   home.username = "vladidobro";
   home.homeDirectory = "/Users/vladidobro";
@@ -9,42 +14,15 @@
   home.stateVersion = "23.11";
 
   home.packages = with pkgs; [
-    ripgrep
-    brave
-    dmenu-rs
-    alacritty
-    lf
+    transmission-qt
   ];
 
   programs.git = {
-    enable = true;
     userName = "Vladislav Wohlrath";
     userEmail = "vladislav@wohlrath.cz";
   };
 
-  programs.ssh = {
-    enable = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-  };
-
-  programs.nushell = {
-    enable = true;
-    package = pkgs.nushell-dfr;
-  };
-
-  programs.atuin = {
-    enable = true;
-  };
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
-
-  programs.helix = {
-    enable = true;
+  home.shellAliases = {
+    rebuild = "sudo nixos-rebuild switch --flake /home/vladidobro/configuration.nix#parok";
   };
 }
