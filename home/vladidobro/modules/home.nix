@@ -2,15 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    nerdfonts
-    poppler_utils
     unzip
     unrar-wrapper
     p7zip
     highlight
   ];
-
-  fonts.fontconfig.enable = true;
 
   # Shells
 

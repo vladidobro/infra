@@ -73,7 +73,6 @@
     nixosConfigurations.parok-wsl = self.lib.mkNixosSystem {
       system = "x86_64-linux";
       modules = [
-        self.nixosModules.wslBase
         ./hosts/parok-wsl.nix
       ];
     };
@@ -89,13 +88,6 @@
       system = "aarch64-darwin";
       modules = [
         ./hosts/mac.nix
-        home-manager.darwinModules.home-manager
-        {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
-        home-manager.users.vladislavwohlrath = import ./home/vladidobro/darwin.nix;
-        }
       ];
     };
 
