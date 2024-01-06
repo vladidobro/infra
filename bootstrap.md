@@ -41,3 +41,6 @@ Windows
       wsl --import NixOS .\NixOS\ nixos-wsl.tar.gz --version 2
       wsl -s NixOS
       ```
+
+Darwin
+------
