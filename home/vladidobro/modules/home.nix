@@ -12,8 +12,8 @@
 
   programs.tmux = {
     baseIndex = 1;
-    escapeTim = 0;
-    disableConfirmaetionPrompt = true;
+    escapeTime = 0;
+    disableConfirmationPrompt = true;
     customPaneNavigationAndResize = true;
     keyMode = "vi";
     mouse = true;
@@ -72,7 +72,7 @@
         bind-key -r '<' resize-pane -L 20
         bind-key -r '>' resize-pane -R 20
     '';
-  }
+  };
 
   programs.zsh = {
     enable = true;
