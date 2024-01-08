@@ -6,7 +6,7 @@
   };
   
   programs.ssh = {
-    enable = true;
+    enable = false;
   };
 
   programs.bash = {
