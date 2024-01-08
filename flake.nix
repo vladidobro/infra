@@ -9,6 +9,7 @@
     darwin = {
       type = "indirect";
       id = "nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     wsl = {
       type = "github";

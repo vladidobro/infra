@@ -10,6 +10,70 @@
 
   # Shells
 
+  programs.tmux = {
+    baseIndex = 1;
+    escapeTim = 0;
+    disableConfirmaetionPrompt = true;
+    customPaneNavigationAndResize = true;
+    keyMode = "vi";
+    mouse = true;
+    prefix = "C-Space";
+    shortcut = "Space";
+    extraConfig = ''
+        set -g default-terminal "xterm-256color"
+        set -ag terminal-overrides ",xterm-256color:RGB"
+
+        set -g set-clipboard off  # macos
+        #set -g set-clipboard on  # linux
+
+
+        bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
+        bind-key -T copy-mode-vi V send -X select-line
+        bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'pbcopy'  # macos
+        #bind-key -T copy-mode-vi y send -X copy-selection  # linus
+
+        # See: https://github.com/christoomey/vim-tmux-navigator
+
+        # decide whether we're in a Vim process
+        is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+            | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+        bind-key -n 'M-h' if-shell "$is_vim" 'send-keys M-h' 'select-pane -L'
+        bind-key -n 'M-j' if-shell "$is_vim" 'send-keys M-j' 'select-pane -D'
+        bind-key -n 'M-k' if-shell "$is_vim" 'send-keys M-k' 'select-pane -U'
+        bind-key -n 'M-l' if-shell "$is_vim" 'send-keys M-l' 'select-pane -R'
+
+        tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+
+        bind-key -n 'M-\' if-shell "$is_vim" 'send-keys M-\\' 'select-pane -l'
+
+        bind-key -n 'M-Space' if-shell "$is_vim" 'send-keys M-Space' 'select-pane -t:.+'
+
+        bind-key -T copy-mode-vi 'M-h' select-pane -L
+        bind-key -T copy-mode-vi 'M-j' select-pane -D
+        bind-key -T copy-mode-vi 'M-k' select-pane -U
+        bind-key -T copy-mode-vi 'M-l' select-pane -R
+        bind-key -T copy-mode-vi 'M-\' select-pane -l
+        bind-key -T copy-mode-vi 'M-Space' select-pane -t:.+
+
+        bind-key -n 'M-1' select-window -t 1
+        bind-key -n 'M-2' select-window -t 2
+        bind-key -n 'M-3' select-window -t 3
+        bind-key -n 'M-4' select-window -t 4
+        bind-key -n 'M-5' select-window -t 5
+        bind-key -n 'M-6' select-window -t 6
+        bind-key -n 'M-7' select-window -t 7
+        bind-key -n 'M-8' select-window -t 8
+        bind-key -n 'M-9' select-window -t 9
+        bind-key -n 'M-0' select-window -t 10
+
+        bind-key -r '+' resize-pane -U 10
+        bind-key -r '-' resize-pane -D 10
+        bind-key -r '<' resize-pane -L 20
+        bind-key -r '>' resize-pane -R 20
+    '';
+  }
+
   programs.zsh = {
     enable = true;
   };
@@ -72,7 +136,7 @@
   };
 
   programs.atuin = {
-    enable = true;
+    enable = false;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
