@@ -1,6 +1,17 @@
 { flake, config, pkgs, ... }:
 
-let zshLegacyInit = ''
+{
+  imports = [
+    ./modules/minimal.nix
+    ./modules/home.nix
+  ];
+
+  home.username = "vladislavwohlrath";
+  home.homeDirectory = "/Users/vladislavwohlrath";
+
+  home.stateVersion = "23.11";
+
+  programs.zsh.initExtra = ''
     function legacy-init-arm () {
         eval "$(/opt/homebrew/bin/brew shellenv)"
         export PYENV_ROOT=~/.pyenv
@@ -17,20 +28,21 @@ let zshLegacyInit = ''
 
     alias init="legacy-init-arm"
     alias x="legacy-init-arm; legacy-init-x86"
-'';
-in {
-  imports = [
-    ./modules/minimal.nix
-    ./modules/home.nix
-  ];
+  '';
 
-  home.username = "vladislavwohlrath";
-  home.homeDirectory = "/Users/vladislavwohlrath";
+  programs.ssh.extraConfig = ''
+    Host data
+        User vladislav.wohlrath@second-foundation.eu
+        HostName 10.254.67.6
 
-  home.stateVersion = "23.11";
-  home.packages = with pkgs; [
-    hello
-  ];
+    Host kulich
+        HostName 37.205.14.94
+        IdentityFile ~/.ssh/id_private
 
-  programs.zsh.initExtra = zshLegacyInit;
+    Host github.com
+        IdentityFile ~/.ssh/id_private
+
+    Host *
+        IdentityFile ~/.ssh/id_rsa
+  '';
 }
