@@ -6,6 +6,7 @@
     unrar-wrapper
     p7zip
     highlight
+    ripgrep
   ];
 
   # Shells
@@ -80,6 +81,13 @@
 
   programs.nushell = {
     enable = true;
+    configFile.text = ''
+      let config = {
+        show_banner: false
+      }
+
+      $env.config = ($env.config? | default {} | merge $config)
+    '';
   };
 
   # Editor
@@ -109,7 +117,32 @@
     nix-direnv.enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-    enableNushellIntegration = false;
+    enableNushellIntegration = true;
+    stdlib = ''
+      layout_poetry() {
+        PYPROJECT_TOML="''${PYPROJECT_TOML:-pyproject.toml}"
+        if [[ ! -f "$PYPROJECT_TOML" ]]; then
+            log_status "No pyproject.toml found. Executing \`poetry init\` to create a \`$PYPROJECT_TOML\` first."
+            poetry init
+        fi
+
+        if [[ -d ".venv" ]]; then
+            VIRTUAL_ENV="$(pwd)/.venv"
+        else
+            VIRTUAL_ENV=$(poetry env info --path 2>/dev/null ; true)
+        fi
+
+        if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+            log_status "No virtual environment exists. Executing \`poetry install\` to create one."
+            poetry install
+            VIRTUAL_ENV=$(poetry env info --path)
+        fi
+
+        PATH_add "$VIRTUAL_ENV/bin"
+        export POETRY_ACTIVE=1
+        export VIRTUAL_ENV
+      }
+    '';
   };
     
   programs.lf = {
@@ -132,14 +165,19 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-    enableNushellIntegration = false;  # TODO
+    enableNushellIntegration = true;
   };
 
   programs.atuin = {
-    enable = false;
+    enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
+    flags = [ "--disable-up-arrow" ];
+    settings = {
+      auto_sync = false;
+      update_check = false;
+    };
   };
 
   programs.starship = {
@@ -153,6 +191,11 @@
         error_symbol = "[λ](red)";
       };
     };
+  };
+
+  programs.broot = {
+    enable = true;
+    # TODO: integragion
   };
 
   programs.git.delta.enable = true;

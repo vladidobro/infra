@@ -19,7 +19,6 @@ let
 in {
   home.packages = with pkgs; [
     python311Packages.poetry
-    ripgrep  
     cargo
     rustc
   ] ++ builtins.attrValues lsps;

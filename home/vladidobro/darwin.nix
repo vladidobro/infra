@@ -11,6 +11,11 @@
 
   home.stateVersion = "23.11";
 
+  home.shellAliases = {
+    e = "nvim";
+    rebuild = "darwin-rebuild switch --flake /etc/nix-darwin#mac";
+  };
+
   programs.zsh.initExtra = ''
     function legacy-init-arm () {
         eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -65,7 +65,10 @@
       stl = "stash list";
       sts = "stash show";
 
-      t = "tag --annotate";
+      t = "tag";
+      ta = "tag --annotate";
+
+      alias = "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
     };
   };
 }
