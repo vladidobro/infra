@@ -1,0 +1,24 @@
+# zsh
+
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+}
+
+# nu
+
+export def-env lfcd [] {
+    let tmp = (mktemp)
+    lf $"-last-dir-path=($tmp)"
+    let cddir = if ($tmp | path exists) { open $tmp --raw } else { $env.PWD }
+    cd $cddir
+}

@@ -1,0 +1,40 @@
+set previewer ~/.config/lf/pv.sh
+%[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
+
+# Shell
+set shell sh
+set shellopts '-eu'
+map <enter> shell
+
+# General settings
+set ifs "\n"
+
+# Executing
+map x $"$f"
+map X !"$f"
+map <c-x> $chmod +x $fx; lf -remote "send $id reload"
+
+# Deleting
+cmd trash !trash -v $fx
+cmd delete ${{
+    set -f
+    printf "$fx\n"
+    printf "delete?[y/n]"
+    read ans
+    [ $ans = "y" ] && rm -rf $fx
+}}
+map <delete> trash
+map D delete
+
+map i $highlight --force -O ansi -i "$f" | $PAGER
+
+# Zoxide
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+
+cmd zi ${{
+	result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
