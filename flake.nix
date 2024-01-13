@@ -7,8 +7,9 @@
       id = "nixpkgs";
     };
     darwin = {
-      type = "indirect";
-      id = "nix-darwin";
+      type = "github";
+      owner = "LnL7";
+      repo = "nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wsl = {
@@ -24,8 +25,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home = {
-      type = "indirect";
-      id = "home-manager";
+      type = "github";
+      owner = "nix-community";
+      repo = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
@@ -55,12 +57,7 @@
 
     hmModules = {};
 
-    homeConfigurations.vladidobro = self.lib.mkHomeManagerConfiguration {
-      name = "vladidobro";
-      modules = [
-        ./home/vladidobro
-      ];
-    };
+    homeConfigurations = {};
 
     nixosModules = {
       wirelessNetworks = import ./modules/wireless-networks.nix;
@@ -69,40 +66,36 @@
       wslBase = import ./modules/wsl-base.nix;
     };
 
-    nixosConfigurations.parok = self.lib.mkNixosSystem {
+    nixosConfigurations.parok = self.lib.mkNixos {
       system = "x86_64-linux";
       modules = [
-      	./hardware/parok.nix
         ./hosts/parok.nix
-      	(self.lib.mkUserModule {
-      	  name = "vladidobro"; 
-      	  home = ./home/vladidobro;
-      	})
       ];
     };
 
-    nixosConfigurations.parok-wsl = self.lib.mkNixosSystem {
+    nixosConfigurations.parok-wsl = self.lib.mkNixos {
       system = "x86_64-linux";
       modules = [
         ./hosts/parok-wsl.nix
       ];
     };
 
-    nixosConfigurations.kulich = self.lib.mkNixosSystem {
+    nixosConfigurations.kulich = self.lib.mkNixos {
       system = "x86_64-linux";
       modules = [
         ./hosts/kulich.nix
       ];
     };
 
-    darwinConfigurations.mac = self.lib.mkDarwinSystem {
+    darwinConfigurations.mac = self.lib.mkDarwin {
       system = "aarch64-darwin";
       modules = [
         ./hosts/mac.nix
       ];
     };
 
-    nixOnDroidConfigurations.lampin = self.lib.mkNixOnDroidConfiguration {
+    nixOnDroidConfigurations.lampin = self.lib.mkDroid {
+      system = "aarch64-linux";
       modules = [
         ./hosts/lampin.nix
       ];

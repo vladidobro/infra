@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./hardware/parok.nix
     flake.nixosModules.wirelessNetworks
     flake.nixosModules.homeManager
     flake.nixosModules.agenix
@@ -46,6 +47,12 @@
 
   services.openssh.enable = true;
 
+  users.users.vladidobro = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+
+  home-manager.users.vladidobro = ../home/default.nix;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
