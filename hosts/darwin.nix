@@ -12,7 +12,7 @@
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
   users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
-  home-manager.users.vladislavwohlrath = import ../home/vladidobro/darwin.nix;
+  home-manager.users.vladislavwohlrath = import ../home/darwin.nix;
   home-manager.extraSpecialArgs = { inherit flake flake-inputs; };
 
   services.nix-daemon.enable = true;

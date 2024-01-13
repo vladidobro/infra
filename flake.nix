@@ -87,10 +87,10 @@
       ];
     };
 
-    darwinConfigurations.mac = self.lib.mkDarwin {
+    darwinConfigurations.darwin = self.lib.mkDarwin {
       system = "aarch64-darwin";
       modules = [
-        ./hosts/mac.nix
+        ./hosts/darwin.nix
       ];
     };
 

@@ -13,7 +13,7 @@
 
   home.shellAliases = {
     e = "nvim";
-    rebuild = "darwin-rebuild switch --flake /etc/nix-darwin#mac";
+    rebuild = "darwin-rebuild switch --flake /etc/nix-darwin#darwin";
   };
 
   programs.zsh.initExtra = ''
