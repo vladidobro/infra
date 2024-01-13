@@ -30,7 +30,9 @@
       b = "branch";
       ba = "branch --all";
       bd = "branch --delete";
-      bD = "branch --delete --force";
+      bdd = "branch --delete --force";
+      bu = "branch --set-upstream-to";
+      bm = "branch -m";
 
       c = "commit --verbose";
       ca = "commit --amend --verbose";
@@ -43,6 +45,9 @@
       ds = "diff --compact-summary";
       dcs = "diff --cached --compact-summary";
 
+      f = "fetch";
+      fa = "fetch --all";
+
       l = "pull";
 
       lg = "log --oneline --decorate --graph";
@@ -53,6 +58,8 @@
 
       p = "push";
       pt = "push --tags";
+      pa = "push --all";
+      pu = "push --set-upstream";
 
       s = "status";
       ss = "status --short";
