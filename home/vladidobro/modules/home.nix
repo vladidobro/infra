@@ -1,6 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, flake, flake-inputs, ... }:
 
 {
+  imports = [
+    flake-inputs.index.hmModules.nix-index
+  ];
+
+  programs.nix-index-database.comma.enable = true;
+
   home.packages = with pkgs; [
     unzip
     unrar-wrapper

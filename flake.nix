@@ -15,11 +15,13 @@
       type = "github";
       owner = "nix-community";
       repo = "NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     droid = {
       type = "github";
       owner = "nix-community";
       repo = "nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home = {
       type = "indirect";
@@ -38,14 +40,22 @@
       repo = "nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    index = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, darwin, wsl, droid, home, agenix, mailserver }@inputs:
+  outputs = inputs@{ self, nixpkgs, darwin, wsl, droid, home, agenix, mailserver, index }:
   {
     secrets = import ./secrets;
     lib = import ./lib inputs;
 
-    homeManagerConfigurations.vladidobro = self.lib.mkHomeManagerConfiguration {
+    hmModules = {};
+
+    homeConfigurations.vladidobro = self.lib.mkHomeManagerConfiguration {
       name = "vladidobro";
       modules = [
         ./home/vladidobro

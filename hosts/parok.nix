@@ -1,4 +1,4 @@
-{ flake, config, pkgs, ... }:
+{ flake, flake-inputs, config, pkgs, ... }:
 
 {
   imports = [
@@ -6,6 +6,7 @@
     flake.nixosModules.homeManager
     flake.nixosModules.agenix
   ];
+
 
   system.stateVersion = "23.05";
 
