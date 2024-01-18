@@ -1,11 +1,13 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./vpsadminos.nix
+    ../modules/vpsadminos.nix
   ];
 
   environment.systemPackages = with pkgs; [
     vim
+    hello
+    neovim
   ];
 
   services.openssh.enable = true;

@@ -6,6 +6,11 @@
     ./modules/home.nix
   ];
 
+  home.packages = with pkgs; [
+    nixos-rebuild
+    #rust-analyzer
+  ];
+
   home.username = "vladislavwohlrath";
   home.homeDirectory = "/Users/vladislavwohlrath";
 
@@ -13,7 +18,8 @@
 
   home.shellAliases = {
     e = "nvim";
-    rebuild = "darwin-rebuild switch --flake /etc/nix-darwin#darwin";
+    rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#darwin";
+    deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nix-darwin#kulich --build-host kulich --target-host kulich";
   };
 
   programs.zsh.initExtra = ''
@@ -41,6 +47,7 @@
         HostName 10.254.67.6
 
     Host kulich
+        User root
         HostName 37.205.14.94
         IdentityFile ~/.ssh/id_private
 

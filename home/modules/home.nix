@@ -29,6 +29,7 @@
     extraConfig = ''
         set -g default-terminal "xterm-256color"
         set -ag terminal-overrides ",xterm-256color:RGB"
+        set -g detach-on-destroy off
 
         set -g set-clipboard off  # macos
         #set -g set-clipboard on  # linux
