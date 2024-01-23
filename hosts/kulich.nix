@@ -15,6 +15,8 @@
   #users.extraUsers.root.openssh.authorizedKeys.keys =
   #  [ "..." ];
 
+  virtualisation.docker.enable = true;
+
   systemd.extraConfig = ''
     DefaultTimeoutStartSec=900s
   '';
