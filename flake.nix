@@ -3,10 +3,12 @@
 
   inputs = {
     nixpkgs = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixpkgs-unstable";
+      type = "indirect";
+      id = "nixpkgs";
+      #type = "github";
+      #owner = "NixOS";
+      #repo = "nixpkgs";
+      #ref = "nixpkgs-unstable";
     };
     unstable = {
       type = "github";
