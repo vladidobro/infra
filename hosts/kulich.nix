@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
+
 {
   imports = [
-    ../modules/vpsadminos.nix
+    flake.nixosModules.vpsfree
   ];
 
   environment.systemPackages = with pkgs; [

@@ -1,8 +1,8 @@
-{ pkgs, flake, flake-inputs, ... }:
+{ pkgs, flake, ... }:
 
 {
   imports = [
-    flake-inputs.index.hmModules.nix-index
+    flake.inputs.index.hmModules.nix-index
   ];
 
   programs.nix-index-database.comma.enable = true;

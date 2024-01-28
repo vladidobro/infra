@@ -1,13 +1,12 @@
-{ self, nixpkgs, darwin, wsl, droid, home, ... }@flake-inputs:
+{ self, nixpkgs, darwin, wsl, droid, home, ... }@inputs:
 
 let
   lib = nixpkgs.lib;
-  flake = self;
 in rec {
   addSpecialArgsFlake = argname: fn: attrs: 
     let 
       passedSpecialArgs = if lib.hasAttr argname attrs then lib.getAttr argname attrs else {};
-      extraSpecialArgs = { inherit flake flake-inputs; };
+      extraSpecialArgs = { flake = self; };
       fullArgs = attrs // { "${argname}" = extraSpecialArgs // passedSpecialArgs; };
     in fn fullArgs;
   mkNixos = addSpecialArgsFlake "specialArgs" nixpkgs.lib.nixosSystem;

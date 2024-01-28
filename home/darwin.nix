@@ -1,4 +1,4 @@
-{ flake, flake-inputs, config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 
 {
   imports = [
@@ -19,7 +19,7 @@
   home.shellAliases = {
     e = "nvim";
     rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#darwin";
-    deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nix-darwin#kulich --build-host kulich --target-host kulich";
+    deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nixos#kulich --build-host root@kulich --target-host root@kulich";
   };
 
   programs.zsh.initExtra = ''

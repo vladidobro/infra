@@ -1,0 +1,5 @@
+- nix fmt treefmt-nix
+- daniel ucet na kulichu
+- ssh config
+- brew
+- env pro sf dev (shell.nix?)

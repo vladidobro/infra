@@ -1,11 +1,11 @@
-{ flake, flake-inputs, config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 
 {
   imports = [
-    ./hardware/parok.nix
-    flake.nixosModules.wirelessNetworks
-    flake.nixosModules.homeManager
-    flake.nixosModules.agenix
+    flake.nixosModules.hardware.parok
+    flake.nixosModules.wifi
+    flake.inputs.home.nixosModules.home-manager
+    flake.inputs.agenix.nixosModules.default
   ];
 
 

@@ -3,8 +3,16 @@
 
   inputs = {
     nixpkgs = {
-      type = "indirect";
-      id = "nixpkgs";
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixpkgs-unstable";
+    };
+    unstable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixpkgs-unstable";
     };
     darwin = {
       type = "github";
@@ -50,20 +58,32 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, darwin, wsl, droid, home, agenix, mailserver, index }:
+  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index }:
   {
+    inherit inputs;
+
     secrets = import ./secrets;
     lib = import ./lib inputs;
 
-    hmModules = {};
+    templates = {
+      poetry.path = ./templates/poetry;
+    };
+
+    hmModules = {
+      kulich = import ./home/kulich.nix;
+      darwin = import ./home/darwin.nix;
+    };
 
     homeConfigurations = {};
 
     nixosModules = {
-      wirelessNetworks = import ./modules/wireless-networks.nix;
-      agenix = import ./modules/agenix.nix;
-      homeManager = import ./modules/home-manager.nix;
-      wslBase = import ./modules/wsl-base.nix;
+      wifi = import ./modules/wifi.nix;
+      wsl = import ./modules/wsl.nix;
+      vpsfree = import ./modules/vpsfree.nix;
+    };
+    
+    nixosModules.hardware = {
+      parok = import ./hardware/parok.nix;
     };
 
     nixosConfigurations.parok = self.lib.mkNixos {
