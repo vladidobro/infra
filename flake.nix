@@ -58,9 +58,15 @@
       repo = "nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt = {
+      type = "github";
+      owner = "numtide";
+      repo = "treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index }:
+  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index, treefmt }:
   {
     inherit inputs;
 
@@ -75,8 +81,6 @@
       kulich = import ./home/kulich.nix;
       darwin = import ./home/darwin.nix;
     };
-
-    homeConfigurations = {};
 
     nixosModules = {
       wifi = import ./modules/wifi.nix;

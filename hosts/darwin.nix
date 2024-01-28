@@ -9,12 +9,16 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
-  nix.settings.experimental-features = "nix-command flakes";
-
-  nix.registry = {
-    nixpkgs.flake = flake.inputs.nixpkgs;
-    sys.flake = flake;
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = "nix-command flakes";
+    nixPath = [
+      { nixpkgs = flake.inputs.nixpkgs; }
+    ];
+    registry = {
+      nixpkgs.flake = flake.inputs.nixpkgs;
+      sys.flake = flake;
+    };
   };
 
   home-manager.useUserPackages = true;
