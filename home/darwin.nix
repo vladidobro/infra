@@ -38,6 +38,7 @@
     }
 
     alias x="legacy-init-arm"
+    alias X="legacy-init-x86"
     alias xx="legacy-init-arm; legacy-init-x86"
   '';
 
@@ -61,6 +62,8 @@
   home.packages = with pkgs; [
     nixos-rebuild
     qemu
+
+    azure-cli
 
     nodePackages_latest.pyright
     poetry

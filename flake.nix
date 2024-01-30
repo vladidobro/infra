@@ -78,7 +78,7 @@
     lib = import ./lib inputs;
 
     templates = {
-      poetry.path = ./templates/poetry;
+      sf-py-stable.path = ./templates/sf-py-stable;
     };
 
     hmModules = {
