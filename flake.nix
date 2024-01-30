@@ -62,9 +62,15 @@
       repo = "treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    python = {
+      type = "github";
+      owner = "cachix";
+      repo = "nixpkgs-python";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index, treefmt }:
+  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index, treefmt, python }:
   {
     inherit inputs;
 

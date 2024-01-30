@@ -14,8 +14,21 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  services.nix-daemon.enable = true;
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = "nix-command flakes";
+    nixPath = [
+      { nixpkgs = flake.inputs.nixpkgs; }
+      { python = flake.inputs.python; }
+      { sys = flake; }
+    ];
+    registry = {
+      nixpkgs.flake = flake.inputs.nixpkgs;
+      python.flake = flake.inputs.python;
+      sys.flake = flake;
+    };
   };
 
   networking = {
@@ -45,36 +58,19 @@
     windowManager.xmonad.enable = true;
   };
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  services.printing.enable = true;
+
   services.openssh.enable = true;
+
+  programs.bash.enable = true;
+  programs.zsh.enable = true;
 
   users.users.vladidobro = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-
-  home-manager.users.vladidobro = ../home/default.nix;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  home-manager.users.vladidobro = flake.hmModules.parok;
 }
