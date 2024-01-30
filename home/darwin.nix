@@ -6,20 +6,20 @@
     ./modules/home.nix
   ];
 
-  home.packages = with pkgs; [
-    nixos-rebuild
-    #rust-analyzer
-  ];
-
-  home.username = "vladislavwohlrath";
-  home.homeDirectory = "/Users/vladislavwohlrath";
-
   home.stateVersion = "23.11";
+
+  home = {
+    username = "vladislavwohlrath";
+    homeDirectory = "/Users/vladislavwohlrath";
+  };
 
   home.shellAliases = {
     e = "nvim";
     rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#darwin";
     deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nixos#kulich --build-host root@kulich --target-host root@kulich";
+    v = ". ~/venv/bin/activate";
+    V = "deactivate";
+    t = "nix flake init --template";
   };
 
   programs.zsh.initExtra = ''
@@ -37,8 +37,8 @@
         eval "$(/usr/local/bin/pyenv init -)"
     }
 
-    alias init="legacy-init-arm"
-    alias x="legacy-init-arm; legacy-init-x86"
+    alias x="legacy-init-arm"
+    alias xx="legacy-init-arm; legacy-init-x86"
   '';
 
   programs.ssh.extraConfig = ''
@@ -47,7 +47,7 @@
         HostName 10.254.67.6
 
     Host kulich
-        User root
+        User vladislav
         HostName 37.205.14.94
         IdentityFile ~/.ssh/id_private
 
@@ -57,4 +57,15 @@
     Host *
         IdentityFile ~/.ssh/id_rsa
   '';
+
+  home.packages = with pkgs; [
+    nixos-rebuild
+    qemu
+
+    nodePackages_latest.pyright
+    poetry
+    (python3.withPackages (ps: with ps; [ pip ]))
+
+    rust-analyzer
+  ];
 }
