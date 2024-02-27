@@ -3,8 +3,10 @@
 
   inputs = {
     secrets = {
-      type = "git+file";
-      dir = "secrets";
+      type = "github";
+      owner = "vladidobro";
+      repo = "secrets";
+      ref = "main";
     };
     nixpkgs = {
       type = "github";
