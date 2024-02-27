@@ -4,7 +4,7 @@
   inputs = {
     secrets = {
       type = "git+file";
-      path = "./secrets";
+      dir = "secrets";
     };
     nixpkgs = {
       type = "github";
