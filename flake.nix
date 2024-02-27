@@ -3,10 +3,8 @@
 
   inputs = {
     secrets = {
-      type = "github";
-      owner = "vladidobro";
-      repo = "secrets";
-      ref = "main";
+      type = "git";
+      url = "ssh://git@github.com/vladidobro/secrets.git";
     };
     nixpkgs = {
       type = "github";

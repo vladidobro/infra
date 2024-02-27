@@ -595,9 +595,25 @@
         "neovim": "neovim",
         "nixpkgs": "nixpkgs",
         "python": "python",
+        "secrets": "secrets",
         "treefmt": "treefmt",
         "unstable": "unstable",
         "wsl": "wsl"
+      }
+    },
+    "secrets": {
+      "locked": {
+        "lastModified": 1709062708,
+        "narHash": "sha256-WF2qMUe49ovgB9t+AKps+XLa2bv6FWT0HFEwE0uJM9c=",
+        "ref": "refs/heads/main",
+        "rev": "5c8f2899a2c66062186c421df6677700265e74d1",
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@github.com/vladidobro/secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/vladidobro/secrets.git"
       }
     },
     "systems": {
