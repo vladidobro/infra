@@ -42,7 +42,7 @@
     certificateScheme = "acme-nginx";
 
     loginAccounts = {
-      "" = {
+      "${flake.inputs.secrets.mail.main}" = {
         hashedPasswordFile = "/root/passwd";
         aliases = [
         ];
@@ -50,7 +50,7 @@
     };
   };
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = "admin+acme";
+  security.acme.defaults.email = flake.inputs.secrets.mail.acme;
 
   services.nginx = {
     virtualHosts = {

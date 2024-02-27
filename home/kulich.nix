@@ -4,7 +4,7 @@
   imports = [
     ./modules/minimal.nix
     ./modules/home.nix
-    ./modules/gui.nix
+    ./modules/graphical.nix
     ./modules/develop.nix
     ./modules/x11.nix
   ];
