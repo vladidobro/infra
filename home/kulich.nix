@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 
 {
   imports = [
@@ -16,6 +16,6 @@
 
   programs.git = {
     userName = "Vladislav Wohlrath";
-    userEmail = "vladislav@wohlrath.cz";
+    userEmail = flake.inputs.secrets.mail.main;
   };
 }

@@ -219,6 +219,12 @@
     # TODO: integragion
   };
 
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
+
   programs.git.delta.enable = true;
   programs.password-store.enable = true;
 }

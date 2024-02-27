@@ -1,0 +1,41 @@
+{ flake, config, pkgs, ... }:
+
+{
+  programs.zsh.initExtra = ''
+    function legacy-init-arm () {
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv
+        export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
+        eval "$(pyenv init -)"
+    }
+
+    function legacy-init-x86 () {
+        eval "$(/usr/local/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv_x86
+        export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
+        eval "$(/usr/local/bin/pyenv init -)"
+    }
+
+    alias x="legacy-init-arm"
+    alias X="legacy-init-x86"
+    alias xx="legacy-init-arm; legacy-init-x86"
+  '';
+
+  programs.ssh.extraConfig = ''
+    Host data
+        User vladislav.wohlrath@second-foundation.eu
+        HostName 10.254.67.6
+  '';
+
+  home.packages = with pkgs; [
+    azure-cli
+    azure-storage-azcopy
+    k9s
+    kubelogin
+    glab
+  ];
+
+  programs.git = {
+    ignores = [ ".envrc" ".direnv" "shell.nix" ];
+  };
+}
