@@ -1,5 +1,23 @@
-- nix fmt treefmt-nix
-- daniel ucet na kulichu
-- ssh config
+- zsh
+  - [ ] bindkey from old
+  - [ ] '^[[Z' reverse-menu-complete
+- [ ] nix fmt treefmt-nix
+- kulich
+  - [ ] daniel ucet na kulichu
 - brew
-- env pro sf dev (shell.nix?)
+  - [ ] udelat v nixu
+  - [ ] zprovoznit k9s
+  - [ ] rosetta
+- [x] env pro sf dev (shell.nix?)
+- [ ] ssh config
+- [ ] mailserver
+- [ ] setup nixos vm
+- [ ] lf
+- [ ] nu
+  - [ ] dataframe
+- nvim
+  - [ ] config cleanup
+  - [ ] convert to home manager
+  - [ ] test in vm
+  - [ ] use plugins from nixpkgs
+  - [ ] setup debugger

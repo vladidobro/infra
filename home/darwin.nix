@@ -48,7 +48,7 @@
         HostName 10.254.67.6
 
     Host kulich
-        User vladislav
+        User vladidobro
         HostName 37.205.14.94
         IdentityFile ~/.ssh/id_private
 
@@ -62,13 +62,29 @@
   home.packages = with pkgs; [
     nixos-rebuild
     qemu
+    cachix
 
     azure-cli
+    azure-storage-azcopy
+    k9s
+    kubelogin
+    glab
 
     nodePackages_latest.pyright
     poetry
     (python3.withPackages (ps: with ps; [ pip ]))
+    ruff
 
     rust-analyzer
   ];
+
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  programs.git = {
+    ignores = [ ".envrc" ".direnv" "shell.nix" ];
+  };
 }

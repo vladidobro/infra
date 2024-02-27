@@ -68,9 +68,17 @@
       repo = "nixpkgs-python";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home";
+      inputs.nix-darwin.follows = "darwin";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, unstable, darwin, wsl, droid, home, agenix, mailserver, index, treefmt, python }:
+  outputs = inputs@{ self, ... }:
   {
     inherit inputs;
 
@@ -84,6 +92,7 @@
     hmModules = {
       kulich = import ./home/kulich.nix;
       darwin = import ./home/darwin.nix;
+      nvim = import ./home/nvim.nix;
     };
 
     nixosModules = {

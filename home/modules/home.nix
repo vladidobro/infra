@@ -149,11 +149,25 @@
         export POETRY_ACTIVE=1
         export VIRTUAL_ENV
       }
+
+      use_rosetta() {
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv
+        export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
+        eval "$(pyenv init -)"
+        eval "$(/usr/local/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv_x86
+        export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
+        eval "$(/usr/local/bin/pyenv init -)"
+      }
     '';
   };
     
   programs.lf = {
     enable = true;
+    keybindings = {
+        zp = "set preview!";
+    };
     previewer.source = pkgs.writeShellScript "pv.sh" ''
       #!/bin/sh
 
@@ -206,4 +220,5 @@
   };
 
   programs.git.delta.enable = true;
+  programs.password-store.enable = true;
 }
