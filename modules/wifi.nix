@@ -1,7 +1,7 @@
 { flake, config, ... }:
 
 {
-  age.secrets.wireless-networks.file = flake.secrets.wireless-networks;
+  age.secrets.wireless-networks.file = flake.inputs.secrets.wireless-networks;
 
   networking.wireless = {
     environmentFile = config.age.secrets.wireless-networks.path;

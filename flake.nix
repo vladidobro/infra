@@ -2,6 +2,10 @@
   description = "vladidobro system configuration";
 
   inputs = {
+    secrets = {
+      type = "git+file";
+      path = "./secrets";
+    };
     nixpkgs = {
       type = "github";
       owner = "NixOS";
@@ -82,7 +86,6 @@
   {
     inherit inputs;
 
-    secrets = import ./secrets;
     lib = import ./lib inputs;
 
     templates = {
