@@ -101,7 +101,7 @@
 
   programs.helix = {
     enable = true;
-    defaultEditor = true;
+    defaultEditor = false;
     settings = {
       theme = "gruvbox";
       editor = {
@@ -166,7 +166,14 @@
   programs.lf = {
     enable = true;
     keybindings = {
-        zp = "set preview!";
+      zp = "set preview!";
+      x = "$$f";
+      X = "!$f";
+      "<c-x>" = "$chmod +x $fx; lf -remote \"send $id reload\"";
+      "<enter>" = "shell";
+      D = "delete";
+      T = "trash";
+      i = "$highlight --force -O ansi -i \"$f\" | $PAGER";
     };
     previewer.source = pkgs.writeShellScript "pv.sh" ''
       #!/bin/sh
@@ -179,6 +186,38 @@
         *.pdf) pdftotext "$1" -;;
         *) highlight -O ansi "$1" || cat "$1";;
       esac
+    '';
+    settings = {
+      shellopts = "-eu";
+      ifs = "\\n";
+    };
+    commands = {
+      trash = "!mv -f $fx ~/.trash";
+      delete = ''
+        $${{
+        set -f
+        printf "$fx\n"
+        printf "delete?[y/n]"
+        read ans
+        [ $ans = "y" ] && rm -rf $fx
+        }}
+      '';
+      z = ''
+        %{{
+          result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+          lf -remote "send $id cd \"$result\""
+        }}
+      '';
+      zi = ''
+        $${{
+          result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+          lf -remote "send $id cd \"$result\""
+        }}
+      '';
+    };
+    extraConfig = ''
+      %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
+      $mkdir -p ~/.trash
     '';
   };
 
