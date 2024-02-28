@@ -6,6 +6,7 @@
     ./modules/home.nix
     ./modules/sf.nix
     ./modules/nvim
+    ./modules/macos.nix
   ];
 
   home.stateVersion = "23.11";
