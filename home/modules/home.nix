@@ -15,8 +15,6 @@
     ripgrep
   ];
 
-  # Shells
-
   programs.tmux = {
     baseIndex = 1;
     escapeTime = 0;
@@ -98,8 +96,6 @@
     '';
   };
 
-  # Editor
-
   programs.helix = {
     enable = true;
     defaultEditor = false;
@@ -117,8 +113,6 @@
       };
     };
   };
-
-  # Shell integration
 
   programs.direnv = {
     enable = true;
