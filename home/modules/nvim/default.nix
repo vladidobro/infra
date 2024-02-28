@@ -1,11 +1,6 @@
 { flake, config, pkgs, ... }:
 
 {
-  home.stateVersion = "23.11";
-
-  home.username = "vladidobro";
-  home.homeDirectory = "/home/vladidobro";
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -334,10 +329,36 @@
         '';
         type = "lua";
       }
-      # dap
-      # nvim treesitter
-      # nvim treesitter textobjects
-      # nvim surround
+      {
+        plugin = nvim-dap;
+        config = ''
+          -- TODO
+        '';
+        type = "lua";
+      }
+      {
+        plugin = nvim-dap-ui;
+        config = ''
+          -- TODO
+        '';
+        type = "lua";
+      }
+      {
+        plugin = nvim-dap-python;
+        config = ''
+          -- TODO
+        '';
+        type = "lua";
+      }
+      nvim-treesitter
+      nvim-treesitter-textobjects
+      {
+        plugin = nvim-surround;
+        config = ''
+          -- TODO
+        '';
+        type = "lua";
+      }
     ];
   };
 }

@@ -5,6 +5,7 @@
     ./modules/minimal.nix
     ./modules/home.nix
     ./modules/sf.nix
+    ./modules/nvim
   ];
 
   home.stateVersion = "23.11";

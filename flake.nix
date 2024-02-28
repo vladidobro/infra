@@ -93,9 +93,9 @@
     };
 
     hmModules = {
+      parok = import ./home/parok.nix;
       kulich = import ./home/kulich.nix;
       darwin = import ./home/darwin.nix;
-      nvim = import ./home/nvim.nix;
     };
 
     nixosModules = {

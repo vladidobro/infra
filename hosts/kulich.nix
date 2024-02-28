@@ -69,7 +69,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-  home-manager.users.vladidobro = flake.hmModules.nvim;
+  home-manager.users.vladidobro = flake.hmModules.kulich;
 
   users.users.daniel = {
     isNormalUser = true;
