@@ -100,6 +100,7 @@
       bindkey '^A' beginning-of-line
       bindkey '^E' end-of-line
       bindkey '^F' forward-word
+      bindkey '^[[Z' reverse-menu-complete
 
       lfcd () {
           tmp="$(mktemp)"

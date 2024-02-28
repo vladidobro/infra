@@ -1,6 +1,6 @@
 - zsh
-  - [ ] bindkey from old
-  - [ ] '^[[Z' reverse-menu-complete
+  - [x] bindkey from old
+  - [x] '^[[Z' reverse-menu-complete
 - [ ] nix fmt treefmt-nix
 - kulich
   - [ ] daniel ucet na kulichu
@@ -9,15 +9,14 @@
   - [ ] zprovoznit k9s
   - [ ] rosetta
 - [x] env pro sf dev (shell.nix?)
-- [ ] ssh config
+- [x] ssh config
 - [ ] mailserver
 - [ ] setup nixos vm
-- [ ] lf
-- [ ] nu
+- [x] lf
+- [x] nu
   - [ ] dataframe
 - nvim
-  - [ ] config cleanup
-  - [ ] convert to home manager
-  - [ ] test in vm
-  - [ ] use plugins from nixpkgs
+  - [x] config cleanup
+  - [x] convert to home manager
+  - [x] use plugins from nixpkgs
   - [ ] setup debugger
