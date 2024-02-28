@@ -88,20 +88,32 @@
     shellAliases = {
       ls = "ls --color=auto";
       ll = "ls -lh";
-      ll = "ls -a";
+      la = "ls -a";
       l = "ls -lah";
       _ = "sudo ";
       f = "lfcd";
       py = "ipython";
     };
     initExtra = ''
-      setopt extendedglob
-
       bindkey '^P' up-line-or-history
       bindkey '^N' down-line-or-history
       bindkey '^A' beginning-of-line
       bindkey '^E' end-of-line
       bindkey '^F' forward-word
+
+      lfcd () {
+          tmp="$(mktemp)"
+          lf -last-dir-path="$tmp" "$@"
+          if [ -f "$tmp" ]; then
+              dir="$(cat "$tmp")"
+              rm -f "$tmp"
+              if [ -d "$dir" ]; then
+                  if [ "$dir" != "$(pwd)" ]; then
+                      cd "$dir"
+                  fi
+              fi
+          fi
+      }
     '';
   };
 
@@ -113,6 +125,13 @@
       }
 
       $env.config = ($env.config? | default {} | merge $config)
+
+      def --env lfcd [] {
+          let tmp = (mktemp)
+          lf $"-last-dir-path=($tmp)"
+          let cddir = if ($tmp | path exists) { open $tmp --raw } else { $env.PWD }
+          cd $cddir
+      }
     '';
   };
 
@@ -262,8 +281,22 @@
     enableNushellIntegration = true;
     settings = {
       character = {
-        success_symbol = "[λ](green)";
-        error_symbol = "[λ](red)";
+        success_symbol = "[λ](green bold)";
+        error_symbol = "[λ](red bold)";
+      };
+      package = {
+        disabled = true;
+      };
+      shell = {
+        disabled = false;
+        bash_indicator = "bash";
+        format = "\\([$indicator]($style)\\) ";
+      };
+      docker_context = {
+        disabled = true;
+      };
+      python = {
+        detect_extensions = [ ];
       };
     };
   };

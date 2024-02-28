@@ -36,6 +36,15 @@
   ];
 
   programs.git = {
+    userName = "Vladislav Wohlrath";
+    userEmail = flake.inputs.secrets.mail.sf;
+
     ignores = [ ".envrc" ".direnv" "shell.nix" ];
+    extraConfig = {
+      init.defaultBranch = "main";
+      pager.branch = false;
+      push.autoSetupRemote = true;
+      push.default = "current";
+    };
   };
 }
