@@ -192,14 +192,14 @@
       ifs = "\\n";
     };
     commands = {
-      trash = "!mv -f $fx ~/.trash";
+      trash = "!trash $fx";
       delete = ''
-        $${{
-        set -f
-        printf "$fx\n"
-        printf "delete?[y/n]"
-        read ans
-        [ $ans = "y" ] && rm -rf $fx
+        ''${{
+          set -f
+          printf "$fx\n"
+          printf "delete?[y/n]"
+          read ans
+          [ $ans = "y" ] && rm -rf $fx
         }}
       '';
       z = ''
@@ -209,7 +209,7 @@
         }}
       '';
       zi = ''
-        $${{
+        ''${{
           result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
           lf -remote "send $id cd \"$result\""
         }}
