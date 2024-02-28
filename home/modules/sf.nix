@@ -23,7 +23,7 @@
 
   programs.ssh.extraConfig = ''
     Host data
-        User vladislav.wohlrath@second-foundation.eu
+        User ${flake.inputs.secrets.mail.sf}
         HostName 10.254.67.6
   '';
 

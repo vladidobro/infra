@@ -83,6 +83,26 @@
 
   programs.zsh = {
     enable = true;
+    defaultKeymap = "viins";
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      ls = "ls --color=auto";
+      ll = "ls -lh";
+      ll = "ls -a";
+      l = "ls -lah";
+      _ = "sudo ";
+      f = "lfcd";
+      py = "ipython";
+    };
+    initExtra = ''
+      setopt extendedglob
+
+      bindkey '^P' up-line-or-history
+      bindkey '^N' down-line-or-history
+      bindkey '^A' beginning-of-line
+      bindkey '^E' end-of-line
+      bindkey '^F' forward-word
+    '';
   };
 
   programs.nushell = {

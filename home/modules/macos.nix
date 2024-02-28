@@ -11,6 +11,7 @@
           family = "NotoMono Nerd Font Mono";
           style = "Regular";
         };
+      };
       colors = {
         primary = {
           background = "0x282828";
@@ -37,24 +38,9 @@
           white =   "0xd4be98";
         };
       };
-      keyboard.bindings = [
-        { key = J, mods = "Alt", chars = "\\x1bj" }
-        { key = K, mods = "Alt", chars = "\\x1bk" }
-        { key = H, mods = "Alt", chars = "\\x1bh" }
-        { key = L, mods = "Alt", chars = "\\x1bl" }
-        { key = N, mods = "Alt", chars = "\\x1bn" }
-        { key = P, mods = "Alt", chars = "\\x1bp" }
-        { key = Key1, mods = "Alt", chars = "\\x1b1" }
-        { key = Key2, mods = "Alt", chars = "\\x1b2" }
-        { key = Key3, mods = "Alt", chars = "\\x1b3" }
-        { key = Key4, mods = "Alt", chars = "\\x1b4" }
-        { key = Key5, mods = "Alt", chars = "\\x1b5" }
-        { key = Key6, mods = "Alt", chars = "\\x1b6" }
-        { key = Key7, mods = "Alt", chars = "\\x1b7" }
-        { key = Key8, mods = "Alt", chars = "\\x1b8" }
-        { key = Key9, mods = "Alt", chars = "\\x1b9" }
-        { key = Key0, mods = "Alt", chars = "\\x1b0" }
-      ]
+      window = {
+        option_as_alt = "OnlyLeft";
+      };
     };
   };
 }
