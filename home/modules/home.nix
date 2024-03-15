@@ -13,6 +13,9 @@
     p7zip
     highlight
     ripgrep
+    jqp
+    lftp
+    sqlite
   ];
 
   programs.tmux = {
@@ -86,13 +89,14 @@
     defaultKeymap = "viins";
     syntaxHighlighting.enable = true;
     shellAliases = {
+      _ = "sudo ";
       ls = "ls --color=auto";
       ll = "ls -lh";
       la = "ls -a";
       l = "ls -lah";
-      _ = "sudo ";
       f = "lfcd";
       py = "ipython";
+      ".." = "cd ..";
     };
     initExtra = ''
       bindkey '^P' up-line-or-history

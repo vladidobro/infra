@@ -23,6 +23,7 @@
 
     v = ". ~/venv/bin/activate";
     V = "deactivate";
+    vpy = "sh -c \". ~/venv/bin/activate; ipython";
     t = "nix flake init --template";
   };
 
@@ -50,6 +51,13 @@
     (python3.withPackages (ps: with ps; [ pip ]))
     ruff
 
+    cargo
     rust-analyzer
+    dhall
+    cabal-install
+    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ sdl2 ]))
+    SDL2
+    SDL2.dev
+    haskellPackages.haskell-language-server
   ];
 }

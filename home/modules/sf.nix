@@ -19,6 +19,10 @@
     alias x="legacy-init-arm"
     alias X="legacy-init-x86"
     alias xx="legacy-init-arm; legacy-init-x86"
+
+    function kv () {
+        az keyvault secret show --id "https://kv-commo-$1-weu-data.vault.azure.net/secrets/$2" -o json | jq --raw-output0 '.value'
+    }
   '';
 
   programs.ssh.extraConfig = ''
@@ -33,6 +37,7 @@
     k9s
     kubelogin
     glab
+    argocd
   ];
 
   programs.git = {

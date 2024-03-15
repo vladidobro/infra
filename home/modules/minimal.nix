@@ -61,6 +61,10 @@
       pa = "push --all";
       pu = "push --set-upstream";
 
+      ra = "remote add";
+      rp = "remote prune";
+      rpo = "remote prune origin";
+
       s = "status";
       ss = "status --short";
 
