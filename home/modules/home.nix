@@ -16,6 +16,7 @@
     jqp
     lftp
     sqlite
+    unixtools.watch
   ];
 
   programs.tmux = {
