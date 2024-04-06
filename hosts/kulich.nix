@@ -89,7 +89,7 @@
         enableACME = true;
         serverAliases = [ "wohlrath.cz" ];
         locations."/" = {
-          root = "/var/www/";
+          root = "${flake.inputs.homepage.packages.x86_64-linux.default}/html";
         };
       };
       "dav.wohlrath.cz" = {

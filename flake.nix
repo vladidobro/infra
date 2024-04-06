@@ -6,6 +6,11 @@
       type = "git";
       url = "ssh://git@github.com/vladidobro/secrets.git";
     };
+    homepage = {
+      type = "github";
+      owner = "vladidobro";
+      repo = "homepage";
+    };
     nixpkgs = {
       type = "github";
       owner = "NixOS";
