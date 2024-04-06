@@ -110,37 +110,27 @@
 
     nixosConfigurations.parok = self.lib.mkNixos {
       system = "x86_64-linux";
-      modules = [
-        ./hosts/parok.nix
-      ];
+      modules = [ ./hosts/parok.nix ];
     };
 
     nixosConfigurations.parok-wsl = self.lib.mkNixos {
       system = "x86_64-linux";
-      modules = [
-        ./hosts/parok-wsl.nix
-      ];
+      modules = [ ./hosts/parok-wsl.nix ];
     };
 
     nixosConfigurations.kulich = self.lib.mkNixos {
       system = "x86_64-linux";
-      modules = [
-        ./hosts/kulich.nix
-      ];
+      modules = [ ./hosts/kulich.nix ];
     };
 
     darwinConfigurations.darwin = self.lib.mkDarwin {
       system = "aarch64-darwin";
-      modules = [
-        ./hosts/darwin.nix
-      ];
+      modules = [ ./hosts/darwin.nix ];
     };
 
     nixOnDroidConfigurations.lampin = self.lib.mkDroid {
       system = "aarch64-linux";
-      modules = [
-        ./hosts/lampin.nix
-      ];
+      modules = [ ./hosts/lampin.nix ];
     };
   };
 }
