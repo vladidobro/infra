@@ -1,4 +1,4 @@
-{ flake, config, pkgs, ... }:
+{ flake, config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -49,6 +49,36 @@
       };
     };
   };
+
+  services.roundcube = {
+    enable = true;
+    hostName = "mail.wohlrath.cz";
+    extraConfig = ''
+      # starttls needed for authentication, so the fqdn required to match
+      # the certificate
+      $config['smtp_server'] = "tls://${config.mailserver.fqdn}";
+      $config['smtp_user'] = "%u";
+      $config['smtp_pass'] = "%p";
+    '';
+  };
+
+  # services.radicale = {
+  #   enable = true;
+  #   config =
+  #   let mailAccounts = config.mailserver.loginAccounts;
+  #       htpasswd = with lib; pkgs.writeText "radicale.users" (concatStrings
+  #         (flip mapAttrsToList mailAccounts (mail: user:
+  #           mail + ":" + user.hashedPassword + "\n"
+  #         ))  # there is no user.hashedPassword, only hashedPasswordFile
+  #       );
+  #   in ''
+  #     [auth]
+  #     type = htpasswd
+  #     htpasswd_filename = ${htpasswd}
+  #     htpasswd_encryption = bcrypt
+  #   '';
+  # };
+
   security.acme.acceptTerms = true;
   security.acme.defaults.email = flake.inputs.secrets.mail.acme;
 
@@ -60,6 +90,18 @@
         serverAliases = [ "wohlrath.cz" ];
         locations."/" = {
           root = "/var/www/";
+        };
+      };
+      "dav.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:5232/";
+          extraConfig = ''
+            proxy_set_header  X-Script-Name /;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass_header Authorization;
+          '';
         };
       };
     };
