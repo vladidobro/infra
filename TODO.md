@@ -10,8 +10,9 @@
   - [ ] rosetta
 - [x] env pro sf dev (shell.nix?)
 - [x] ssh config
-- [ ] mailserver
-- [ ] setup nixos vm
+- [x] mailserver
+  - [ ] pridat srv a zbytek
+- [x] setup nixos vm
 - [x] lf
 - [x] nu
   - [ ] dataframe
