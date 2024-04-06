@@ -84,12 +84,20 @@
 
   services.nginx = {
     virtualHosts = {
-      "www.wohlrath.cz" = {
+      "vladislav.wohlrath.cz" = {
         forceSSL = true;
         enableACME = true;
-        serverAliases = [ "wohlrath.cz" ];
+        serverAliases = [ "www.vladislav.wohlrath.cz" ];
         locations."/" = {
           root = "${flake.inputs.homepage.packages.x86_64-linux.default}/html";
+        };
+      };
+      "wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        serverAliases = [ "www.wohlrath.cz" ];
+        locations."/" = {
+          root = "/var/www";
         };
       };
       "dav.wohlrath.cz" = {
