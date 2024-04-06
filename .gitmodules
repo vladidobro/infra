@@ -1,3 +1,6 @@
 [submodule "secrets"]
 	path = secrets
 	url = git@github.com:vladidobro/secrets.git
+[submodule "homepage"]
+	path = homepage
+	url = git@github.com:vladidobro/homepage.git
