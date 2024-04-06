@@ -9,7 +9,7 @@
 
   system.stateVersion = "23.11";
 
-  time.timeZone = "Europe/Prague";
+  time.timeZone = "UTC";
 
   systemd.extraConfig = ''
     DefaultTimeoutStartSec=900s
