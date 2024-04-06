@@ -10,6 +10,7 @@
       type = "github";
       owner = "vladidobro";
       repo = "homepage";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs = {
       type = "github";
