@@ -50,6 +50,9 @@
       pager.branch = false;
       push.autoSetupRemote = true;
       push.default = "current";
+      gpg.format = "ssh";
+      user.signingkey = "~/.ssh/id_rsa";
+      commit.gpgsign = true;
     };
   };
 }

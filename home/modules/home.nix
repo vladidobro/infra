@@ -320,6 +320,10 @@
     enableZshIntegration = true;
   };
 
+  programs.htop = {
+    enable = true;
+  };
+
   programs.git.delta.enable = true;
   programs.password-store.enable = true;
 }

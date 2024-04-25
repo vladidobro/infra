@@ -26,6 +26,8 @@
     linux-builder.enable = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
