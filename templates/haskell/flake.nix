@@ -1,5 +1,5 @@
 {
-    description = "haskell app"
+    description = "haskell app";
 
     inputs = {};
 

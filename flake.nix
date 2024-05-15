@@ -100,10 +100,22 @@
     lib = import ./lib inputs;
 
     templates = {
-      sf-py-stable.path = ./templates/sf-py-stable;
-      python.path = ./templates/python;
-      rust.path = ./templates/rust;
-      haskell.path = ./templates/haskell;
+      sf-py-stable = {
+        path = ./templates/sf-py-stable;
+        description = "sf python";
+      };
+      python = {
+        path = ./templates/python;
+        description = "python";
+      };
+      rust = {
+        path = ./templates/rust;
+        description = "rust";
+      };
+      haskell = {
+        path = ./templates/haskell;
+        description = "haskell";
+      };
     };
 
     hmModules = {

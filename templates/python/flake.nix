@@ -1,5 +1,5 @@
 {
-    description = "python app"
+    description = "python app";
 
     inputs = {};
 
