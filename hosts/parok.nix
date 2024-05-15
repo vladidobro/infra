@@ -2,8 +2,8 @@
 
 {
   imports = [
-    flake.nixosModules.hardware.parok
-    flake.nixosModules.wifi
+    #flake.nixosModules.hardware.parok
+    #flake.nixosModules.wifi  # infinite recursion
     flake.inputs.home.nixosModules.home-manager
     flake.inputs.agenix.nixosModules.default
   ];
@@ -15,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs.hostPlatform = "aarch64-darwin";
-  services.nix-daemon.enable = true;
+  #services.nix-daemon.enable = true;  # no exist
   nix = {
     package = pkgs.nix;
     settings.experimental-features = "nix-command flakes";

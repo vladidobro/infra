@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Vladislav Wohlrath <...@wohlrath.cz>"]
+license = "GPL-3.0-only"
+packages = [
+  { include = "app", from = "src" },
+]
+
+[tool.poetry.scripts]
+app = "app:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
