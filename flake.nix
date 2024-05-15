@@ -100,10 +100,6 @@
     lib = import ./lib inputs;
 
     templates = {
-      sf-py-stable = {
-        path = ./templates/sf-py-stable;
-        description = "sf python";
-      };
       python = {
         path = ./templates/python;
         description = "python";
