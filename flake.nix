@@ -86,9 +86,20 @@
       inputs.home-manager.follows = "home";
       inputs.nix-darwin.follows = "darwin";
     };
+    treefmt = {
+      type = "github";
+      owner = "numtide";
+      repo = "treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-utils = {
+      type = "github";
+      owner = "numtide";
+      repo = "flake-utils";
+    };
   };
 
-  outputs = inputs@{ self, ... }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, treefmt, ... }:
   {
     inherit inputs;
 
@@ -96,6 +107,8 @@
 
     templates = {
       sf-py-stable.path = ./templates/sf-py-stable;
+      python.path = ./templates/python;
+      rust.path = ./templates/rust;
     };
 
     hmModules = {
@@ -138,5 +151,11 @@
       system = "aarch64-linux";
       modules = [ ./hosts/lampin.nix ];
     };
-  };
+  } // flake-utils.lib.eachDefaultSystem (system: 
+      let pkgs = nixpkgs.legacyPackages."${system}";
+      in {
+      devShells.default = pkgs.mkShell {
+        packages = with pkgs; [ hello ];
+      };
+  });
 }
