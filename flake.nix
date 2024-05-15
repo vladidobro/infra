@@ -86,12 +86,6 @@
       inputs.home-manager.follows = "home";
       inputs.nix-darwin.follows = "darwin";
     };
-    treefmt = {
-      type = "github";
-      owner = "numtide";
-      repo = "treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-utils = {
       type = "github";
       owner = "numtide";
