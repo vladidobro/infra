@@ -103,6 +103,7 @@
       sf-py-stable.path = ./templates/sf-py-stable;
       python.path = ./templates/python;
       rust.path = ./templates/rust;
+      haskell.path = ./templates/haskell;
     };
 
     hmModules = {
@@ -146,10 +147,14 @@
       modules = [ ./hosts/lampin.nix ];
     };
   } // flake-utils.lib.eachDefaultSystem (system: 
-      let pkgs = nixpkgs.legacyPackages."${system}";
-      in {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [ hello ];
-      };
+  let 
+    pkgs = nixpkgs.legacyPackages."${system}";
+    treefmtEval = treefmt.lib.evalModule pkgs ./treefmt.nix;
+  in {
+    devShells.default = pkgs.mkShell {
+      packages = with pkgs; [ hello ];
+    };
+    formatter = treefmtEval.config.build.wrapper;
+    checks.formatting = treefmtEval.config.build.check self;
   });
 }
