@@ -47,6 +47,11 @@
         aliases = [
         ];
       };
+      "${flake.inputs.secrets.mail.srv}" = {
+        hashedPasswordFile = "/root/passwd";
+        aliases = [
+        ];
+      };
     };
   };
 
