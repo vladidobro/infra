@@ -29,6 +29,31 @@
     Host data
         User ${flake.inputs.secrets.mail.sf}
         HostName 10.254.67.6
+
+    Host oci
+        User opc
+        HostName 10.127.96.17
+        IdentityFile ~/.ssh/id_rastaoci
+
+    Host oraprod
+        User opc
+        HostName 10.127.0.76
+        IdentityFile ~/.ssh/id_inpoweroci
+
+    Host oradmz
+        User opc
+        HostName 10.127.3.121
+        IdentityFile ~/.ssh/id_inpoweroci
+
+    Host orauat1
+        User opc
+        HostName 10.127.2.191
+        IdentityFile ~/.ssh/id_inpoweroci
+
+    Host orauat2
+        User opc
+        HostName 10.127.2.144
+        IdentityFile ~/.ssh/id_inpoweroci
   '';
 
   home.packages = with pkgs; [

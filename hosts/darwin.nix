@@ -24,6 +24,17 @@
       sys.flake = flake;
     };
     linux-builder.enable = true;
+    buildMachines = [
+      {
+        sshUser = "root";
+        hostName = "37.205.14.94";
+        protocol = "ssh";
+        system = "x86_64-linux";
+        maxJobs = 8;
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU9MMFNQUjlZTDJWL1FxTjFCZEttOURuL3JxbXVLWmFVSG50cUwwVWZEVUYgcm9vdEBuaXhvcwo=";
+        sshKey = "/users/vladislavwohlrath/.ssh/id_private";
+      }
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;

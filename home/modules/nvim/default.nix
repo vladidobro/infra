@@ -90,6 +90,7 @@
           lspconfig.pyright.setup {}
           lspconfig.rust_analyzer.setup {}
           lspconfig.hls.setup {}
+          lspconfig.nushell.setup {}
 
           vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)

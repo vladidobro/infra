@@ -34,11 +34,6 @@
         HostName 37.205.14.94
         IdentityFile ~/.ssh/id_private
 
-    Host oci
-        User opc
-        HostName 10.127.96.17
-        IdentityFile ~/.ssh/id_rastaoci
-
     Host github.com
         IdentityFile ~/.ssh/id_private
 

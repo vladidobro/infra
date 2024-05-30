@@ -1,5 +1,5 @@
 {
-    description = "rust app"
+    description = "rust app";
 
     inputs = {};
 
