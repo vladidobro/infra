@@ -125,9 +125,6 @@
 
   programs.nushell = {
     enable = true;
-    package = pkgs.nushell.overrideAttrs (_: {
-      buildFeatures = [ "dataframe" ];
-    });
     configFile.text = ''
       let config = {
         show_banner: false
