@@ -2,8 +2,7 @@
 
 {
   imports = [
-    #flake.nixosModules.hardware.parok
-    #flake.nixosModules.wifi  # infinite recursion
+    flake.nixosModules.hardware.parok
     flake.inputs.home.nixosModules.home-manager
     flake.inputs.agenix.nixosModules.default
   ];
@@ -14,29 +13,26 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = "x86_64-linux";
   #services.nix-daemon.enable = true;  # no exist
   nix = {
     package = pkgs.nix;
     settings.experimental-features = "nix-command flakes";
-    nixPath = [
-      { nixpkgs = flake.inputs.nixpkgs; }
-      { python = flake.inputs.python; }
-      { sys = flake; }
-    ];
-    registry = {
-      nixpkgs.flake = flake.inputs.nixpkgs;
-      python.flake = flake.inputs.python;
-      sys.flake = flake;
-    };
+    #nixPath = [
+    #  { nixpkgs = flake.inputs.nixpkgs; }
+    #  { python = flake.inputs.python; }
+    #  { sys = flake; }
+    #];
+    #registry = {
+    #  nixpkgs.flake = flake.inputs.nixpkgs;
+    #  python.flake = flake.inputs.python;
+    #  sys.flake = flake;
+    #};
   };
 
   networking = {
     hostName = "parok";
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
-    };
+    networkmanager.enable = true;
     firewall = {
       allowedTCPPorts = [ ];
       allowedUDPPorts = [ ];
@@ -53,8 +49,8 @@
   services.xserver = {
     enable = true;
     libinput.enable = true;
-    layout = "us";
-    xkbOptions = "caps:escape";
+    xkb.layout = "us";
+    xkb.options = "caps:escape";
     windowManager.xmonad.enable = true;
   };
 
@@ -63,10 +59,13 @@
 
   services.printing.enable = true;
 
-  services.openssh.enable = true;
-
-  programs.bash.enable = true;
   programs.zsh.enable = true;
+
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+    extraSpecialArgs = { inherit flake; };
+  };
 
   users.users.vladidobro = {
     isNormalUser = true;

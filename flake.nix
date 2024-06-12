@@ -130,10 +130,10 @@
       parok = import ./hardware/parok.nix;
     };
 
-    #nixosConfigurations.parok = self.lib.mkNixos {
-    #  system = "x86_64-linux";
-    #  modules = [ ./hosts/parok.nix ];
-    #};
+    nixosConfigurations.parok = self.lib.mkNixos {
+      system = "x86_64-linux";
+      modules = [ ./hosts/parok.nix ];
+    };
 
     #nixosConfigurations.parok-wsl = self.lib.mkNixos {
     #  system = "x86_64-linux";

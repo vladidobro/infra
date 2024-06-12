@@ -18,7 +18,7 @@ let
    };
 in {
   home.packages = with pkgs; [
-    python311Packages.poetry
+    poetry
     cargo
     rustc
   ] ++ builtins.attrValues lsps;
