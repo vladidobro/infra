@@ -28,7 +28,7 @@
   programs.ssh.extraConfig = ''
     Host data
         User ${flake.inputs.secrets.mail.sf}
-        HostName 10.254.67.6
+        HostName 10.240.0.7
 
     Host oci
         User opc

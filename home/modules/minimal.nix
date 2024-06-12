@@ -26,6 +26,7 @@
     aliases = {
       a = "add";
       aa = "add --all";
+      ac = "! git add --all && git commit --verbose";
 
       b = "branch";
       ba = "branch --all";
