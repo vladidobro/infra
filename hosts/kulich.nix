@@ -15,12 +15,6 @@
     DefaultTimeoutStartSec=900s
   '';
 
-  home-manager = {
-    useUserPackages = true;
-    useGlobalPkgs = true;
-    extraSpecialArgs = { inherit flake; };
-  };
-
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -40,19 +34,6 @@
     fqdn = "mail.wohlrath.cz";
     domains = [ "wohlrath.cz" ];
     certificateScheme = "acme-nginx";
-
-    loginAccounts = {
-      "${flake.inputs.secrets.mail.main}" = {
-        hashedPasswordFile = "/root/passwd";
-        aliases = [
-        ];
-      };
-      "${flake.inputs.secrets.mail.srv}" = {
-        hashedPasswordFile = "/root/passwd";
-        aliases = [
-        ];
-      };
-    };
   };
 
   services.roundcube = {
@@ -85,7 +66,6 @@
   # };
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = flake.inputs.secrets.mail.acme;
 
   services.nginx = {
     virtualHosts = {
@@ -129,11 +109,21 @@
     '';
   };
 
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+  };
+
   users.users.vladidobro = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-  home-manager.users.vladidobro = flake.hmModules.kulich;
+  home-manager.users.vladidobro = {
+    imports = [ ../home ];
+    vladidobro.features = {
+      basic = true;
+    };
+  };
 
   users.users.daniel = {
     isNormalUser = true;

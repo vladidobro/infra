@@ -1,13 +1,6 @@
 { flake, config, pkgs, ... }:
 
 {
-  imports = [
-    flake.nixosModules.hardware.parok
-    flake.inputs.home.nixosModules.home-manager
-    flake.inputs.agenix.nixosModules.default
-  ];
-
-
   system.stateVersion = "23.05";
 
   boot.loader.systemd-boot.enable = true;
