@@ -1,13 +1,15 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-let cfg = config.vladidobro.nvim;
+let 
+  cfg = config.vladidobro.nvim;
+  cfg-dev = config.vladidobro.develop;
 in {
   options.vladidobro.nvim = {
-
+    enable = mkEnableOption "nvim";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     programs.neovim = {
       enable = true;
       defaultEditor = true;

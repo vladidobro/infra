@@ -1,15 +1,31 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-let cfg = config.vladidobro;
+let 
+  cfg = config.vladidobro;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isDroid = config.isDroid;
 in {
   imports = [
     ./nvim.nix
   ];
 
+
+  options.isDroid = mkEnableOption "nix-on-droid";
+
   options.vladidobro = {
     features = {
-      basic = mkEnableOption "Basic tools";
+      aliases = mkEnableOption "aliases";
+      minimal = mkEnableOption "minimal";
+      basic = mkEnableOption "basic";
+      full = mkEnableOption "full";
+      develop = {
+        enable = mkEnableOption "develop";
+        c = mkEnableOption "c";
+        python = mkEnableOption "python";
+        rust = mkEnableOption "rust";
+        haskell = mkEnableOption "haskell";
+      };
     };
   };
   # config = mkIf cfg.enable { };
