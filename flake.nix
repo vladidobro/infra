@@ -62,7 +62,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-utils, treefmt-nix, nix-on-droid, home-manager, agenix, nixos-mailserver, ... }:
+  outputs = inputs@{ self, secrets, nixpkgs, flake-utils, nix-darwin, treefmt-nix, nix-on-droid, home-manager, agenix, nixos-mailserver, ... }:
   {
 
     nixosConfigurations.parok = nixpkgs.lib.nixosSystem {
@@ -91,7 +91,8 @@
         secrets.kulich
         home-manager.nixosModules.home-manager
         agenix.nixosModules.default
-        nixos-mailserver.nixosModule
+        nixos-mailserver.nixosModules.default
+        # homepage.nixosModules.default
       ];
     };
 
@@ -138,7 +139,7 @@
   } // flake-utils.lib.eachDefaultSystem (system: 
   let 
     pkgs = nixpkgs.legacyPackages."${system}";
-    treefmtEval = treefmt.lib.evalModule pkgs ./treefmt.nix;
+    treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
   in {
     formatter = treefmtEval.config.build.wrapper;
     checks.formatting = treefmtEval.config.build.check self;

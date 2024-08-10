@@ -65,5 +65,10 @@
   };
   home-manager.users.vladidobro = {
     imports = [ ../home ];
+
+    home.stateVersion = "23.11";
+
+    home.username = "vladidobro";
+    home.homeDirectory = "/home/vladidobro";
   };
 }

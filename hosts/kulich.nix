@@ -108,16 +108,23 @@
     useGlobalPkgs = true;
   };
 
+  users.users.daniel = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+
   users.users.vladidobro = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
   home-manager.users.vladidobro = {
     imports = [ ../home ];
+
+    home.stateVersion = 
+    home.stateVersion = "23.11";
+
+    home.username = "vladidobro";
+    home.homeDirectory = "/home/vladidobro";
   };
 
-  users.users.daniel = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
 }

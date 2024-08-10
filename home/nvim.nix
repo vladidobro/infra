@@ -1,4 +1,4 @@
-{ flake, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.neovim = {
