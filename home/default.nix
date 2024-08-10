@@ -499,10 +499,6 @@ in {
     # ];
 
 
-    # imports = [
-    #   flake.inputs.index.hmModules.nix-index
-    # ];
-
     # programs.nix-index-database.comma.enable = true;
 
   };

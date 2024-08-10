@@ -62,8 +62,21 @@
     };
   };
 
-  outputs = inputs@{ self, secrets, nixpkgs, flake-utils, nix-darwin, treefmt-nix, nix-on-droid, home-manager, agenix, nixos-mailserver, ... }:
-  {
+  outputs = inputs@{ 
+    self,
+    secrets,
+    nixpkgs,
+    flake-utils,
+    nix-darwin,
+    treefmt-nix,
+    nix-on-droid,
+    home-manager,
+    agenix,
+    nixos-mailserver,
+    nix-index-database,
+    nixvim,
+    ... 
+  }: {
 
     nixosConfigurations.parok = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -111,6 +124,10 @@
         ./hosts/sf.nix 
         secrets.sf
         home-manager.darwinModules.home-manager
+        { home-manager.sharedModules = [ 
+          nix-index-database.hmModules.nix-index 
+          nixvim.homeManagerModules.nixvim
+        ]; }
       ];
     };
 
@@ -120,6 +137,8 @@
         ./hosts/lampin.nix 
       ];
     };
+
+    homeManagerModules.default = ./home;
 
     templates = {
       python = {
