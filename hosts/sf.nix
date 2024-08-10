@@ -47,7 +47,7 @@
   };
 
   users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
-  home-manager.users.vladislavwohlrath = {
+  home-manager.users.vladislavwohlrath = { ... }: {
     imports = [ ../home ];
 
     home.stateVersion = "23.11";
@@ -63,18 +63,6 @@
       V = "deactivate";
     };
 
-    home.ssh.extraConfig = ''
-      Host kulich
-          User vladidobro
-          HostName wohlrath.cz
-          IdentityFile ~/.ssh/id_private
-
-      Host github.com
-          IdentityFile ~/.ssh/id_private
-
-      Host *
-          IdentityFile ~/.ssh/id_rsa
-    '';
 
     home.packages = with pkgs; [
       nixos-rebuild
@@ -101,6 +89,19 @@
       glab
       argocd
     ];
+
+    programs.ssh.extraConfig = ''
+      Host kulich
+          User vladidobro
+          HostName wohlrath.cz
+          IdentityFile ~/.ssh/id_private
+
+      Host github.com
+          IdentityFile ~/.ssh/id_private
+
+      Host *
+          IdentityFile ~/.ssh/id_rsa
+    '';
 
     programs.zsh.initExtra = ''
       function legacy-init-arm () {

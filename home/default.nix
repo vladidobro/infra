@@ -1,12 +1,12 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./nvim.nix
+  ];
 
   config = {
 
-    imports = [
-      ./nvim.nix
-    ];
 
     home.shellAliases = {
       g = "git";
