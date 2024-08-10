@@ -1,9 +1,18 @@
 { config, pkgs, lib, ... }:
 
-{
+with lib;
+let cfg = config.vladidobro;
+in {
   imports = [
     ./nvim.nix
   ];
+
+  options.vladidobro = {
+    features = {
+      basic = mkEnableOption "Basic tools";
+    };
+  };
+  # config = mkIf cfg.enable { };
 
   config = {
 
@@ -14,25 +23,25 @@
     };
     
     programs.ssh = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
     };
 
     programs.bash = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
     };
 
     programs.tmux = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
     };
 
     programs.neovim = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
     };
 
     programs.git = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
 
-      userName = lib.mkDefault "Vladislav Wohlrath";
+      userName = mkDefault "Vladislav Wohlrath";
 
       extraConfig = {
         init.defaultBranch = "main";
@@ -456,7 +465,7 @@
             white =   "0xd4be98";
           };
         };
-        window = {
+        window = {  # only darwin
           option_as_alt = "OnlyLeft";
         };
       };
@@ -472,44 +481,6 @@
     #   dmenu-rs
     #   brave
     # ];
-
-    # alacritty
-    # settings = {
-    #   #env.TERM = "xterm-256color";
-    #   font = {
-    #     size = 16;
-    #     normal = {
-    #       family = "NotoMono Nerd Font Mono";
-    #       style = "Regular";
-    #     };
-    #   };
-    #   colors = {
-    #     primary = {
-    #       background = "0x282828";
-    #       foreground = "0xd4be98";
-    #     };
-    #     normal = {
-    #       black =   "0x3c3836";
-    #       red =     "0xea6962";
-    #       green =   "0xa9b665";
-    #       yellow =  "0xd8a657";
-    #       blue =    "0x7daea3";
-    #       magenta = "0xd3869b";
-    #       cyan =    "0x89b482";
-    #       white =   "0xd4be98";
-    #     };
-    #     bright = {
-    #       black =   "0x3c3836";
-    #       red =     "0xea6962";
-    #       green =   "0xa9b665";
-    #       yellow =  "0xd8a657";
-    #       blue =    "0x7daea3";
-    #       magenta = "0xd3869b";
-    #       cyan =    "0x89b482";
-    #       white =   "0xd4be98";
-    #     };
-    #   };
-    # };
 
 
     # imports = [

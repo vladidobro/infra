@@ -47,7 +47,7 @@
   };
 
   users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
-  home-manager.users.vladislavwohlrath = { ... }: {
+  home-manager.users.vladislavwohlrath = { pkgs, ... }: {
     imports = [ ../home ];
 
     home.stateVersion = "23.11";
@@ -56,7 +56,7 @@
     home.homeDirectory = "/Users/vladislavwohlrath";
 
     home.shellAliases = {
-      rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#darwin";
+      rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#sf";
       deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nixos#kulich --build-host root@kulich --target-host root@kulich";
 
       v = ". ~/venv/bin/activate";
