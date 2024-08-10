@@ -1,4 +1,4 @@
-{ flake, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   system.stateVersion = "23.05";
@@ -57,12 +57,13 @@
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit flake; };
   };
 
   users.users.vladidobro = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-  home-manager.users.vladidobro = flake.hmModules.parok;
+  home-manager.users.vladidobro = {
+    imports = [ ../home ];
+  };
 }

@@ -62,7 +62,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-utils, treefmt-nix, nix-on-droid, home-manager, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, treefmt-nix, nix-on-droid, home-manager, agenix, nixos-mailserver, ... }:
   {
 
     nixosConfigurations.parok = nixpkgs.lib.nixosSystem {
@@ -88,6 +88,10 @@
       modules = [ 
         ./hosts/kulich.nix 
         ./hardware/vpsfree.nix
+        secrets.kulich
+        home-manager.nixosModules.home-manager
+        agenix.nixosModules.default
+        nixos-mailserver.nixosModule
       ];
     };
 
@@ -96,6 +100,7 @@
       modules = [
         ./hosts/kublajchan.nix
         ./hardware/kublajchan.nix
+        home-manager.nixosModules.home-manager
       ];
     };
 
@@ -103,12 +108,16 @@
       system = "aarch64-darwin";
       modules = [
         ./hosts/sf.nix 
+        secrets.sf
+        home-manager.darwinModules.home-manager
       ];
     };
 
     nixOnDroidConfigurations.lampin = nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
-      modules = [ ./hosts/lampin.nix ];
+      modules = [ 
+        ./hosts/lampin.nix 
+      ];
     };
 
     templates = {

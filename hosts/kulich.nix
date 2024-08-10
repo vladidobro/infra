@@ -1,12 +1,6 @@
 { flake, config, pkgs, lib, ... }:
 
 {
-  imports = [
-    flake.nixosModules.vpsfree
-    flake.inputs.home.nixosModules.home-manager
-    flake.inputs.mailserver.nixosModule
-  ];
-
   system.stateVersion = "23.11";
 
   time.timeZone = "UTC";
@@ -120,9 +114,6 @@
   };
   home-manager.users.vladidobro = {
     imports = [ ../home ];
-    vladidobro.features = {
-      basic = true;
-    };
   };
 
   users.users.daniel = {

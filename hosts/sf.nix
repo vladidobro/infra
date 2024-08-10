@@ -1,4 +1,4 @@
-{ flake, pkgs, ... }: 
+{ pkgs, ... }: 
 
 {
   imports = [
@@ -42,12 +42,15 @@
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit flake; };
   };
 
   programs.bash.enable = true;
   programs.zsh.enable = true;
 
   users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
-  home-manager.users.vladislavwohlrath = flake.hmModules.darwin;
+  home-manager.users.vladislavwohlrath = {
+    imports = [
+      ../home
+    ];
+  };
 }
