@@ -90,18 +90,19 @@
       argocd
     ];
 
-    programs.ssh.extraConfig = ''
-      Host kulich
-          User vladidobro
-          HostName wohlrath.cz
-          IdentityFile ~/.ssh/id_private
-
-      Host github.com
-          IdentityFile ~/.ssh/id_private
-
-      Host *
-          IdentityFile ~/.ssh/id_rsa
-    '';
+    programs.ssh.matchBlocks = {
+      "*" = {
+        identityFile = "~/.ssh/id_rsa";
+      };
+      "kulich" = {
+        user = "vladidobro";
+        hostname = "wohlrath.cz";
+        identityFile = "~/.ssh/id_private";
+      };
+      "github.com" = {
+        identityFile = "~/.ssh/id_private";
+      };
+    };
 
     programs.zsh.initExtra = ''
       function legacy-init-arm () {
