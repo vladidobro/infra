@@ -29,6 +29,7 @@ in {
 
 
   options.vladidobro = {
+    enable = mkEnableOption "vladidobro";
     aliases = mkEnableOption "aliases";
     minimal = mkEnableOption "minimal";
     basic = mkEnableOption "basic";
@@ -55,7 +56,7 @@ in {
   };
   # config = mkIf cfg.enable { };
 
-  config = {
+  config = mkIf cfg.enable {
 
 
     home.shellAliases = mkIf cfg.aliases {
@@ -63,33 +64,31 @@ in {
       e = "nvim";
     };
     
-    programs.ssh = {
+    programs.ssh = mkIf cfg.minimal {
       enable = mkDefault true;
     };
 
-    programs.bash = {
+    programs.bash = mkIf cfg.minimal {
       enable = mkDefault true;
     };
 
-    programs.tmux = {
-      enable = mkDefault true;
-    };
-
-    programs.neovim = {
+    programs.neovim = mkIf cfg.basic {
       enable = mkDefault false;
     };
 
-    programs.git = {
+    programs.git = mkIf cfg.minimal {
       enable = mkDefault true;
 
       userName = mkDefault "Vladislav Wohlrath";
 
-      extraConfig = {
+      extraConfig = mkIf cfg.basic {
         init.defaultBranch = mkDefault "main";
         pager.branch = mkDefault false;
         push.autoSetupRemote = mkDefault true;
         push.default = mkDefault "current";
       };
+
+      delta.enable = mkIf cfg.full true;
 
       aliases = mkIf cfg.aliases {
         a = "add";
@@ -152,6 +151,7 @@ in {
       };
     };
 
+    #TODO
     home.packages = [ rebuild ] ++ (with pkgs; [
       unzip
       unrar-wrapper
@@ -164,7 +164,8 @@ in {
       unixtools.watch
     ]);
 
-    programs.tmux = {
+    programs.tmux = mkIf cfg.basic {
+      enable = true;
       baseIndex = 1;
       escapeTime = 0;
       disableConfirmationPrompt = true;
@@ -178,19 +179,16 @@ in {
           set -ag terminal-overrides ",xterm-256color:RGB"
           set -g detach-on-destroy off
 
-          set -g set-clipboard off  # macos
-          #set -g set-clipboard on  # linux
-
+          set -g set-clipboard ${if platform.isDarwin then "off" else "on"}
 
           bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
           bind-key -T copy-mode-vi v send -X begin-selection
           bind-key -T copy-mode-vi V send -X select-line
-          bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'pbcopy'  # macos
-          #bind-key -T copy-mode-vi y send -X copy-selection  # linus
+          ${if platform.isDarwin 
+            then "bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'pbcopy'"
+            else "bind-key -T copy-mode-vi y send -X copy-selection"
+          }
 
-          # See: https://github.com/christoomey/vim-tmux-navigator
-
-          # decide whether we're in a Vim process
           is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
               | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
@@ -230,11 +228,11 @@ in {
       '';
     };
 
-    programs.zsh = {
+    programs.zsh = mkIf cfg.basic {
       enable = true;
       defaultKeymap = "viins";
       syntaxHighlighting.enable = true;
-      shellAliases = {
+      shellAliases = mkIf cfg.aliases {
         _ = "sudo ";
         ls = "ls --color=auto";
         ll = "ls -lh";
@@ -268,7 +266,7 @@ in {
       '';
     };
 
-    programs.nushell = {
+    programs.nushell = mkIf cfg.full {
       enable = true;
       configFile.text = ''
         let config = {
@@ -285,7 +283,7 @@ in {
         }
       '';
     };
-    programs.helix = {
+    programs.helix = mkIf cfg.full {
       enable = true;
       defaultEditor = false;
       settings = {
@@ -303,7 +301,7 @@ in {
       };
     };
 
-    programs.direnv = {
+    programs.direnv = mkIf cfg.full {
       enable = true;
       nix-direnv.enable = true;
       enableBashIntegration = true;
@@ -336,7 +334,7 @@ in {
       '';
     };
       
-    programs.lf = {
+    programs.lf = mkIf cfg.full {
       enable = true;
       keybindings = {
         zp = "set preview!";
@@ -394,14 +392,14 @@ in {
       '';
     };
 
-    programs.zoxide = {
+    programs.zoxide = mkIf cfg.full {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
       enableNushellIntegration = true;
     };
 
-    programs.atuin = {
+    programs.atuin = mkIf cfg.full {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
@@ -413,7 +411,7 @@ in {
       };
     };
 
-    programs.starship = {
+    programs.starship = mkIf cfg.full {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
@@ -440,23 +438,22 @@ in {
       };
     };
 
-    programs.broot = {
+    programs.broot = mkIf cfg.full {
       enable = true;
       # TODO: integragion
     };
 
-    programs.fzf = {
+    programs.fzf = mkIf cfg.basic {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
 
-    programs.htop = {
+    programs.htop = mkIf cfg.basic {
       enable = true;
     };
 
-    programs.git.delta.enable = true;
-    programs.password-store.enable = true;
+    programs.password-store.enable = mkIf cfg.basic true;
 
     programs.alacritty = mkIf cfg.graphical {
       enable = true;
@@ -501,17 +498,15 @@ in {
       };
     };
 
-  
+    fonts.fontconfig.enable = mkIf platform.isLinux true;
     # -- linux
     #
-    # fonts.fontconfig.enable = true;
     # home.packages = with pkgs; [
     #   nerdfonts
     #   poppler_utils
     #   dmenu-rs
     #   brave
     # ];
-
 
     # programs.nix-index-database.comma.enable = true;
 

@@ -58,8 +58,20 @@
 
 
     vladidobro = {
+      enable = true;
       aliases = true;
+      minimal = true;
+      basic = true;
+      full = true;
+      develop = {
+        enable = true;
+        c = true;
+        python = true;
+        rust = true;
+        haskell = true;
+      };
       graphical = true;
+
       nvim.enable = true;
       nvim.nixvim = false;
 
