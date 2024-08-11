@@ -57,6 +57,8 @@
 
 
     vladidobro = {
+      aliases = true;
+      graphical = true;
       nvim.enable = true;
       nvim.nixvim = false;
     };
@@ -130,5 +132,18 @@
     '';
 
     programs.git.ignores = [ ".envrc" ".direnv" "shell.nix" ];
+
+    programs.direnv.stdlib = ''
+      use_rosetta() {
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv
+        export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
+        eval "$(pyenv init -)"
+        eval "$(/usr/local/bin/brew shellenv)"
+        export PYENV_ROOT=~/.pyenv_x86
+        export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
+        eval "$(/usr/local/bin/pyenv init -)"
+      }
+    '';
   };
 }

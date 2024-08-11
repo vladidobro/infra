@@ -14,18 +14,17 @@ in {
   options.isDroid = mkEnableOption "nix-on-droid";
 
   options.vladidobro = {
-    features = {
-      aliases = mkEnableOption "aliases";
-      minimal = mkEnableOption "minimal";
-      basic = mkEnableOption "basic";
-      full = mkEnableOption "full";
-      develop = {
-        enable = mkEnableOption "develop";
-        c = mkEnableOption "c";
-        python = mkEnableOption "python";
-        rust = mkEnableOption "rust";
-        haskell = mkEnableOption "haskell";
-      };
+    aliases = mkEnableOption "aliases";
+    minimal = mkEnableOption "minimal";
+    basic = mkEnableOption "basic";
+    full = mkEnableOption "full";
+    graphical = mkEnableOption "graphical";
+    develop = {
+      enable = mkEnableOption "develop";
+      c = mkEnableOption "c";
+      python = mkEnableOption "python";
+      rust = mkEnableOption "rust";
+      haskell = mkEnableOption "haskell";
     };
   };
   # config = mkIf cfg.enable { };
@@ -33,7 +32,7 @@ in {
   config = {
 
 
-    home.shellAliases = {
+    home.shellAliases = mkIf cfg.aliases {
       g = "git";
       e = "nvim";
     };
@@ -60,13 +59,13 @@ in {
       userName = mkDefault "Vladislav Wohlrath";
 
       extraConfig = {
-        init.defaultBranch = "main";
-        pager.branch = false;
-        push.autoSetupRemote = true;
-        push.default = "current";
+        init.defaultBranch = mkDefault "main";
+        pager.branch = mkDefault false;
+        push.autoSetupRemote = mkDefault true;
+        push.default = mkDefault "current";
       };
 
-      aliases = {
+      aliases = mkIf cfg.aliases {
         a = "add";
         aa = "add --all";
         ac = "! git add --all && git commit --verbose";
@@ -308,17 +307,6 @@ in {
           export POETRY_ACTIVE=1
           export VIRTUAL_ENV
         }
-
-        use_rosetta() {
-          eval "$(/opt/homebrew/bin/brew shellenv)"
-          export PYENV_ROOT=~/.pyenv
-          export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
-          eval "$(pyenv init -)"
-          eval "$(/usr/local/bin/brew shellenv)"
-          export PYENV_ROOT=~/.pyenv_x86
-          export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
-          eval "$(/usr/local/bin/pyenv init -)"
-        }
       '';
     };
       
@@ -444,7 +432,7 @@ in {
     programs.git.delta.enable = true;
     programs.password-store.enable = true;
 
-    programs.alacritty = {
+    programs.alacritty = mkIf cfg.graphical {
       enable = true;
       settings = {
         env.TERM = "xterm-256color";
@@ -481,7 +469,7 @@ in {
             white =   "0xd4be98";
           };
         };
-        window = {  # only darwin
+        window = mkIf isDarwin {
           option_as_alt = "OnlyLeft";
         };
       };

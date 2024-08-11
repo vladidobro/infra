@@ -1,4 +1,4 @@
-{ flake, config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   system.stateVersion = "23.11";
@@ -68,7 +68,7 @@
         enableACME = true;
         serverAliases = [ "www.vladislav.wohlrath.cz" ];
         locations."/" = {
-          root = "${flake.inputs.homepage.packages.x86_64-linux.default}/html";
+          root = "/var/www/html";
         };
       };
       "wohlrath.cz" = {
@@ -84,6 +84,18 @@
         enableACME = true;
         locations."/" = {
           proxyPass = "http://localhost:5232/";
+          extraConfig = ''
+            proxy_set_header  X-Script-Name /;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass_header Authorization;
+          '';
+        };
+      };
+      "api.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:5587/";
           extraConfig = ''
             proxy_set_header  X-Script-Name /;
             proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -120,7 +132,11 @@
   home-manager.users.vladidobro = {
     imports = [ ../home ];
 
-    home.stateVersion = 
+    vladidobro = {
+      aliases = true;
+      nvim.nixvim = true;
+    };
+
     home.stateVersion = "23.11";
 
     home.username = "vladidobro";
