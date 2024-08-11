@@ -166,5 +166,6 @@
       packages = with pkgs; [ hello ];
     };
 
+    packages.kulich-api = pkgs.callPackage ./kulich-api {};
   });
 }
