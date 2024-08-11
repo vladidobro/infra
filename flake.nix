@@ -97,6 +97,7 @@
       modules = [ 
         ./hosts/kulich.nix 
         ./hardware/vpsfree.nix
+        ./kulich-api/module.nix
         secrets.kulich
         home-manager.nixosModules.home-manager
         agenix.nixosModules.default

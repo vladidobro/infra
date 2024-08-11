@@ -91,18 +91,6 @@
           '';
         };
       };
-      "api.wohlrath.cz" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:5587/";
-          extraConfig = ''
-            proxy_set_header  X-Script-Name /;
-            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_pass_header Authorization;
-          '';
-        };
-      };
     };
   };
 
@@ -142,5 +130,7 @@
     home.username = "vladidobro";
     home.homeDirectory = "/home/vladidobro";
   };
+
+  services.kulich-api.enable = true;
 
 }

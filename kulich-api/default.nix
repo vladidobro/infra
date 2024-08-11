@@ -3,9 +3,10 @@
   lib
 }:
 
-rustPlatform.buildRustPackage {
-  pname = "kulich-api";
-  version = "0.0.1";
+let manifest = (lib.importTOML ./Cargo.toml).package;
+in rustPlatform.buildRustPackage {
+  pname = manifest.name;
+  version = manifest.version;
   src = lib.cleanSource ./.;
   cargoLock.lockFile = ./Cargo.lock;
 }
