@@ -5,6 +5,24 @@ let
   cfg = config.vladidobro;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isDroid = config.isDroid;
+  rebuild = pkgs.writeShellScriptBin "rebuild" ''
+    case "$1"
+      "")
+        ${if isDroid then "nix-on-droid" else if isDarwin then "darwin-rebuild" else "nixos-rebuild"} switch \
+        --flake git+file:$NIXOS_HOME#$NIXOS_HOST
+        ;;
+      "kulich")
+        nixos-rebuild switch \
+          --flake git+file:/etc/nixos#kulich \
+          --fast --build-host root@kulich --target-host root@kulich
+        ;;
+      *)
+        echo "Unknown host: $1"
+        echo "Choose one of: kulich"
+        exit 1
+        ;;
+    esac
+  '';
 in {
   imports = [
     ./nvim.nix
@@ -127,6 +145,8 @@ in {
     };
 
     home.packages = with pkgs; [
+      rebuild
+
       unzip
       unrar-wrapper
       p7zip

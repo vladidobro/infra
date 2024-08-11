@@ -64,8 +64,6 @@
     };
 
     home.shellAliases = {
-      rebuild = "darwin-rebuild switch --flake git+file:/etc/nixos#sf";
-      deploy-kulich = "nixos-rebuild switch --fast --flake git+file:/etc/nixos#kulich --build-host root@kulich --target-host root@kulich";
       v = ". ~/venv/bin/activate";
       V = "deactivate";
     };
