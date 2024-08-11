@@ -58,6 +58,7 @@
 
     vladidobro = {
       nvim.enable = true;
+      nvim.nixvim = false;
     };
 
     home.shellAliases = {

@@ -51,7 +51,7 @@ in {
     };
 
     programs.neovim = {
-      enable = mkDefault true;
+      enable = mkDefault false;
     };
 
     programs.git = {
