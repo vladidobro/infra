@@ -2,6 +2,9 @@ use actix_web::{get, post, web, App, HttpResponse, HttpServer};
 use clap::Parser;
 use deadpool_postgres::{Config, ManagerConfig, RecyclingMethod, Runtime, Client, Pool};
 use tokio_postgres::NoTls;
+use actix_web_httpauth::extractors::basic::BasicAuth;
+use serde::Deserialize;
+use chrono::NaiveDateTime;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -16,34 +19,42 @@ struct Args {
     database: String,
 }
 
-async fn auth(db: &Client, username: &str, password: &str) -> Option<i32> {
-    let stmt = db.prepare_cached("SELECT id, password FROM users WHERE username = $1").await.unwrap();
+#[derive(Deserialize)]
+struct LocationData {
+    time: NaiveDateTime,
+    lat: f64,
+    lon: f64,
+}
+
+async fn authenticate(db: &Client, auth: &BasicAuth) -> Option<i32> {
+    let username = auth.user_id();
+    let Some(password) = auth.password() else { return None };
+    let stmt = db.prepare_cached("SELECT uid, password FROM users WHERE username = $1").await.unwrap();
     let rows = db.query(&stmt, &[&username]).await.unwrap();
     if rows.len() != 1 { return None };
-    let pwd: String = rows[1].get(1);
+    let pwd: String = rows[0].get(1);
     if pwd != password { return None };
     Some(rows[0].get(0))
 }
 
 #[get("/uid")]
-async fn get_uid(pool: web::Data<Pool>) -> HttpResponse {
+async fn get_uid(pool: web::Data<Pool>, auth: BasicAuth) -> HttpResponse {
     let db = pool.get().await.unwrap();
-    let uid = auth(&db, "lampin", "assword").await;
-    HttpResponse::Ok().json(uid)
-}
-
-#[get("/location")]
-async fn get_location(pool: web::Data<Pool>) -> HttpResponse {
-    let db = pool.get().await.unwrap();
-    let uid = auth(&db, "lampin", "assword").await;
+    let uid = authenticate(&db, &auth).await;
     HttpResponse::Ok().json(uid)
 }
 
 #[post("/location")]
-async fn post_location(pool: web::Data<Pool>) -> HttpResponse {
+async fn post_location(pool: web::Data<Pool>, auth: BasicAuth, data: web::Json<LocationData>) -> HttpResponse {
     let db = pool.get().await.unwrap();
-    let uid = auth(&db, "lampin", "assword").await;
-    HttpResponse::Ok().json(uid)
+    let Some(uid) = authenticate(&db, &auth).await else {
+        return HttpResponse::Unauthorized().into();
+    };
+
+    let stmt = db.prepare_cached("INSERT INTO locations (uid, time, lat, lon) VALUES ($1, $2, $3, $4)").await.unwrap();
+    db.execute(&stmt, &[&uid, &data.time, &data.lat, &data.lon]).await.unwrap();
+    
+    HttpResponse::Ok().into()
 }
 
 #[actix_web::main]
@@ -60,11 +71,14 @@ async fn main() -> std::io::Result<()> {
     let server = HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(pool.clone()))
-            .service(hello)
-    })
-    .bind((args.addr.clone(), args.port.clone()))?
-    .run();
+            .service(get_uid)
+            .service(post_location)
+    });
 
-    println!("Server running at http://{}:{}", args.addr, args.port);
-    server.await
+    let fut = server
+        .bind((args.addr.clone(), args.port.clone()))?  // TODO bind_uds
+        .run();
+
+    println!("Server running at {}:{}", args.addr, args.port);
+    fut.await
 }
