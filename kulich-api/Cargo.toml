@@ -5,4 +5,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.9.0"
+actix-web-httpauth = "0.8.2"
 clap = { version = "4.5.15", features = ["derive"] }
+deadpool-postgres = "0.12"
+tokio-postgres = "0.7"

@@ -15,6 +15,10 @@ in {
       type = types.int;
       default = 8088;
     };
+    user = mkOption {
+      type = types.str;
+      default = "kulich-api";
+    };
   };
 
   config = {
@@ -22,9 +26,17 @@ in {
       enable = true;
       serviceConfig = {
         ExecStart = "${pkg}/bin/kulich-api -p ${builtins.toString cfg.port}";
+        User = cfg.user;
         # TODO other options
       };
     };
+
+    users.users.${cfg.user} = mkIf cfg.enable {
+      group = cfg.user;
+      isSystemUser = true;
+      createHome = false;
+    };
+    users.groups.${cfg.user} = mkIf cfg.enable {};
     
     services.nginx.virtualHosts = mkIf cfg.enable {
       "${cfg.hostname}" = {

@@ -97,9 +97,20 @@
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "data" ];
-    authentication = pkgs.lib.mkOverride 10 ''
-      #type database  DBuser  auth-method
-      local all       all     trust
+    ensureUsers = [
+      { name = "kulich-api"; }
+      { name = "vladidobro"; }
+    ];
+    authentication = lib.mkOverride 10 ''
+      # type database DBUser optional_identmap
+      local all all peer map=usermap
+    '';
+    identMap = ''
+      # arbitraryMapName systemUser DBUser
+      usermap      root       postgres
+      usermap      postgres   postgres
+      usermap      vladidobro postgres
+      usermap      /^(.*)$    \1
     '';
   };
 
@@ -121,6 +132,9 @@
     imports = [ ../home ];
 
     vladidobro = {
+      enable = true;
+      minimal = true;
+      basic = true;
       aliases = true;
       nvim.nixvim = true;
     };
