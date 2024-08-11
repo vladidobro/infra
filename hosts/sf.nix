@@ -36,6 +36,7 @@
 
   };
 
+
   nixpkgs.config.allowUnfree = true;
 
   programs.bash.enable = true;
@@ -61,6 +62,11 @@
       graphical = true;
       nvim.enable = true;
       nvim.nixvim = false;
+
+      rebuild = {
+        enable = true;
+        hostname = "sf";
+      };
     };
 
     home.shellAliases = {

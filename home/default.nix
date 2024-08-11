@@ -3,17 +3,16 @@
 with lib;
 let 
   cfg = config.vladidobro;
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  isDroid = config.isDroid;
-  rebuild = pkgs.writeShellScriptBin "rebuild" ''
-    case "$1"
+  platform = pkgs.stdenv.hostPlatform;
+  rebuild = let c = cfg.rebuild; in pkgs.writeShellScriptBin "rebuild" ''
+    case "$1" in
       "")
-        ${if isDroid then "nix-on-droid" else if isDarwin then "darwin-rebuild" else "nixos-rebuild"} switch \
-        --flake git+file:$NIXOS_HOME#$NIXOS_HOST
+        ${if platform.isLinux then "nixos-rebuild" else if platform.isDarwin then "darwin-rebuild" else if platform.isAndroid then "nix-on-droid" else ""} switch \
+          --flake git+file:${c.path}#${c.hostname}
         ;;
       "kulich")
         nixos-rebuild switch \
-          --flake git+file:/etc/nixos#kulich \
+          --flake git+file:${c.path}#kulich \
           --fast --build-host root@kulich --target-host root@kulich
         ;;
       *)
@@ -29,8 +28,6 @@ in {
   ];
 
 
-  options.isDroid = mkEnableOption "nix-on-droid";
-
   options.vladidobro = {
     aliases = mkEnableOption "aliases";
     minimal = mkEnableOption "minimal";
@@ -43,6 +40,17 @@ in {
       python = mkEnableOption "python";
       rust = mkEnableOption "rust";
       haskell = mkEnableOption "haskell";
+    };
+    rebuild = {
+      enable = mkEnableOption "rebuild";
+      path = mkOption {
+        type = types.path;
+        default = "/etc/nixos";
+      };
+      hostname = mkOption {
+        type = types.str;
+        default = "";
+      };
     };
   };
   # config = mkIf cfg.enable { };
@@ -144,9 +152,7 @@ in {
       };
     };
 
-    home.packages = with pkgs; [
-      rebuild
-
+    home.packages = [ rebuild ] ++ (with pkgs; [
       unzip
       unrar-wrapper
       p7zip
@@ -156,7 +162,7 @@ in {
       lftp
       sqlite
       unixtools.watch
-    ];
+    ]);
 
     programs.tmux = {
       baseIndex = 1;
@@ -489,7 +495,7 @@ in {
             white =   "0xd4be98";
           };
         };
-        window = mkIf isDarwin {
+        window = mkIf platform.isDarwin {
           option_as_alt = "OnlyLeft";
         };
       };
