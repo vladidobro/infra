@@ -73,7 +73,7 @@
       graphical = true;
 
       nvim.enable = true;
-      nvim.nixvim = false;
+      nvim.nixvim = true;
 
       rebuild = {
         enable = true;
@@ -90,6 +90,15 @@
     home.packages = with pkgs; [
       nixos-rebuild
       qemu
+      podman
+      colima
+      inetutils
+      qmk
+      renameutils
+      cmake
+      gnumake
+      meson
+      ninja
 
       nodePackages_latest.pyright
       poetry

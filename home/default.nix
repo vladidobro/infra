@@ -162,6 +162,7 @@ in {
       lftp
       sqlite
       unixtools.watch
+      socat
     ]);
 
     programs.tmux = mkIf cfg.basic {
