@@ -72,7 +72,10 @@
     nix-index-database,
     nixvim,
     ... 
-  }: {
+  }: 
+  let 
+    lib = import ./lib.nix;
+  in {
 
     nixosConfigurations.parok = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -103,9 +106,11 @@
         agenix.nixosModules.default
         nixos-mailserver.nixosModules.default
         # homepage.nixosModules.default
-        { home-manager.sharedModules = [ 
+        (lib.mkNixRegistry { inherit nixpkgs; })
+        (lib.mkHomeShared [ 
           nixvim.homeManagerModules.nixvim
-        ]; }
+        ])
+        (lib.mkOverlayModule [ nixvim.overlays.default ])
       ];
     };
 
@@ -124,10 +129,12 @@
         ./hosts/sf.nix 
         secrets.sf
         home-manager.darwinModules.home-manager
-        { home-manager.sharedModules = [ 
+        (lib.mkNixRegistry { inherit nixpkgs; })
+        (lib.mkHomeShared [
           nix-index-database.hmModules.nix-index 
           nixvim.homeManagerModules.nixvim
-        ]; }
+        ])
+        (lib.mkOverlayModule [ nixvim.overlays.default ])
       ];
     };
 

@@ -10,7 +10,7 @@
   #services.nix-daemon.enable = true;  # no exist
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = "nix-command flakes";
+    settings.experimental-features = [ "nix-command" "flakes" ];
     #nixPath = [
     #  { nixpkgs = flake.inputs.nixpkgs; }
     #  { python = flake.inputs.python; }

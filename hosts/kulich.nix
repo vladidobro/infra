@@ -3,6 +3,11 @@
 {
   system.stateVersion = "23.11";
 
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
   time.timeZone = "UTC";
 
   systemd.extraConfig = ''
@@ -18,8 +23,6 @@
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
-  #users.extraUsers.root.openssh.authorizedKeys.keys =
-  #  [ "..." ];
 
   virtualisation.docker.enable = true;
 
@@ -34,8 +37,6 @@
     enable = true;
     hostName = "mail.wohlrath.cz";
     extraConfig = ''
-      # starttls needed for authentication, so the fqdn required to match
-      # the certificate
       $config['smtp_server'] = "tls://${config.mailserver.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
