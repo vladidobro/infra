@@ -123,6 +123,13 @@
       ];
     };
 
+    nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/vm.nix
+      ];
+    };
+
     darwinConfigurations.sf = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
