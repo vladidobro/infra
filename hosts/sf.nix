@@ -88,6 +88,7 @@
 
 
     home.packages = with pkgs; [
+      (pkgs.writeShellScriptBin "sf" ''exec "/users/vladislavwohlrath/src/lib/sf/.venv/bin/sf" "$@"'')
       nixos-rebuild
       qemu
       podman
