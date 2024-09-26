@@ -689,11 +689,11 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1727095472,
-        "narHash": "sha256-agpwgTd5cvObBKCO8WCxdfWXUb/fwItqg/XJnebe0GQ=",
+        "lastModified": 1727360034,
+        "narHash": "sha256-fCiOf7JTpw2pnbwBMB3f4VzAh09lLwvNVvxEXbjxuEc=",
         "ref": "refs/heads/main",
-        "rev": "80e678440b289567e283e4d4d92f52c0a79851de",
-        "revCount": 12,
+        "rev": "33d635be1827933609e46c5efe0b862486ed3f7c",
+        "revCount": 13,
         "type": "git",
         "url": "ssh://git@github.com/vladidobro/secrets.git"
       },
