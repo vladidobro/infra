@@ -84,6 +84,7 @@
 #          html.enable = true;           # html
           yamlls.enable = true;         # yaml
           taplo.enable = true;          # toml
+          zig.enable=true;               # zig
         };
         keymaps = {
           lspBuf = {
