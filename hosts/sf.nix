@@ -47,6 +47,14 @@
     useGlobalPkgs = true;
   };
 
+  homebrew = {
+    enable = true;
+    brews = [
+      "azure-cli"
+      "libiodbc"
+    ];
+  };
+
   users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
   home-manager.users.vladislavwohlrath = { pkgs, ... }: {
     imports = [ ../home ];
@@ -115,8 +123,6 @@
       SDL2.dev
       haskellPackages.haskell-language-server
 
-      azure-cli
-      azure-storage-azcopy
       k9s
       kubelogin
       glab
