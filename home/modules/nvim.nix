@@ -7,18 +7,24 @@ let
 in {
   options.vladidobro.nvim = {
     enable = mkEnableOption "nvim";
-    nixvim = mkEnableOption "nixvim";
+    nixvim = {
+      enable = mkEnableOption "nixvim";
+      alias = mkOption {
+        type = types.str;
+        default = "nvim";
+      };
   };
 
-  config.home.packages = mkIf cfg.nixvim [
+  config.home.packages = mkIf cfg.nixvim.enable [
     (let 
       vim = pkgs.nixvim.makeNixvimWithModule { module = ./nixvim.nix; };
-    in pkgs.writeShellScriptBin "nixvim" "exec -a $0 ${vim}/bin/nvim $@")
+    in pkgs.writeShellScriptBin cfg.nixvim.alias "exec -a $0 ${vim}/bin/nvim $@")
   ];
 
-  config.programs.nixvim = mkIf cfg.nixvim {
-    #enable = true;
-  };
+  # TODO: when ditch old nvim
+  # config.programs.nixvim = mkIf cfg.nixvim {
+  #   enable = true;
+  # };
 
   config.programs.neovim = mkIf cfg.enable {
     enable = true;

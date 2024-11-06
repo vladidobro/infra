@@ -82,7 +82,10 @@
       graphical = true;
 
       nvim.enable = true;
-      nvim.nixvim = true;
+      nvim.nixvim = {
+        enable = true;
+        alias = "nixvim";
+      };
 
       rebuild = {
         enable = true;

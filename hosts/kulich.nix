@@ -137,7 +137,7 @@
       minimal = true;
       basic = true;
       aliases = true;
-      nvim.nixvim = true;
+      nvim.enable = true;
     };
 
     home.stateVersion = "23.11";
