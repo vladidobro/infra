@@ -4,27 +4,12 @@ with lib;
 let 
   cfg = config.vladidobro;
   platform = pkgs.stdenv.hostPlatform;
-  rebuild = let c = cfg.rebuild; in pkgs.writeShellScriptBin "rebuild" ''
-    case "$1" in
-      "")
-        ${if platform.isLinux then "nixos-rebuild" else if platform.isDarwin then "darwin-rebuild" else if platform.isAndroid then "nix-on-droid" else ""} switch \
-          --flake git+file:${c.path}#${c.hostname}
-        ;;
-      "kulich")
-        nixos-rebuild switch \
-          --flake git+file:${c.path}#kulich \
-          --fast --build-host root@kulich --target-host root@kulich
-        ;;
-      *)
-        echo "Unknown host: $1"
-        echo "Choose one of: kulich"
-        exit 1
-        ;;
-    esac
-  '';
 in {
   imports = [
-    ./nvim.nix
+    ./modules/nvim.nix
+    ./modules/duckdb.nix
+    ./modules/ipython.nix
+    ./modules/rebuild.nix
   ];
 
 
@@ -42,22 +27,32 @@ in {
       rust = mkEnableOption "rust";
       haskell = mkEnableOption "haskell";
     };
-    rebuild = {
-      enable = mkEnableOption "rebuild";
-      path = mkOption {
-        type = types.path;
-        default = "/etc/nixos";
-      };
-      hostname = mkOption {
-        type = types.str;
-        default = "";
-      };
+    data = {
+      duckdb = mkEnableOption "duckdb";
     };
   };
-  # config = mkIf cfg.enable { };
 
   config = mkIf cfg.enable {
 
+    home.packages = with pkgs; ([
+      unzip
+      unrar-wrapper
+      p7zip
+      highlight
+      ripgrep
+      jqp
+      lftp
+      sqlite
+      unixtools.watch
+      socat
+    ]); 
+    # TODO
+    # + (mkIf (platform.isLinux && cfg.graphical) [
+    #   nerdfonts
+    #   poppler_utils
+    #   dmenu-rs
+    #   brave
+    # ]));
 
     home.shellAliases = mkIf cfg.aliases {
       g = "git";
@@ -150,20 +145,6 @@ in {
         alias = "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
       };
     };
-
-    #TODO
-    home.packages = [ rebuild ] ++ (with pkgs; [
-      unzip
-      unrar-wrapper
-      p7zip
-      highlight
-      ripgrep
-      jqp
-      lftp
-      sqlite
-      unixtools.watch
-      socat
-    ]);
 
     programs.tmux = mkIf cfg.basic {
       enable = true;
@@ -439,11 +420,6 @@ in {
       };
     };
 
-    programs.broot = mkIf cfg.full {
-      enable = true;
-      # TODO: integragion
-    };
-
     programs.fzf = mkIf cfg.basic {
       enable = true;
       enableBashIntegration = true;
@@ -499,15 +475,7 @@ in {
       };
     };
 
-    fonts.fontconfig.enable = mkIf platform.isLinux true;
-    # -- linux
-    #
-    # home.packages = with pkgs; [
-    #   nerdfonts
-    #   poppler_utils
-    #   dmenu-rs
-    #   brave
-    # ];
+    fonts.fontconfig.enable = mkIf (platform.isLinux && cfg.graphical) true;
 
     # programs.nix-index-database.comma.enable = true;
 

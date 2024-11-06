@@ -65,6 +65,7 @@
     home.homeDirectory = "/Users/vladislavwohlrath";
 
 
+    # comon configuration
     vladidobro = {
       enable = true;
       aliases = true;
@@ -97,32 +98,38 @@
 
     home.packages = with pkgs; [
       (pkgs.writeShellScriptBin "sf" ''exec "/users/vladislavwohlrath/src/lib/sf/.venv/bin/sf" "$@"'')
+      # utils
       nixos-rebuild
       qemu
       podman
       colima
       inetutils
-      qmk
       renameutils
-      cmake
       gnumake
-      meson
       ninja
 
+      # meteo tools
+      cdo
+      eccodes
+
+      # python
       nodePackages_latest.pyright
       poetry
       (python3.withPackages (ps: with ps; [ pip ]))
       ruff
 
+      # languages
       cargo
       rust-analyzer
       dhall
       cabal-install
-      (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ sdl2 ]))
-      SDL2
-      SDL2.dev
-      haskellPackages.haskell-language-server
+      zig
+      kotlin
+      gradle
+      openjdk
+      maturin
 
+      # integration
       k9s
       kubelogin
       glab
@@ -143,39 +150,15 @@
       };
     };
 
+    # don't pollute common git projects
+    programs.git.ignores = [ ".envrc" ".direnv" ];
+
+    # setup homebrew
     programs.zsh.initExtra = ''
-      function legacy-init-arm () {
-          eval "$(/opt/homebrew/bin/brew shellenv)"
-          export PYENV_ROOT=~/.pyenv
-          export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
-          eval "$(pyenv init -)"
-      }
-
-      function legacy-init-x86 () {
-          eval "$(/usr/local/bin/brew shellenv)"
-          export PYENV_ROOT=~/.pyenv_x86
-          export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
-          eval "$(/usr/local/bin/pyenv init -)"
-      }
-
-      alias x="legacy-init-arm"
-      alias X="legacy-init-x86"
-      alias xx="legacy-init-arm; legacy-init-x86"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
     '';
 
-    programs.git.ignores = [ ".envrc" ".direnv" "shell.nix" ];
 
-    programs.direnv.stdlib = ''
-      use_rosetta() {
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-        export PYENV_ROOT=~/.pyenv
-        export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
-        eval "$(pyenv init -)"
-        eval "$(/usr/local/bin/brew shellenv)"
-        export PYENV_ROOT=~/.pyenv_x86
-        export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
-        eval "$(/usr/local/bin/pyenv init -)"
-      }
-    '';
   };
 }
