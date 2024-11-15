@@ -110,6 +110,7 @@
       renameutils
       gnumake
       ninja
+      duckdb
 
       # meteo tools
       cdo

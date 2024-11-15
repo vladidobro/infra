@@ -13,6 +13,7 @@ in {
         type = types.str;
         default = "nvim";
       };
+    };
   };
 
   config.home.packages = mkIf cfg.nixvim.enable [

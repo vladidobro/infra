@@ -40,6 +40,8 @@ in {
       p7zip
       highlight
       ripgrep
+      jq
+      parallel
       jqp
       lftp
       sqlite
@@ -162,6 +164,7 @@ in {
           set -g detach-on-destroy off
 
           set -g set-clipboard ${if platform.isDarwin then "off" else "on"}
+          set -g status-bg blue
 
           bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
           bind-key -T copy-mode-vi v send -X begin-selection

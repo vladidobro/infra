@@ -10,21 +10,16 @@
 
   time.timeZone = "UTC";
 
-  systemd.extraConfig = ''
-    DefaultTimeoutStartSec=900s
-  '';
-
   networking.firewall.allowedTCPPorts = [
     80
     443
-    587
-    993
+    587  # SMPT
+    993  # IMAP
+    6443  # k3s
   ];
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
-
-  virtualisation.docker.enable = true;
 
   mailserver = {
     enable = true;
@@ -92,6 +87,17 @@
           '';
         };
       };
+      "k3s.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "https://localhost:6443/";
+          extraConfig = ''
+            proxy_set_header  X-Script-Name /;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+          '';
+        };
+      };
     };
   };
 
@@ -113,6 +119,18 @@
       usermap      vladidobro postgres
       usermap      /^(.*)$    \1
     '';
+  };
+
+  services.redis.servers.redis = {
+    enable = true;
+  };
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = toString [
+        "--kubelet-arg=feature-gates=KubeletInUserNamespace=true"
+    ];
   };
 
   home-manager = {
