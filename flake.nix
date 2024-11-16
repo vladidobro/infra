@@ -62,6 +62,7 @@
     self,
     secrets,
     nixpkgs,
+    nixpkgs-unstable,
     flake-utils,
     nix-darwin,
     treefmt-nix,
@@ -112,6 +113,15 @@
         ])
         (lib.mkOverlayModule [ nixvim.overlays.default ])
       ];
+      specialArgs = { 
+        pkgs-unstable = import nixpkgs-unstable {
+          system = "x86_64-linux"; # whatever your system name is
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
+        };
+      };
     };
 
     nixosConfigurations.kublajchan = nixpkgs.lib.nixosSystem {

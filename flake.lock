@@ -553,11 +553,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1723221148,
-        "narHash": "sha256-7pjpeQlZUNQ4eeVntytU3jkw9dFK3k1Htgk2iuXjaD8=",
+        "lastModified": 1731531548,
+        "narHash": "sha256-sz8/v17enkYmfpgeeuyzniGJU0QQBfmAjlemAUYhfy8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "154bcb95ad51bc257c2ce4043a725de6ca700ef6",
+        "rev": "24f0d4acd634792badd6470134c387a3b039dace",
         "type": "github"
       },
       "original": {
@@ -689,11 +689,11 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1728033954,
-        "narHash": "sha256-hJuOBrLIGto6o13V9fGplX2xVOLPoSIw0JDe/4nGTOs=",
+        "lastModified": 1731749796,
+        "narHash": "sha256-3IDN86UF84OGuMR9+wGvZybjQgQjqQ3hPXRfbaha50I=",
         "ref": "refs/heads/main",
-        "rev": "dbdaef1d25798227fe7a5ca3f904199fa167ae0e",
-        "revCount": 14,
+        "rev": "407662aaf1b685ba3e499dba2482fc0f7565cb41",
+        "revCount": 15,
         "type": "git",
         "url": "ssh://git@github.com/vladidobro/secrets.git"
       },

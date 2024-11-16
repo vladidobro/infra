@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   system.stateVersion = "23.11";
@@ -6,6 +6,10 @@
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
   };
 
   time.timeZone = "UTC";
@@ -15,7 +19,6 @@
     443
     587  # SMPT
     993  # IMAP
-    6443  # k3s
   ];
 
   services.openssh.enable = true;
@@ -87,17 +90,27 @@
           '';
         };
       };
-      "k3s.wohlrath.cz" = {
+      "svatba.maskova.wohlrath.cz" = {
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "https://localhost:6443/";
+          proxyPass = "http://localhost:8180";
           extraConfig = ''
             proxy_set_header  X-Script-Name /;
             proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass_header Authorization;
           '';
         };
       };
+    };
+  };
+
+  virtualisation.containers.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
   };
 
@@ -125,12 +138,9 @@
     enable = true;
   };
 
-  services.k3s = {
+  services.mongodb = {
     enable = true;
-    role = "server";
-    extraFlags = toString [
-        "--kubelet-arg=feature-gates=KubeletInUserNamespace=true"
-    ];
+    package = pkgs-unstable.mongodb-ce;
   };
 
   home-manager = {
@@ -140,7 +150,12 @@
 
   users.users.daniel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ ];
+  };
+
+  users.users.pesa = {
+    isNormalUser = true;
+    extraGroups = [ "podman" ];
   };
 
   users.users.vladidobro = {
