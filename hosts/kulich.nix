@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, homepage, ... }:
 
 {
   system.stateVersion = "23.11";
@@ -66,16 +66,41 @@
         forceSSL = true;
         enableACME = true;
         serverAliases = [ "www.vladislav.wohlrath.cz" ];
-        locations."/" = {
-          root = "/var/www/html";
-        };
+        root = "${homepage.packages.x86_64-linux.default}/html/";
+        extraConfig = ''
+          index index.html;
+        '';
       };
       "wohlrath.cz" = {
         forceSSL = true;
         enableACME = true;
         serverAliases = [ "www.wohlrath.cz" ];
         locations."/" = {
-          root = "/var/www";
+          root = "/var/www/wohlrath.cz";
+        };
+      };
+      "martina.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        serverAliases = [ "www.martina.wohlrath.cz" ];
+        locations."/" = {
+          root = "/var/www/martina.wohlrath.cz";
+        };
+      };
+      "daniel.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        serverAliases = [ "www.daniel.wohlrath.cz" ];
+        locations."/" = {
+          root = "/var/www/daniel.wohlrath.cz";
+        };
+      };
+      "rea.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        serverAliases = [ "www.rea.wohlrath.cz" ];
+        locations."/" = {
+          root = "/var/www/rea.wohlrath.cz";
         };
       };
       "dav.wohlrath.cz" = {
@@ -149,6 +174,16 @@
   };
 
   users.users.daniel = {
+    isNormalUser = true;
+    extraGroups = [ "podman" ];
+  };
+
+  users.users.martina = {
+    isNormalUser = true;
+    extraGroups = [ ];
+  };
+
+  users.users.rea = {
     isNormalUser = true;
     extraGroups = [ ];
   };

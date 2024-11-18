@@ -361,11 +361,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1728257302,
-        "narHash": "sha256-1kBh0CFV0Sg16yadoLmjrSu2a3rtaqvaGt59P9SHVAI=",
+        "lastModified": 1731883513,
+        "narHash": "sha256-pH0JSxuOfG6mltreXbhjC5ESN/eUwJakbTfQED89eAQ=",
         "owner": "vladidobro",
         "repo": "homepage",
-        "rev": "1f7248d2d1d705dcd3012410e228bc1b66d68b0e",
+        "rev": "4d0b5a4a5a31218c380d805e77c4ba1df5de0c50",
         "type": "github"
       },
       "original": {

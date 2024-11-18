@@ -60,6 +60,7 @@
 
   outputs = inputs@{ 
     self,
+    homepage,
     secrets,
     nixpkgs,
     nixpkgs-unstable,
@@ -114,13 +115,8 @@
         (lib.mkOverlayModule [ nixvim.overlays.default ])
       ];
       specialArgs = { 
-        pkgs-unstable = import nixpkgs-unstable {
-          system = "x86_64-linux"; # whatever your system name is
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-        };
+        pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
+        inherit homepage;
       };
     };
 
