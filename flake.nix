@@ -12,6 +12,9 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-24.05";
     };
+    nixpkgs-2411 = {
+      url = "github:NixOS/nixpkgs/nixos-24.11";
+    };
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
@@ -30,6 +33,10 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager-2411 = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-2411";
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -63,12 +70,14 @@
     homepage,
     secrets,
     nixpkgs,
+    nixpkgs-2411,
     nixpkgs-unstable,
     flake-utils,
     nix-darwin,
     treefmt-nix,
     nix-on-droid,
     home-manager,
+    home-manager-2411,
     agenix,
     nixos-mailserver,
     nix-index-database,
@@ -86,6 +95,15 @@
         ./hardware/parok.nix
         home-manager.nixosModules.home-manager
         agenix.nixosModules.default
+      ];
+    };
+
+    nixosConfigurations.myskus = nixpkgs-2411.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/myskus.nix
+	    ./hardware/myskus.nix
+        home-manager-2411.nixosModules.home-manager
       ];
     };
 

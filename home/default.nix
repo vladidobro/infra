@@ -478,7 +478,7 @@ in {
       };
     };
 
-    fonts.fontconfig.enable = mkIf (platform.isLinux && cfg.graphical) true;
+    # fonts.fontconfig.enable = mkIf (platform.isLinux && cfg.graphical) true;
 
     # programs.nix-index-database.comma.enable = true;
 
