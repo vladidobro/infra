@@ -32,7 +32,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Verify code route
-app.post('/verify', accessCodeRouter);
+app.get('/verify/:code', accessCodeRouter);
 
 // Register guest route
 app.post('/register', registerGuest);

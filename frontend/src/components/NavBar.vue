@@ -5,6 +5,7 @@
         <!-- Link to Home -->
         <router-link to="/">Home</router-link>
         <router-link to="/register">Registrace</router-link>
+        <router-link to="/info">Info</router-link>
 
       </div>
   

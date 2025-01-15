@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
     const url = 'http://localhost:3000/verify'
 
     try {
-      const response = await axios.post(url, { code: accessCode })
+      const response = await axios.get(url + '/' + accessCode)
       const data = response.data
 
       if (!data.success) {

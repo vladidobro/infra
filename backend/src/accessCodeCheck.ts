@@ -2,31 +2,27 @@ import { Request, Response } from 'express';
 import AccessCode from './models/AccessCode';
 
 
-/**
- * POST /verify
- * Example body: { "code": "xyz-123" }
- * This route verifies an access code.
- */
 const verifyAccessCode = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { code } = req.body;
+    const { code } = req.params; // code comes from the URL param
 
     if (!code) {
-      return res.status(400).json({ error: 'No code provided' });
+      return res.status(400).json({ error: 'No code provided in URL' });
     }
-
+    console.log('Code attempt:', code);
     // Use Mongoose to look up the code in MongoDB
     const foundCode = await AccessCode.findOne({ code });
     if (!foundCode) {
-      // If the code isn't found, return an error
       return res.status(404).json({ error: 'Invalid code' });
     }
+    console.log('Found code:', foundCode);
 
     // Code found - return success and any info you'd like.
     return res.json({
       success: true,
       category: foundCode.category,
       used: foundCode.used,
+      
     });
   } catch (error) {
     console.error('Error verifying code:', error);
