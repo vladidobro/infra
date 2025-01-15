@@ -1,8 +1,8 @@
 <template>
     <div class="login-container">
       <h1>{{ t('enter_code') }}</h1>
-      <input v-model="accessCode" type="text" placeholder="Enter code" />
-      <button @click="login">Login</button>
+      <input v-model="accessCode" type="text"  />
+      <button @click="login">{{ t('navbar.login') }}</button>
   
       <div v-if="error" class="error">
         {{ error }}

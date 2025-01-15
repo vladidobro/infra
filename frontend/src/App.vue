@@ -1,5 +1,6 @@
 <template>
-  <!-- Always show the NavBar -->
+  <TopBar />
+  <img class="wedding-logo" src="../assets/pie-placeholder.jpg" alt="Wedding logo"/>
   <NavBar />
 
   <!-- Where your views (pages) render -->
@@ -8,8 +9,11 @@
 
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue'
+import TopBar from './components/TopBar.vue'
 </script>
 
 <style>
-/* Global or app-wide styles can go here if needed */
+/* Import styles from the global stylesheet */
+@import './style.css';
+
 </style>
