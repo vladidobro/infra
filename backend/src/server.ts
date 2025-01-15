@@ -24,6 +24,8 @@ mongoose
   })
   .catch((err) => {
     console.error('Could not connect to MongoDB', err);
+    // Exit the process if we can't connect to MongoDB
+    process.exit(1);
   });
 
 // Test route
