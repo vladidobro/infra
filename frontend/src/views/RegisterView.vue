@@ -1,8 +1,6 @@
 <template>
     <div class="register-page">
-      <h1>Register Form</h1>
-      <p>Your code: {{ authStore.code }}</p>
-      <p>Category: {{ authStore.category }}</p>
+      <h1> {{ t('register.title')  }}</h1>
   
       <form @submit.prevent="submitForm">
         <!-- Name -->
@@ -44,6 +42,9 @@
   import { ref, computed } from 'vue'
   import axios from 'axios'
   import { useAuthStore } from '../stores/auth'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
   
   const authStore = useAuthStore()
   

@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-      <h1>Enter Your Access Code</h1>
+      <h1>{{ t('enter_code') }}</h1>
       <input v-model="accessCode" type="text" placeholder="Enter code" />
       <button @click="login">Login</button>
   
@@ -14,6 +14,9 @@
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '../stores/auth'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
   
   const router = useRouter()
   const authStore = useAuthStore()
