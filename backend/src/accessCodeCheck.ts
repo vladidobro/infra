@@ -20,9 +20,7 @@ const verifyAccessCode = async (req: Request, res: Response): Promise<any> => {
     // Code found - return success and any info you'd like.
     return res.json({
       success: true,
-      category: foundCode.category,
-      used: foundCode.used,
-      
+      obj: foundCode
     });
   } catch (error) {
     console.error('Error verifying code:', error);

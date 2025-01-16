@@ -1,21 +1,23 @@
-// ~/Dev/WDNG.IO/backend/src/seedAccessCodes.ts
-
+// ~/Dev/WDNG.IO/backend/makeAccessCodes.ts
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
-
-// Import your AccessCode model
-import AccessCode from './src/models/AccessCode';
+import AccessCode from './src/models/AccessCode';  // Adjust path if needed
 
 dotenv.config();
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/wedding';
 
-// Array of categories you want to seed
-const categories = ['guest_no_plusone', 'guest_with_plusone', 'family'];
-
-// Decide how many codes to generate per category
-const NUM_CODES_PER_CATEGORY = 3;
+/**
+ * Example config: each item has:
+ *  - max_guests: how many people allowed on this code
+ *  - howMany: how many codes to generate with that max_guests
+ */
+const SEED_CONFIG = [
+  { max_guests: 0, howMany: 3 },  // e.g. single invites
+  { max_guests: 1, howMany: 5 },  // e.g. plus-one invites
+  { max_guests: 999, howMany: 4 },  // e.g. family invites
+];
 
 async function seedDatabase() {
   try {
@@ -23,19 +25,29 @@ async function seedDatabase() {
     await mongoose.connect(mongoURI);
     console.log('Connected to MongoDB');
 
-    // 2. Generate and insert codes
-    for (const category of categories) {
-      for (let i = 0; i < NUM_CODES_PER_CATEGORY; i++) {
-        const code = uuidv4(); 
-        await AccessCode.create({ code, category, used: false });
-        console.log(`Inserted code: ${code} for category: ${category}`);
+    // 2. Drop the entire "wedding" database (all collections!)
+    console.log('Dropping the entire database...');
+    if (mongoose.connection.db) {
+      await mongoose.connection.db.dropDatabase();
+    } else {
+      throw new Error('Database connection is not established.');
+    }
+    console.log('Database dropped successfully.');
+
+    // 3. Generate and insert AccessCode docs
+    for (const { max_guests, howMany } of SEED_CONFIG) {
+      for (let i = 0; i < howMany; i++) {
+        const code = uuidv4();
+        await AccessCode.create({ code, max_guests, used: false });
+        console.log(`Inserted code: ${code} with max_guests: ${max_guests}`);
       }
     }
+
     console.log('Seeding completed successfully.');
   } catch (err) {
     console.error('Error during seeding:', err);
   } finally {
-    // 3. Close the DB connection
+    // 4. Close the DB connection
     await mongoose.connection.close();
     console.log('DB connection closed.');
   }
