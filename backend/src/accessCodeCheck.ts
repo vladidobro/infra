@@ -15,7 +15,6 @@ const verifyAccessCode = async (req: Request, res: Response): Promise<any> => {
     if (!foundCode) {
       return res.status(404).json({ error: 'Invalid code' });
     }
-    console.log('Found code:', foundCode);
 
     // Code found - return success and any info you'd like.
     return res.json({

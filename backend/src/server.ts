@@ -7,7 +7,7 @@ import registerGuest from './registerGuest';
 
 const app = express();
 const host = process.env.HOST;
-const port = process.env.PORT ? parseInt(process.env.PORT) : undefined
+const port = process.env.PORT ? parseInt(process.env.PORT) : undefined;
 const mongoURI = process.env.MONGO_URI;
 
 if (!host) {
@@ -30,28 +30,31 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose
-  .connect(mongoURI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
+const startServer = async () => {
+  try {
+    console.log("Connecting to MongoDB at", mongoURI);
+    await mongoose.connect(mongoURI);
+    console.log('Connected.');
+
+    // Test route
+    app.get('/', (req: Request, res: Response) => {
+      res.send('Hello from Wedding App Backend!');
+    });
+
+    // Verify code route
+    app.get('/verify/:code', accessCodeRouter);
+
+    // Register guest route
+    app.post('/register', registerGuest);
+
+    // Start server
+    app.listen(port, host, () => {
+      console.log(`Server running at ${host}:${port}`);
+    });
+  } catch (err) {
     console.error('Could not connect to MongoDB', err);
     process.exit(1);
-  });
+  }
+};
 
-// Test route
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from Wedding App Backend!');
-});
-
-// Verify code route
-app.get('/verify/:code', accessCodeRouter);
-
-// Register guest route
-app.post('/register', registerGuest);
-
-// Start server
-app.listen(port, host, () => {
-  console.log(`Server running at ${host}:${port}`);
-});
+startServer();

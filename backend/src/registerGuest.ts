@@ -15,8 +15,6 @@ const registerGuest = async (req: Request, res: Response): Promise<any> => {
       guests_list,
     } = req.body;
 
-    console.log('registerGuest req.body:', req.body);
-
     // Check if user is authenticated by code
     if (!code || typeof code !== 'string') {
       return res.status(400).json({ error: 'Invalid or missing code.' });
