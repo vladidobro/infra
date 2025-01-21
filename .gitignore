@@ -1,3 +1,6 @@
 .history
 *node_modules
 *.vscode
+backend/dist
+backend/.env.production
+frontend/.env.production
