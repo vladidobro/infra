@@ -16,7 +16,8 @@ export const useAuthStore = defineStore('auth', () => {
     // For example, call your backend endpoint: POST /api/verify-code
     // Adjust the URL if needed. If your backend is running on localhost:3000, do something like:
     // 'http://localhost:3000/api/verify-code'
-    const url = 'http://localhost:3000/verify'
+    const apiEndpoint = import.meta.env.VITE_API_HOST
+    const url = `${apiEndpoint}/verify`
 
     try {
       const response = await axios.get(url + '/' + accessCode)

@@ -106,13 +106,14 @@ function removeGuest(index: number) {
 }
 
 async function fetchRegistrationData() {
+  const apiEndpoint = import.meta.env.VITE_API_HOST
   if (!authStore.code) {
     error.value = 'No code is set; please log in first.'
     return
   }
 
   try {
-    const response = await axios.get(`http://localhost:3000/verify/${authStore.code}`)
+    const response = await axios.get(`${apiEndpoint}/verify/${authStore.code}`)
     if (response.data.success) {
       const registration = response.data.obj.registration
       if (registration) {
@@ -135,6 +136,7 @@ async function fetchRegistrationData() {
 }
 
 async function submitForm() {
+  const apiEndpoint = import.meta.env.VITE_API_HOST
   error.value = null
   success.value = null
 
@@ -144,7 +146,7 @@ async function submitForm() {
   }
 
   try {
-    const response = await axios.post('http://localhost:3000/register', {
+    const response = await axios.post(`${apiEndpoint}/register`, {
       code: authStore.code,
       accepted: accepted.value,
       email: email.value,
