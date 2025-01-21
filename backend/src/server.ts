@@ -6,12 +6,12 @@ import accessCodeRouter from './accessCodeCheck';
 import registerGuest from './registerGuest';
 
 const app = express();
-const address = process.env.ADDRESS;
+const host = process.env.HOST;
 const port = process.env.PORT ? parseInt(process.env.PORT) : undefined
 const mongoURI = process.env.MONGO_URI;
 
-if (!address) {
-  console.error('No address specified');
+if (!host) {
+  console.error('No host specified');
   process.exit(1);
 }
 
@@ -52,6 +52,6 @@ app.get('/verify/:code', accessCodeRouter);
 app.post('/register', registerGuest);
 
 // Start server
-app.listen(port, address, () => {
-  console.log(`Server running at ${address}:${port}`);
+app.listen(port, host, () => {
+  console.log(`Server running at ${host}:${port}`);
 });
