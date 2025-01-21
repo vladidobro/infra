@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import AccessCode from './src/models/AccessCode';  // Adjust path if needed
 
+
+// udelat podminku ze databaze se smaze jenom explicitne 
+// s flagem --force nebo -f
 dotenv.config();
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/wedding';

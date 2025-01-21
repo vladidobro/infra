@@ -1,17 +1,17 @@
 <template>
   <div class="register-page">
-    <h1>Register</h1>
+    <h1>{{ $t('register.title') }}</h1>
     <form @submit.prevent="submitForm">
       <div class="form-row">
         <!-- RSVP Checkbox -->
         <div class="form-group checkbox-group">
           <input type="checkbox" v-model="accepted" id="accepted" />
-          <label for="accepted">I accept the terms</label>
+          <label for="accepted">{{ $t('register.accept') }}</label>
         </div>
 
         <!-- Email -->
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">{{ $t('register.email') }}</label>
           <input type="email" v-model="email" id="email" required />
         </div>
       </div>
@@ -19,68 +19,60 @@
       <div class="form-row">
         <!-- Phone Number (Optional) -->
         <div class="form-group">
-          <label for="phone">Phone Number</label>
+          <label for="phone">{{ $t('register.phone') }}</label>
           <input type="text" v-model="phoneNumber" id="phone" />
         </div>
 
         <!-- Accommodation Type -->
         <div class="form-group">
-          <label for="accommodationType">Accommodation Type</label>
+          <label for="accommodationType">{{ $t('register.accomodation') }}</label>
           <select v-model="accommodationType" id="accommodationType">
             <option v-for="option in accommodationOptions" :key="option" :value="option">
-              {{ option }}
+              {{ $t(`register.${option}`) }}
             </option>
           </select>
         </div>
-
       </div>
 
       <div class="form-row">
-
-
         <div class="form-group">
-            <label for="mainGuestName">Name</label>
-            <input type="text" v-model="mainGuestName" id="mainGuestName" required />
-          </div>
-          <div class="form-group">
-            <label for="mainGuestNote">Note</label>
-            <input type="text" v-model="mainGuestNote" id="mainGuestNote" />
-          </div>
+          <label for="mainGuestName">{{ $t('register.name') }}</label>
+          <input type="text" v-model="mainGuestName" id="mainGuestName" required />
+        </div>
+        <div class="form-group">
+          <label for="mainGuestNote">{{ $t('register.note') }}</label>
+          <input type="text" v-model="mainGuestNote" id="mainGuestNote" />
+        </div>
       </div>
-
-
 
       <!-- Additional Guests -->
       <div class="form-group additional-guests">
-        <h3>Additional Guests</h3>
-        <div v-if="maxGuests <= 100" class="guest-limit">
-          {{ guestsList.length }} / {{ maxGuests }} guests
-        </div>
+        <h3>{{ $t('register.additional_guests') }}</h3>
         <div v-for="(guest, index) in guestsList" :key="index" class="guest-item">
           <div class="guest-box">
             <div class="form-group">
-              <label>Guest Name</label>
+              <label>{{ $t('register.name') }}</label>
               <input type="text" v-model="guest.name" placeholder="Guest name" />
             </div>
             <div class="form-group">
-              <label>Note</label>
+              <label>{{ $t('register.note') }}</label>
               <input type="text" v-model="guest.note" placeholder="Note for this guest" />
             </div>
             <div class="form-group">
-              <label>Is Child</label>
+              <label>{{ $t('register.is_child') }}</label>
               <input type="checkbox" v-model="guest.is_child" />
             </div>
             <button type="button" class="remove-btn" @click="removeGuest(index)">✖</button>
           </div>
         </div>
-        <button v-if="guestsList.length < maxGuests" type="button" class="add-btn" @click="addGuest">➕ Add Guest</button>
+        <button v-if="guestsList.length < maxGuests" type="button" class="add-btn" @click="addGuest">➕ {{ $t('register.additional_guests') }}</button>
       </div>
 
       <!-- Error / Success Messages -->
       <div v-if="error" class="error">{{ error }}</div>
       <div v-if="success" class="success">{{ success }}</div>
 
-      <button type="submit" class="submit-btn">Submit</button>
+      <button type="submit" class="submit-btn">{{ $t('register.submit') }}</button>
     </form>
   </div>
 </template>
@@ -102,7 +94,7 @@ const mainGuestNote = ref('')
 const guestsList = ref<Array<{ name: string; is_child: boolean; note: string }>>([])
 const error = ref<string | null>(null)
 const success = ref<string | null>(null)
-const accommodationOptions = ['camping', 'self-hosted', 'family-hosted', 'hotel']
+const accommodationOptions = ['camping', 'self_hosted', 'family_hosted', 'hotel']
 const maxGuests = ref<number>(0)
 
 function addGuest() {

@@ -17,8 +17,17 @@ const messages = {
       title: 'Register Form',
       name: 'Name',
       email: 'Email',
-      companion: 'Number of companions',
-      submit: 'Register'
+      submit: 'Register',
+      phone: 'Phone Number',
+      accomodation: 'Accomodation Type',
+      hotel: 'Hotel',
+      camping: 'Camping',
+      self_hosted: 'Self Hosted',
+      family_hosted: 'Family',
+      accept: 'I accept the invitation',
+      note: 'Note',
+      additional_guests: 'Additional Guests',
+      is_child: 'Is a child?'
     },
   },
   cs: {
@@ -36,8 +45,17 @@ const messages = {
       title: 'Registrační formulář',
       name: 'Jméno',
       email: 'Email',
-      companion: 'Počet dalších hostů',
-      submit: 'Registrovat'
+      submit: 'Registrovat',
+      phone: 'Telefonní číslo',
+      accomodation: 'Typ ubytování',
+      hotel: 'Hotel',
+      camping: 'Ve stanu',
+      self_hosted: 'Zařídím si ubytování sám',
+      family_hosted: 'U rodiny',
+      accept: 'Přijímám pozvánku',
+      note: 'Poznámka',
+      additional_guests: 'Další hosté',
+      is_child: 'Je dítě?'      
     },
   }
 }
