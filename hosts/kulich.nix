@@ -19,6 +19,7 @@
     443
     587  # SMPT
     993  # IMAP
+    8998 # temporary
   ];
 
   services.openssh.enable = true;
@@ -115,27 +116,6 @@
           '';
         };
       };
-      "svatba.maskova.wohlrath.cz" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:8180";
-          extraConfig = ''
-            proxy_set_header  X-Script-Name /;
-            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_pass_header Authorization;
-          '';
-        };
-      };
-    };
-  };
-
-  virtualisation.containers.enable = true;
-  virtualisation = {
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
     };
   };
 
@@ -214,6 +194,12 @@
     home.homeDirectory = "/home/vladidobro";
   };
 
-  services.kulich-api.enable = true;
+  services.kulich-api.enable = false;  # TODO
 
+  services.svatba = {
+    enable = true;   
+    backendHost = "api.svatba.maskova.wohlrath.cz";
+    frontendHost = "svatba.maskova.wohlrath.cz";
+    mongoUri = "mongodb://127.0.0.1:27017/svatba";
+  };
 }
