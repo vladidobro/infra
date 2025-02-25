@@ -64,7 +64,7 @@
       url = "github:numtide/flake-utils";
     };
     svatba = {
-      url = "github:jaroslavpesek/wedding-app";
+      url = "github:jaroslavpesek/wedding-app?tag=0.2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
