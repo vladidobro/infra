@@ -63,6 +63,10 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+    svatba = {
+      url = "github:jaroslavpesek/wedding-app";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ 
@@ -82,6 +86,7 @@
     nixos-mailserver,
     nix-index-database,
     nixvim,
+    svatba,
     ... 
   }: 
   let 
@@ -125,6 +130,7 @@
         home-manager.nixosModules.home-manager
         agenix.nixosModules.default
         nixos-mailserver.nixosModules.default
+        svatba.nixosModules.default
         # homepage.nixosModules.default
         (lib.mkNixRegistry { inherit nixpkgs; })
         (lib.mkHomeShared [ 
