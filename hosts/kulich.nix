@@ -63,7 +63,7 @@
 
   services.nginx = {
     virtualHosts = {
-      "vladislav.wohlrath.cz" = {
+      "megaprdak.wohlrath.cz" = {
         forceSSL = true;
         enableACME = true;
         serverAliases = [ "www.vladislav.wohlrath.cz" ];
