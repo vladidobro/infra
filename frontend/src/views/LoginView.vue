@@ -11,19 +11,28 @@
   </template>
   
   <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
+  import { ref, onMounted } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
   import { useAuthStore } from '../stores/auth'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
   
   const router = useRouter()
+  const route = useRoute()
   const authStore = useAuthStore()
   
   const accessCode = ref('')
   const error = ref<string | null>(null)
   
+  // Auto-login if URL has "code" parameter
+  onMounted(() => {
+    if (route.query.code) {
+      accessCode.value = route.query.code as string
+      login()
+    }
+  })
+
   async function login() {
     error.value = null
   
@@ -40,7 +49,7 @@
       router.push({ name: 'Home' })
     } catch (err: any) {
       // If login fails, show an error
-      error.value = err?.message || 'Invalid code'
+      error.value = t('login_failed')
     }
   }
   </script>

@@ -43,7 +43,8 @@ async function seedDatabase() {
     // 3. Generate and insert AccessCode docs
     for (const { max_guests, howMany } of SEED_CONFIG) {
       for (let i = 0; i < howMany; i++) {
-        const code = uuidv4();
+        // Generate a new UUIDv4 code, take only 6 chars
+        const code = uuidv4().slice(0, 10);
         await AccessCode.create({ code, max_guests, used: false });
         console.log(`Inserted code: ${code} with max_guests: ${max_guests}`);
       }

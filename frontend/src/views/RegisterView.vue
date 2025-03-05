@@ -94,7 +94,7 @@ const mainGuestNote = ref('')
 const guestsList = ref<Array<{ name: string; is_child: boolean; note: string }>>([])
 const error = ref<string | null>(null)
 const success = ref<string | null>(null)
-const accommodationOptions = ['camping', 'self_hosted', 'family_hosted', 'hotel']
+const accommodationOptions = ref<string[]>([]) // removed hardcoded array
 const maxGuests = ref<number>(0)
 
 function addGuest() {
@@ -135,6 +135,21 @@ async function fetchRegistrationData() {
   }
 }
 
+async function fetchAccommodationTypes() {
+  const apiEndpoint = import.meta.env.VITE_API_HOST
+  try {
+    const response = await axios.get(`${apiEndpoint}/accommodation-types`)
+    if (response.data.success) {
+      accommodationOptions.value = response.data.types
+      if (!accommodationType.value && accommodationOptions.value.length > 0) {
+        accommodationType.value = accommodationOptions.value[0]
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching accommodation types.')
+  }
+}
+
 async function submitForm() {
   const apiEndpoint = import.meta.env.VITE_API_HOST
   error.value = null
@@ -170,7 +185,10 @@ async function submitForm() {
   }
 }
 
-onMounted(fetchRegistrationData)
+onMounted(() => {
+  fetchRegistrationData()
+  fetchAccommodationTypes()
+})
 </script>
 
 <style scoped>

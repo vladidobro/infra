@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import accessCodeRouter from './accessCodeCheck';
 import registerGuest from './registerGuest';
+import accommodationTypesRouter from './accommodationTypes';
 
 const app = express();
 const host = process.env.HOST;
@@ -46,6 +47,9 @@ const startServer = async () => {
 
     // Register guest route
     app.post('/register', registerGuest);
+
+    // Mount new endpoint for accommodation types
+    app.use('/accommodation-types', accommodationTypesRouter);
 
     // Start server
     app.listen(port, host, () => {
