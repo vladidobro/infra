@@ -1,6 +1,6 @@
 <template>
     <div>
-      <p style="text-align: left;" v-html="t('home_text')"></p>
+      <p style="text-align: left;">tba</p>
     </div>
 </template>
 

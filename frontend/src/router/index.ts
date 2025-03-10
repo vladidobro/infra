@@ -4,6 +4,8 @@ import type { RouteRecordRaw } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import InfoView from '../views/InfoView.vue'
+import FestivalView from '../views/FestivalView.vue'
 
 import { useAuthStore } from '../stores/auth'
 
@@ -24,6 +26,17 @@ const routes: Array<RouteRecordRaw> = [
       name: 'Register',
       component: RegisterView,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/info',
+      name: 'Info',
+      component: InfoView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/festival',
+      name: 'Festival',
+      component: FestivalView
     }
   ]
 
