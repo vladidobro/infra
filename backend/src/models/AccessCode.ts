@@ -52,5 +52,5 @@ const AccessCodeSchema = new Schema<IAccessCode>({
   registration: { type: RegistrationSchema, default: undefined },
 });
 
-export default model<IAccessCode>('AccessCode', AccessCodeSchema);
+export default model<IAccessCode>('codes', AccessCodeSchema);
 export { ACCOMODATION_TYPES, IAccessCode, IRegistration, IPerson };
