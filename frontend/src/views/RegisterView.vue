@@ -1,108 +1,202 @@
 <template>
   <div class="register-page">
-    <h1>{{ $t('register.title') }}</h1>
+    <h1>{{ t('register.title') }}</h1>
     <form @submit.prevent="submitForm">
-      <div class="form-row">
-        <!-- RSVP Checkbox -->
-        <div class="form-group checkbox-group">
-          <input type="checkbox" v-model="accepted" id="accepted" />
-          <label for="accepted">{{ $t('register.accept') }}</label>
-        </div>
-
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">{{ $t('register.email') }}</label>
-          <input type="email" v-model="email" id="email" required />
-        </div>
+      <!-- Acceptance Question: always visible -->
+      <div class="form-group">
+        <p>{{ t('register.acceptQuestion') }}</p>
+        <label>
+          <input type="radio" v-model="accepted" value="accept" @change="markChanged" />
+          {{ t('register.accept') }}
+        </label>
+        <label>
+          <input type="radio" v-model="accepted" value="refuse" @change="markChanged" />
+          {{ t('register.refuse') }}
+        </label>
       </div>
 
-      <div class="form-row">
-        <!-- Phone Number (Optional) -->
-        <div class="form-group">
-          <label for="phone">{{ $t('register.phone') }}</label>
-          <input type="text" v-model="phoneNumber" id="phone" />
+      <!-- Extra details: visible only when accepted -->
+      <div v-if="accepted === 'accept'">
+        <div class="form-row">
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">{{ t('register.email') }}</label>
+            <input type="email" v-model="email" id="email" required @input="markChanged" />
+          </div>
         </div>
 
-        <!-- Accommodation Type -->
+        <div class="form-row">
+          <!-- Phone Number (Optional) -->
+          <div class="form-group">
+            <label for="phone">{{ t('register.phone') }}</label>
+            <input type="text" v-model="phoneNumber" id="phone" @input="markChanged" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mainGuestName">{{ t('register.name') }}</label>
+            <input type="text" v-model="mainGuestName" id="mainGuestName" required @input="markChanged" />
+          </div>
+          <div class="form-group">
+            <label for="mainGuestNote">{{ t('register.note') }}</label>
+            <input type="text" v-model="mainGuestNote" id="mainGuestNote" @input="markChanged" />
+          </div>
+        </div>
+        <!-- New Main Guest Attendance and Accomodation -->
+        <div class="form-row">
+          <div class="form-group">
+            <p>{{ t('register.attendance_days') }}</p>
+            <label>
+              <input type="checkbox" value="day_13" v-model="mainGuestAttendanceDays" @change="markChanged" />
+              {{ t('register.day_13') }}
+            </label>
+            <label>
+              <input type="checkbox" value="day_14" v-model="mainGuestAttendanceDays" @change="markChanged" />
+              {{ t('register.day_14') }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="mainGuestAccomodation">{{ t('register.accomodation') }}</label>
+            <select v-model="mainGuestAccomodation" id="mainGuestAccomodation" @change="markChanged">
+              <option v-for="option in accommodationOptions" :key="option" :value="option">
+                {{ t(`register.${option}`) }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- NEW: Assumed Time of Arrival for Main Guest -->
         <div class="form-group">
-          <label for="accommodationType">{{ $t('register.accomodation') }}</label>
-          <select v-model="accommodationType" id="accommodationType">
-            <option v-for="option in accommodationOptions" :key="option" :value="option">
-              {{ $t(`register.${option}`) }}
+          <label for="mainGuestArrivalTime">{{ t('register.arrival_time') }}</label>
+          <input type="time" v-model="mainGuestArrivalTime" id="mainGuestArrivalTime" @change="markChanged" />
+        </div>
+        <!-- New Main Guest Transportation -->
+        <div class="form-group">
+          <label for="mainGuestTransportation">{{ t('register.transportation') }}</label>
+          <select v-model="mainGuestTransportation" id="mainGuestTransportation" @change="markChanged">
+            <option v-for="option in transportationOptions" :key="option" :value="option">
+              {{ t(`register.${option}`) }}
             </option>
           </select>
         </div>
-      </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="mainGuestName">{{ $t('register.name') }}</label>
-          <input type="text" v-model="mainGuestName" id="mainGuestName" required />
-        </div>
-        <div class="form-group">
-          <label for="mainGuestNote">{{ $t('register.note') }}</label>
-          <input type="text" v-model="mainGuestNote" id="mainGuestNote" />
-        </div>
-      </div>
-
-      <!-- Additional Guests -->
-      <div class="form-group additional-guests">
-        <h3>{{ $t('register.additional_guests') }}</h3>
-        <div v-for="(guest, index) in guestsList" :key="index" class="guest-item">
-          <div class="guest-box">
-            <div class="form-group">
-              <label>{{ $t('register.name') }}</label>
-              <input type="text" v-model="guest.name" placeholder="Guest name" />
+        <!-- Additional Guests -->
+        <div class="form-group additional-guests">
+          <h3>{{ t('register.additional_guests') }}</h3>
+          <div v-for="(guest, index) in guestsList" :key="index" class="guest-item">
+            <div class="guest-box">
+              <div class="form-group">
+                <label>{{ t('register.name') }}</label>
+                <input type="text" v-model="guest.name" placeholder="Guest name" @input="markChanged" />
+              </div>
+              <div class="form-group">
+                <label>{{ t('register.note') }}</label>
+                <input type="text" v-model="guest.note" placeholder="Note for this guest" @input="markChanged" />
+              </div>
+              <div class="form-group">
+                <label>{{ t('register.is_child') }}</label>
+                <input type="checkbox" v-model="guest.is_child" @change="markChanged" />
+              </div>
+              <!-- New Guest Attendance and Accomodation -->
+              <div class="form-group">
+                <p>{{ t('register.attendance_days') }}</p>
+                <label>
+                  <input type="checkbox" value="day_13" v-model="guest.attendance_days" @change="markChanged" />
+                  {{ t('register.day_13') }}
+                </label>
+                <label>
+                  <input type="checkbox" value="day_14" v-model="guest.attendance_days" @change="markChanged" />
+                  {{ t('register.day_14') }}
+                </label>
+              </div>
+              <div class="form-group">
+                <label>{{ t('register.accomodation') }}</label>
+                <select v-model="guest.accomodation_type" @change="markChanged">
+                  <option v-for="option in accommodationOptions" :key="option" :value="option">
+                    {{ t(`register.${option}`) }}
+                  </option>
+                </select>
+              </div>
+              <button type="button" class="remove-btn" @click="removeGuest(index)">✖</button>
             </div>
-            <div class="form-group">
-              <label>{{ $t('register.note') }}</label>
-              <input type="text" v-model="guest.note" placeholder="Note for this guest" />
-            </div>
-            <div class="form-group">
-              <label>{{ $t('register.is_child') }}</label>
-              <input type="checkbox" v-model="guest.is_child" />
-            </div>
-            <button type="button" class="remove-btn" @click="removeGuest(index)">✖</button>
           </div>
+          <button v-if="guestsList.length < maxGuests" type="button" class="add-btn" @click="addGuest">➕ {{ t('register.additional_guests') }}</button>
         </div>
-        <button v-if="guestsList.length < maxGuests" type="button" class="add-btn" @click="addGuest">➕ {{ $t('register.additional_guests') }}</button>
       </div>
 
       <!-- Error / Success Messages -->
       <div v-if="error" class="error">{{ error }}</div>
       <div v-if="success" class="success">{{ success }}</div>
 
-      <button type="submit" class="submit-btn">{{ $t('register.submit') }}</button>
+      <!-- Submit button: text and disabled state based on state -->
+      <button type="submit" class="submit-btn" :disabled="!formChanged">{{ submitButtonText }}</button>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const authStore = useAuthStore()
 
-const accepted = ref(false)
+// Reactive form data
+const accepted = ref('')
 const email = ref('')
 const phoneNumber = ref('')
-const accommodationType = ref('camping')
 const mainGuestName = ref('')
 const mainGuestIsChild = ref(false)
 const mainGuestNote = ref('')
-const guestsList = ref<Array<{ name: string; is_child: boolean; note: string }>>([])
+// New reactive variable for assumed arrival time (HH:MM)
+const mainGuestArrivalTime = ref('')
+
+// New reactive variables for main guest per-person fields:
+const mainGuestAccomodation = ref('camping')
+const mainGuestAttendanceDays = ref<string[]>([])
+// New reactive variable for main guest transportation
+const mainGuestTransportation = ref('no_car')
+const transportationOptions = ref<string[]>([]); // Remove hardcoded transportationOptions declaration
+// Update guestsList with new fields:
+const guestsList = ref<Array<{ 
+  name: string; 
+  is_child: boolean; 
+  note: string; 
+  accomodation_type: string;
+  attendance_days: string[]
+}>>([])
+
+const isEditing = ref(false)
+const formChanged = ref(false)
+
 const error = ref<string | null>(null)
 const success = ref<string | null>(null)
 const accommodationOptions = ref<string[]>([]) // removed hardcoded array
 const maxGuests = ref<number>(0)
 
+// Helper to mark the form as changed.
+function markChanged() {
+  formChanged.value = true
+}
+
+// Override addGuest and removeGuest as needed.
 function addGuest() {
-  guestsList.value.push({ name: '', is_child: false, note: '' })
+  guestsList.value.push({ 
+    name: '', 
+    is_child: false, 
+    note: '', 
+    accomodation_type: 'camping',
+    attendance_days: []
+  })
+  markChanged()
 }
 
 function removeGuest(index: number) {
   guestsList.value.splice(index, 1)
+  markChanged()
 }
 
 async function fetchRegistrationData() {
@@ -111,22 +205,27 @@ async function fetchRegistrationData() {
     error.value = 'No code is set; please log in first.'
     return
   }
-
   try {
     const response = await axios.get(`${apiEndpoint}/verify/${authStore.code}`)
     if (response.data.success) {
       const registration = response.data.obj.registration
       if (registration) {
-        accepted.value = registration.accepted
-        email.value = registration.email
-        phoneNumber.value = registration.phone_number
-        accommodationType.value = registration.accomodation_type
-        mainGuestName.value = registration.main_guest.name
-        mainGuestIsChild.value = registration.main_guest.is_child
-        mainGuestNote.value = registration.main_guest.note
-        guestsList.value = registration.guests_list
+        accepted.value = registration.accepted ? 'accept' : 'refuse'
+        isEditing.value = true
+        email.value = registration.email || ''
+        phoneNumber.value = registration.phone_number || ''
+        // Load main guest fields if available:
+        mainGuestName.value = registration.main_guest?.name || ''
+        mainGuestIsChild.value = registration.main_guest?.is_child || false
+        mainGuestNote.value = registration.main_guest?.note || ''
+        mainGuestAccomodation.value = registration.main_guest?.accomodation_type || 'camping'
+        mainGuestAttendanceDays.value = registration.main_guest?.attendance_days || []
+        mainGuestArrivalTime.value = registration.main_guest?.arrival_time || '' // new field
+        mainGuestTransportation.value = registration.main_guest?.transportation_type || 'no_car' // new field
+        guestsList.value = registration.guests_list || []
       }
       maxGuests.value = response.data.obj.max_guests
+      formChanged.value = false
     } else {
       error.value = 'Error fetching registration data.'
     }
@@ -141,14 +240,34 @@ async function fetchAccommodationTypes() {
     const response = await axios.get(`${apiEndpoint}/accommodation-types`)
     if (response.data.success) {
       accommodationOptions.value = response.data.types
-      if (!accommodationType.value && accommodationOptions.value.length > 0) {
-        accommodationType.value = accommodationOptions.value[0]
+      if (!mainGuestAccomodation.value && accommodationOptions.value.length > 0) {
+        mainGuestAccomodation.value = accommodationOptions.value[0]
       }
     }
   } catch (err) {
     console.error('Error fetching accommodation types.')
   }
 }
+
+// New function to fetch transportation types from the API
+async function fetchTransportationTypes() {
+  const apiEndpoint = import.meta.env.VITE_API_HOST;
+  try {
+    const response = await axios.get(`${apiEndpoint}/transportation-types`);
+    if (response.data.success) {
+      transportationOptions.value = response.data.types;
+      if (!mainGuestTransportation.value && transportationOptions.value.length > 0) {
+        mainGuestTransportation.value = transportationOptions.value[0];
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching transportation types.');
+  }
+}
+
+const submitButtonText = computed(() => {
+  return isEditing.value ? t('register.submit_edit') : t('register.submit')
+})
 
 async function submitForm() {
   const apiEndpoint = import.meta.env.VITE_API_HOST
@@ -160,23 +279,37 @@ async function submitForm() {
     return
   }
 
+  // Convert the radio selection to a boolean.
+  const acceptedBool = accepted.value === 'accept'
+
   try {
     const response = await axios.post(`${apiEndpoint}/register`, {
       code: authStore.code,
-      accepted: accepted.value,
+      accepted: acceptedBool,
       email: email.value,
-      accommodation_type: accommodationType.value,
       phone_number: phoneNumber.value,
       main_guest: {
         name: mainGuestName.value,
         is_child: mainGuestIsChild.value,
         note: mainGuestNote.value,
+        accomodation_type: mainGuestAccomodation.value,
+        attendance_days: mainGuestAttendanceDays.value,
+        arrival_time: mainGuestArrivalTime.value,
+        transportation_type: mainGuestTransportation.value  // new field
       },
-      guests_list: guestsList.value,
+      guests_list: guestsList.value
     })
 
     if (response.data.success) {
-      success.value = 'Registration successful!'
+      // Set the success message depending on editing state.
+      if (isEditing.value) {
+        success.value = t('register.submitted_edit')
+      } else {
+        success.value = t('register.submitted_new')
+        isEditing.value = true
+      }
+      // Reset change flag after submission.
+      formChanged.value = false
     } else {
       error.value = 'Error updating registration.'
     }
@@ -188,6 +321,7 @@ async function submitForm() {
 onMounted(() => {
   fetchRegistrationData()
   fetchAccommodationTypes()
+  fetchTransportationTypes();
 })
 </script>
 
@@ -304,6 +438,11 @@ input[type='checkbox'] {
 
 .submit-btn:hover {
   background-color: #0056b3;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 button[type='button'] {

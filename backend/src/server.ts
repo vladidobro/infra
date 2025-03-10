@@ -5,6 +5,7 @@ import cors from 'cors';
 import accessCodeRouter from './accessCodeCheck';
 import registerGuest from './registerGuest';
 import accommodationTypesRouter from './accommodationTypes';
+import transportationTypesRouter from './transportationTypes';
 
 const app = express();
 const host = process.env.HOST;
@@ -45,11 +46,10 @@ const startServer = async () => {
     // Verify code route
     app.get('/verify/:code', accessCodeRouter);
 
-    // Register guest route
     app.post('/register', registerGuest);
 
-    // Mount new endpoint for accommodation types
     app.use('/accommodation-types', accommodationTypesRouter);
+    app.use('/transportation-types', transportationTypesRouter);
 
     // Start server
     app.listen(port, host, () => {
