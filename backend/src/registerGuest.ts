@@ -13,7 +13,7 @@ const registerGuest = async (req: Request, res: Response): Promise<any> => {
       accomodation_type,
       phone_number,
       guests_list,
-      attendance_days // new field from client
+      attendance_days
     } = req.body;
 
     // Check if user is authenticated by code
@@ -53,6 +53,11 @@ const registerGuest = async (req: Request, res: Response): Promise<any> => {
         });
       }
 
+      // Validate arrival time if provided.
+      if (main_guest.arrival_time && typeof main_guest.arrival_time !== 'string') {
+        return res.status(400).json({ error: 'main_guest "arrival_time" must be a string.' });
+      }
+
       // Validate guests_list if provided.
       let finalGuestsList: IPerson[] = [];
       if (guests_list !== undefined) {
@@ -82,9 +87,9 @@ const registerGuest = async (req: Request, res: Response): Promise<any> => {
           name: main_guest.name,
           is_child: main_guest.is_child,
           note: main_guest.note,
-          // New per-person fields
           accomodation_type: main_guest.accomodation_type,
-          attendance_days: Array.isArray(main_guest.attendance_days) ? main_guest.attendance_days : []
+          attendance_days: Array.isArray(main_guest.attendance_days) ? main_guest.attendance_days : [],
+          arrival_time: main_guest.arrival_time
         },
         phone_number: typeof phone_number === 'string' ? phone_number : '',
         guests_list: finalGuestsList

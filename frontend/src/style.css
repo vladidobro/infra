@@ -1,12 +1,16 @@
 :root {
   font-family: "Playwrite CZ", serif;
-  font-weight: 400;
+  font-weight: 800;
   font-style: normal;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.festival {
+  font-family: fantasy;
 }
 
 
@@ -65,3 +69,4 @@ img.wedding-logo {
   cursor: pointer;
   border-radius: 50%;
 }
+

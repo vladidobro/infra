@@ -1,12 +1,12 @@
 <template>
   <div style="text-align: left;">
     <section>
-      <h2>{{ t('info.kdy.title') }}</h2>
-      <p v-html="t('info.kdy.svatba')"></p>
-      <h3 v-html="t('info.kdy.casovy_rozvrh.title')"></h3>
-      <p v-html="t('info.kdy.casovy_rozvrh.items')"></p>
+      <h2 style="text-align: left;">{{ t('info.kdy.title') }}</h2>
+      <p style="text-align: left;" v-html="t('info.kdy.svatba')"></p>
+      <h3 v-html="t('info.kdy.casovy_rozvrh.title')" style="text-align: center;"></h3>
+      <div class="schedule" v-html="t('info.kdy.casovy_rozvrh.items')" style="text-align: center;"></div>
       <p v-html="t('info.kdy.festival')"></p>
-      <p v-html="t('info.kdy.festival_program')"></p>
+      <div style="text-align: left;"><a href="/festival"> {{ t('info.kdy.festival_program') }} </a></div>
     </section>
     <section>
       <h2>{{ t('info.kde.title') }}</h2>
@@ -48,3 +48,26 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 </script>
+
+<style>
+.schedule table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.schedule td {
+    padding: 10px;
+}
+
+.schedule td:first-child {
+    text-align: right;
+    width: 30%;
+    font-weight: bold;
+}
+
+.schedule td:last-child {
+    text-align: left;
+    width: 70%;
+}
+</style>

@@ -1,7 +1,9 @@
 // ~/Dev/WDNG.IO/backend/src/models/AccessCode.ts
 import { Schema, model } from 'mongoose';
 
-const ACCOMODATION_TYPES = ['camping', 'camping_with_someone', 'self_hosted', 'family_hosted', 'hotel', 'no_sleepover'] as const;
+// const ACCOMODATION_TYPES = ['camping', 'camping_with_someone', 'self_hosted', 'family_hosted', 'hotel', 'no_sleepover'] as const;
+const ACCOMODATION_TYPES = ['camping', 'camping_with_someone', 'in_car', 'no_sleepover', 'other'] as const;
+
 const TRANSPORTATION_TYPES = ['own_car', 'with_someones_car', 'no_car'] as const;
 
 interface IPerson {

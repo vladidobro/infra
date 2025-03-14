@@ -38,10 +38,6 @@
             <label for="mainGuestName">{{ t('register.name') }}</label>
             <input type="text" v-model="mainGuestName" id="mainGuestName" required @input="markChanged" />
           </div>
-          <div class="form-group">
-            <label for="mainGuestNote">{{ t('register.note') }}</label>
-            <input type="text" v-model="mainGuestNote" id="mainGuestNote" @input="markChanged" />
-          </div>
         </div>
         <!-- New Main Guest Attendance and Accomodation -->
         <div class="form-row">
@@ -55,6 +51,10 @@
               <input type="checkbox" value="day_14" v-model="mainGuestAttendanceDays" @change="markChanged" />
               {{ t('register.day_14') }}
             </label>
+            <label>
+            <input type="checkbox" value="day_15" v-model="mainGuestAttendanceDays" @change="markChanged" />
+              {{ t('register.day_15') }}
+            </label>
           </div>
           <div class="form-group">
             <label for="mainGuestAccomodation">{{ t('register.accomodation') }}</label>
@@ -65,7 +65,7 @@
             </select>
           </div>
         </div>
-        <!-- NEW: Assumed Time of Arrival for Main Guest -->
+        <!-- Time of Arrival for Main Guest -->
         <div class="form-group">
           <label for="mainGuestArrivalTime">{{ t('register.arrival_time') }}</label>
           <input type="time" v-model="mainGuestArrivalTime" id="mainGuestArrivalTime" @change="markChanged" />
@@ -85,37 +85,40 @@
           <h3>{{ t('register.additional_guests') }}</h3>
           <div v-for="(guest, index) in guestsList" :key="index" class="guest-item">
             <div class="guest-box">
-              <div class="form-group">
-                <label>{{ t('register.name') }}</label>
-                <input type="text" v-model="guest.name" placeholder="Guest name" @input="markChanged" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label>{{ t('register.name') }}</label>
+                  <input type="text" v-model="guest.name" placeholder="Guest name" @input="markChanged" />
+                </div>
+                <div class="form-group">
+                  <label>{{ t('register.is_child') }}</label>
+                  <input type="checkbox" v-model="guest.is_child" @change="markChanged" />
+                </div>
               </div>
-              <div class="form-group">
-                <label>{{ t('register.note') }}</label>
-                <input type="text" v-model="guest.note" placeholder="Note for this guest" @input="markChanged" />
-              </div>
-              <div class="form-group">
-                <label>{{ t('register.is_child') }}</label>
-                <input type="checkbox" v-model="guest.is_child" @change="markChanged" />
-              </div>
-              <!-- New Guest Attendance and Accomodation -->
-              <div class="form-group">
-                <p>{{ t('register.attendance_days') }}</p>
-                <label>
-                  <input type="checkbox" value="day_13" v-model="guest.attendance_days" @change="markChanged" />
-                  {{ t('register.day_13') }}
-                </label>
-                <label>
-                  <input type="checkbox" value="day_14" v-model="guest.attendance_days" @change="markChanged" />
-                  {{ t('register.day_14') }}
-                </label>
-              </div>
-              <div class="form-group">
-                <label>{{ t('register.accomodation') }}</label>
-                <select v-model="guest.accomodation_type" @change="markChanged">
-                  <option v-for="option in accommodationOptions" :key="option" :value="option">
-                    {{ t(`register.${option}`) }}
-                  </option>
-                </select>
+              <div class="form-row">
+                <div class="form-group">
+                  <p>{{ t('register.attendance_days') }}</p>
+                  <label>
+                    <input type="checkbox" value="day_13" v-model="guest.attendance_days" @change="markChanged" />
+                    {{ t('register.day_13') }}
+                  </label>
+                  <label>
+                    <input type="checkbox" value="day_14" v-model="guest.attendance_days" @change="markChanged" />
+                    {{ t('register.day_14') }}
+                  </label>
+                  <label>
+                    <input type="checkbox" value="day_15" v-model="guest.attendance_days" @change="markChanged" />
+                    {{ t('register.day_15') }}
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>{{ t('register.accomodation') }}</label>
+                  <select v-model="guest.accomodation_type" @change="markChanged">
+                    <option v-for="option in accommodationOptions" :key="option" :value="option">
+                      {{ t(`register.${option}`) }}
+                    </option>
+                  </select>
+                </div>
               </div>
               <button type="button" class="remove-btn" @click="removeGuest(index)">✖</button>
             </div>
@@ -398,7 +401,7 @@ input[type='checkbox'] {
 
 .guest-box {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
   border: 1px solid #ccc;
   padding: 10px;

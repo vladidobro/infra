@@ -1,6 +1,13 @@
 <template>
-    <div>
-      <p style="text-align: left;">tba</p>
+    <div class="festival">
+      <h1> {{ t('festival.title') }} </h1>
+      <h2 style="margin-top: -1.2em;" > {{ t("festival.subtitle") }}</h2>
+      <p> 14. - 15. 6. 2025 </p>
+      <p> {{ t("festival.lineup") }} </p> 
+      <p>
+        {{ t("festival.detail") }}
+      </p>
+      <p> {{ t("festival.teaser") }} </p> 
     </div>
 </template>
 

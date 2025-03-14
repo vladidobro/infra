@@ -4,3 +4,4 @@
 backend/dist
 backend/.env.production
 frontend/.env.production
+.DS_Store
