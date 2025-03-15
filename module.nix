@@ -40,6 +40,9 @@ in {
       serverAliases = [ "www.${cfg.frontendHost}" ];
       locations."/" = {
         root = pkgs.callPackage (import ./frontend "https://${cfg.backendHost}") {};
+        extraConfig = ''
+          try_files $uri $uri/ /index.html;
+        '';
       };
     };
     systemd.services."backend-${cfg.backendHost}" = {
