@@ -27,8 +27,8 @@
   
   // Auto-login if URL has "code" parameter
   onMounted(() => {
-    if (route.query.code) {
-      accessCode.value = route.query.code as string
+    if (route.query.hostkod) {
+      accessCode.value = route.query.hostkod as string
       login()
     }
   })
