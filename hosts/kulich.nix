@@ -116,6 +116,15 @@
           '';
         };
       };
+      "grafana.wohlrath.cz" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+          proxyWebsockets = true;
+          recommendedProxySettings = true;
+        };
+      };
     };
   };
 
@@ -194,6 +203,18 @@
     home.homeDirectory = "/home/vladidobro";
   };
 
+  services.grafana = {
+    enable = true;
+    settings = {
+      server = {
+        http_addr = "127.0.0.1";
+        http_port = 3050;
+        domain = "grafana.wohlrath.cz";
+        serve_from_sub_path = true;
+      };
+    };
+  };
+
   services.kulich-api.enable = false;  # TODO
 
   services.svatba = {
@@ -202,4 +223,8 @@
     frontendHost = "svatba.maskova.wohlrath.cz";
     mongoUri = "mongodb://127.0.0.1:27017/svatba";
   };
+
+  environment.systemPackages = with pkgs; [
+    mongosh
+  ];
 }

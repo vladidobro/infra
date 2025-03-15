@@ -768,11 +768,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740507665,
-        "narHash": "sha256-NKDQGSrXdKRDTM66eZxha2b7eoE9vUKT+u8XzUlE3vc=",
+        "lastModified": 1742069193,
+        "narHash": "sha256-io35EHJt7ocBwDj6SxBhMye0EHvQJLsgDze+rNggFkM=",
         "owner": "jaroslavpesek",
         "repo": "wedding-app",
-        "rev": "1196cafe333a4f2898429545be96877c3fa8c05d",
+        "rev": "5ebf1c94c02a9a268dd749d87b98fe0e868085e9",
         "type": "github"
       },
       "original": {

@@ -64,8 +64,11 @@
       url = "github:numtide/flake-utils";
     };
     svatba = {
-      url = "github:jaroslavpesek/wedding-app?tag=0.2.0";
+      url = "github:jaroslavpesek/wedding-app?tag=0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-pars = {
+      url = "github:hercules-ci/flake-parts";
     };
   };
 
