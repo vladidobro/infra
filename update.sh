@@ -1,2 +1,6 @@
 #!/bin/bash
-nix flake lock --update-input secrets --update-input homepage --update-input svatba
+nix flake lock \
+    --update-input secrets \
+    --update-input homepage \
+    --update-input svatba
+

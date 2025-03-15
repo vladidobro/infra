@@ -1,6 +1,80 @@
-{ config, pkgs, pkgs-unstable, lib, homepage, ... }:
+{ inputs, ... }: 
+let home = {
+  imports = [ ../home ];
 
-{
+  vladidobro = {
+    enable = true;
+    minimal = true;
+    basic = true;
+    aliases = true;
+    nvim.enable = true;
+  };
+
+  home.stateVersion = "23.11";
+
+  home.username = "vladidobro";
+  home.homeDirectory = "/home/vladidobro";
+};
+vpsfree = { config, pkgs, lib, ... }:
+with lib;
+let
+  nameservers = [
+    "1.1.1.1"
+    "2606:4700:4700::1111"
+  ];
+in {
+  networking.nameservers = mkDefault nameservers;
+  services.resolved = mkDefault { fallbackDns = nameservers; };
+  networking.dhcpcd.extraConfig = "noipv4ll";
+
+  systemd.services.systemd-sysctl.enable = false;
+  systemd.services.systemd-oomd.enable = false;
+  systemd.sockets."systemd-journald-audit".enable = false;
+  systemd.mounts = [ {where = "/sys/kernel/debug"; enable = false;} ];
+  systemd.services.rpc-gssd.enable = false;
+
+  # Due to our restrictions in /sys, the default systemd-udev-trigger fails
+  # on accessing PCI devices, etc. Override it to match only network devices.
+  # In addition, boot.isContainer prevents systemd-udev-trigger.service from
+  # being enabled at all, so add it explicitly.
+  systemd.additionalUpstreamSystemUnits = [
+    "systemd-udev-trigger.service"
+  ];
+  systemd.services.systemd-udev-trigger.serviceConfig.ExecStart = [
+    ""
+    "-udevadm trigger --subsystem-match=net --action=add"
+  ];
+
+  boot.isContainer = true;
+  boot.enableContainers = mkDefault true;
+  boot.loader.initScript.enable = true;
+  boot.specialFileSystems."/run/keys".fsType = mkForce "tmpfs";
+  boot.systemdExecutable = mkDefault "/run/current-system/systemd/lib/systemd/systemd systemd.unified_cgroup_hierarchy=0";
+
+  # Overrides for <nixpkgs/nixos/modules/virtualisation/container-config.nix>
+  documentation.enable = mkOverride 500 true;
+  documentation.nixos.enable = mkOverride 500 true;
+  networking.useHostResolvConf = mkOverride 500 false;
+  services.openssh.startWhenNeeded = mkOverride 500 false;
+
+  # Bring up the network, /ifcfg.{add,del} are supplied by the vpsAdminOS host
+  systemd.services.networking-setup = {
+    description = "Load network configuration provided by the vpsAdminOS host";
+    before = [ "network.target" ];
+    wantedBy = [ "network.target" ];
+    after = [ "network-pre.target" ];
+    path = [ pkgs.iproute2 ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.bash}/bin/bash /ifcfg.add";
+      ExecStop = "${pkgs.bash}/bin/bash /ifcfg.del";
+    };
+    unitConfig.ConditionPathExists = "/ifcfg.add";
+    restartIfChanged = false;
+  };
+};
+config = { config, pkgs, lib, ... }: {
   system.stateVersion = "23.11";
 
   nix = {
@@ -67,7 +141,7 @@
         forceSSL = true;
         enableACME = true;
         serverAliases = [ "www.vladislav.wohlrath.cz" ];
-        root = "${homepage.packages.x86_64-linux.default}/html/";
+        root = "${inputs.homepage.packages.x86_64-linux.default}/html/";
         extraConfig = ''
           index index.html;
         '';
@@ -154,7 +228,9 @@
 
   services.mongodb = {
     enable = true;
-    package = pkgs-unstable.mongodb-ce;
+    package = 
+    let pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
+    in pkgs.mongodb-ce;
   };
 
   home-manager = {
@@ -186,22 +262,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-  home-manager.users.vladidobro = {
-    imports = [ ../home ];
-
-    vladidobro = {
-      enable = true;
-      minimal = true;
-      basic = true;
-      aliases = true;
-      nvim.enable = true;
-    };
-
-    home.stateVersion = "23.11";
-
-    home.username = "vladidobro";
-    home.homeDirectory = "/home/vladidobro";
-  };
+  home-manager.users.vladidobro = home;
 
   services.grafana = {
     enable = true;
@@ -215,8 +276,6 @@
     };
   };
 
-  services.kulich-api.enable = false;  # TODO
-
   services.svatba = {
     enable = true;   
     backendHost = "api.svatba.maskova.wohlrath.cz";
@@ -227,4 +286,18 @@
   environment.systemPackages = with pkgs; [
     mongosh
   ];
+
+  imports = [
+    inputs.secrets.kulich
+    inputs.home-manager.nixosModules.home-manager
+    inputs.agenix.nixosModules.default
+    inputs.nixos-mailserver.nixosModules.default
+    inputs.svatba.nixosModules.default
+  ];
+};
+in { 
+  flake.nixosConfigurations.kulich = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [ config vpsfree ];
+  };
 }

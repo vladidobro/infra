@@ -67,153 +67,21 @@
       url = "github:jaroslavpesek/wedding-app?tag=0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-pars = {
+    flake-parts = {
       url = "github:hercules-ci/flake-parts";
     };
   };
 
   outputs = inputs@{ 
-    self,
-    homepage,
-    secrets,
-    nixpkgs,
-    nixpkgs-2411,
-    nixpkgs-unstable,
-    flake-utils,
-    nix-darwin,
-    treefmt-nix,
-    nix-on-droid,
-    home-manager,
-    home-manager-2411,
-    agenix,
-    nixos-mailserver,
-    nix-index-database,
-    nixvim,
-    svatba,
+    flake-parts, 
     ... 
   }: 
-  let 
-    lib = import ./lib.nix;
-  in {
-
-    nixosConfigurations.parok = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ 
-        ./hosts/parok.nix 
-        ./hardware/parok.nix
-        home-manager.nixosModules.home-manager
-        agenix.nixosModules.default
-      ];
-    };
-
-    nixosConfigurations.myskus = nixpkgs-2411.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/myskus.nix
-	    ./hardware/myskus.nix
-        home-manager-2411.nixosModules.home-manager
-      ];
-    };
-
-    nixosConfigurations.parok-wsl = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ 
-        ./hosts/parok-wsl.nix 
-        ./hardware/wsl.nix
-      ];
-    };
-
-    nixosConfigurations.kulich = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ 
-        ./hosts/kulich.nix 
-        ./hardware/vpsfree.nix
-        ./kulich-api/module.nix
-        secrets.kulich
-        home-manager.nixosModules.home-manager
-        agenix.nixosModules.default
-        nixos-mailserver.nixosModules.default
-        svatba.nixosModules.default
-        # homepage.nixosModules.default
-        (lib.mkNixRegistry { inherit nixpkgs; })
-        (lib.mkHomeShared [ 
-          nixvim.homeManagerModules.nixvim
-        ])
-        (lib.mkOverlayModule [ nixvim.overlays.default ])
-      ];
-      specialArgs = { 
-        pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
-        inherit homepage;
-      };
-    };
-
-    nixosConfigurations.kublajchan = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/kublajchan.nix
-        ./hardware/kublajchan.nix
-        home-manager.nixosModules.home-manager
-      ];
-    };
-
-    nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/vm.nix
-      ];
-    };
-
-    darwinConfigurations.sf = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        ./hosts/sf.nix 
-        secrets.sf
-        home-manager.darwinModules.home-manager
-        (lib.mkNixRegistry { inherit nixpkgs; })
-        (lib.mkHomeShared [
-          nix-index-database.hmModules.nix-index 
-          nixvim.homeManagerModules.nixvim
-        ])
-        (lib.mkOverlayModule [ nixvim.overlays.default ])
-      ];
-    };
-
-    nixOnDroidConfigurations.lampin = nix-on-droid.lib.nixOnDroidConfiguration {
-      pkgs = nixpkgs.legacyPackages.aarch64-linux;
-      modules = [ 
-        ./hosts/lampin.nix 
-      ];
-    };
-
-    homeManagerModules.default = ./home;
-
-    templates = {
-      python = {
-        path = ./templates/python;
-        description = "python";
-      };
-      rust = {
-        path = ./templates/rust;
-        description = "rust";
-      };
-      haskell = {
-        path = ./templates/haskell;
-        description = "haskell";
-      };
-    };
-
-  } // flake-utils.lib.eachDefaultSystem (system: 
-  let 
-    pkgs = nixpkgs.legacyPackages."${system}";
-    treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-  in {
-    formatter = treefmtEval.config.build.wrapper;
-    checks.formatting = treefmtEval.config.build.check self;
-
-    devShells.default = pkgs.mkShell {
-      packages = with pkgs; [ hello ];
-    };
-
-    packages.kulich-api = pkgs.callPackage ./kulich-api {};
+  flake-parts.lib.mkFlake { inherit inputs; } (top:
+  {
+    systems = [ "x86_64-linux" "aarch64-darwin" ];
+    imports = [
+      ./hosts
+      ./home/flake.nix
+    ];
   });
 }

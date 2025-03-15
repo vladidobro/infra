@@ -1,6 +1,93 @@
-{ config, lib, pkgs, ... }:
+{ inputs, ... }:
+let home = {
+  imports = [ ../home ];
 
-{
+  home.stateVersion = "24.11";
+
+  home.username = "vladidobro";
+  home.homeDirectory = "/home/vladidobro";
+
+  vladidobro = {
+    enable = true;
+    aliases = true;
+    minimal = true;
+    basic = true;
+    full = true;
+    graphical = true;
+    nvim.enable = true;
+  };
+};
+hardware = { config, lib, pkgs, modulesPath, ... }: {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/9a83adb1-000f-430d-9385-69b14b3cda5d";
+      fsType = "btrfs";
+      options = [ "subvol=root" "compress=zstd" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/9a83adb1-000f-430d-9385-69b14b3cda5d";
+      fsType = "btrfs";
+      options = [ "subvol=home" "compress=zstd" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/9a83adb1-000f-430d-9385-69b14b3cda5d";
+      fsType = "btrfs";
+      options = [ "subvol=data" "compress=zstd" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/9a83adb1-000f-430d-9385-69b14b3cda5d";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" "noatime" ];
+    };
+
+  fileSystems."/swap" =
+    { device = "/dev/disk/by-uuid/9a83adb1-000f-430d-9385-69b14b3cda5d";
+      fsType = "btrfs";
+      options = [ "subvol=swap" "noatime" ];
+    };
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/E86E-A363";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  networking.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  services.printing.enable = true;
+
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
+
+  services.libinput.enable = true;
+
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
+
+  environment.systemPackages = with pkgs; [
+    clinfo
+  ];
+};
+config = { config, lib, pkgs, ... }: {
   system.stateVersion = "24.11";
 
   boot.loader.grub.enable = true;
@@ -61,22 +148,15 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
-  home-manager.users.vladidobro = {
-    imports = [ ../home ];
+  home-manager.users.vladidobro = home;
 
-    home.stateVersion = "24.11";
-
-    home.username = "vladidobro";
-    home.homeDirectory = "/home/vladidobro";
-
-    vladidobro = {
-      enable = true;
-      aliases = true;
-      minimal = true;
-      basic = true;
-      full = true;
-      graphical = true;
-      nvim.enable = true;
-    };
+  imports = [
+    inputs.home-manager-2411.nixosModules.home-manager
+  ];
+};
+in {
+  flake.nixosConfigurations.myskus = inputs.nixpkgs-2411.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [ hardware config ];
   };
 }
