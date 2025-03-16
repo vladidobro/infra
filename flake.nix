@@ -7,68 +7,57 @@
     };
     homepage = {
       url = "github:vladidobro/homepage";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    nixpkgs = {
+    svatba = {
+      url = "github:jaroslavpesek/wedding-app?tag=0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
+    };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
+    nixpkgs-2405 = {
       url = "github:NixOS/nixpkgs/nixos-24.05";
     };
     nixpkgs-2411 = {
       url = "github:NixOS/nixpkgs/nixos-24.11";
     };
-    nixpkgs-unstable = {
+    nixpkgs = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
-    nix-darwin = {
+    nix-darwin-2405 = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    NixOS-WSL = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
+    home-manager-2405 = {
       url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     home-manager-2411 = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-2411";
     };
-    agenix = {
+    agenix-2405 = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    nixos-mailserver = {
+    agenix-2411 = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs-2411";
+    };
+    nixos-mailserver-2405 = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    nix-index-database = {
+    nix-index-database-2405 = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
+    nixvim-2405 = {
       url = "github:nix-community/nixvim/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.nix-darwin.follows = "nix-darwin";
-    };
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
-    svatba = {
-      url = "github:jaroslavpesek/wedding-app?tag=0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs-2405";
+      inputs.home-manager.follows = "home-manager-2405";
+      inputs.nix-darwin.follows = "nix-darwin-2405";
     };
   };
 

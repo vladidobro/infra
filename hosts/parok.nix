@@ -135,8 +135,8 @@ let
     home-manager.users.vladidobro = home;
 
     imports = [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.agenix.nixosModules.default
+      inputs.home-manager-2405.nixosModules.home-manager
+      inputs.agenix-2405.nixosModules.default
     ];
 
     home-manager.sharedModules = [
@@ -145,7 +145,7 @@ let
   };
 
 in {
-  flake.nixosConfigurations.parok = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.parok = inputs.nixpkgs-2405.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [ hardware config ];
   };

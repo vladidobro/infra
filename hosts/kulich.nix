@@ -226,7 +226,7 @@ let
     services.mongodb = {
       enable = true;
       package = 
-      let pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
+      let pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
       in pkgs.mongodb-ce;
     };
 
@@ -287,9 +287,9 @@ let
 
     imports = [
       inputs.secrets.kulich
-      inputs.home-manager.nixosModules.home-manager
-      inputs.agenix.nixosModules.default
-      inputs.nixos-mailserver.nixosModules.default
+      inputs.home-manager-2405.nixosModules.home-manager
+      inputs.agenix-2405.nixosModules.default
+      inputs.nixos-mailserver-2405.nixosModules.default
       inputs.svatba.nixosModules.default
     ];
 
@@ -299,7 +299,7 @@ let
   };
 
 in { 
-  flake.nixosConfigurations.kulich = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.kulich = inputs.nixpkgs-2405.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [ config vpsfree ];
   };

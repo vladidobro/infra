@@ -168,19 +168,19 @@ let
     home-manager.users.vladislavwohlrath = home;
 
     home-manager.sharedModules = [
-      inputs.nix-index-database.hmModules.nix-index 
-      inputs.nixvim.homeManagerModules.nixvim
+      inputs.nix-index-database-2405.hmModules.nix-index 
+      inputs.nixvim-2405.homeManagerModules.nixvim
       self.homeModules.default
     ];
 
     imports = [
       inputs.secrets.sf
-      inputs.home-manager.darwinModules.home-manager
+      inputs.home-manager-2405.darwinModules.home-manager
     ];
   };
 
 in {
-  flake.darwinConfigurations.sf = inputs.nix-darwin.lib.darwinSystem {
+  flake.darwinConfigurations.sf = inputs.nix-darwin-2405.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [ config ];
   };
