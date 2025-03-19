@@ -9,9 +9,10 @@ const verifyAccessCode = async (req: Request, res: Response): Promise<any> => {
     if (!code) {
       return res.status(400).json({ error: 'No code provided in URL' });
     }
-    console.log('Code attempt:', code);
+    const lowerCaseCode = code.toLowerCase();
+    console.log('Code attempt:', lowerCaseCode);
     // Use Mongoose to look up the code in MongoDB
-    const foundCode = await AccessCode.findOne({ code });
+    const foundCode = await AccessCode.findOne({ code: lowerCaseCode });
     if (!foundCode) {
       return res.status(401).json({ error: 'Invalid code' });
     }
