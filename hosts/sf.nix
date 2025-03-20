@@ -46,41 +46,41 @@ let
       (pkgs.writeShellScriptBin "sf" ''exec "/users/vladislavwohlrath/src/lib/sf/.venv/bin/sf" "$@"'')
       # utils
       nixos-rebuild
-      qemu
-      podman
-      colima
+      #qemu
+      #podman
+      #colima
       inetutils
       renameutils
       gnumake
-      ninja
-      duckdb
+      #ninja
+      #duckdb
 
       # meteo tools
-      cdo
-      eccodes
+      #cdo
+      #eccodes
 
       # python
-      nodePackages_latest.pyright
+      pyright
       poetry
       (python3.withPackages (ps: with ps; [ pip ]))
       ruff
 
       # languages
-      cargo
-      rust-analyzer
-      dhall
-      cabal-install
-      zig
-      kotlin
-      gradle
-      openjdk
-      maturin
+      #cargo
+      #rust-analyzer
+      #dhall
+      #cabal-install
+      #zig
+      #kotlin
+      #gradle
+      #openjdk
+      #maturin
 
       # integration
-      k9s
-      kubelogin
-      glab
-      argocd
+      #k9s
+      #kubelogin
+      #glab
+      #argocd
     ];
 
     programs.ssh.matchBlocks = {
@@ -111,13 +111,14 @@ let
     system.stateVersion = 4;
 
     nixpkgs.hostPlatform = "aarch64-darwin";
-    services.nix-daemon.enable = true;
+    #services.nix-daemon.enable = true;
     nix = {
+      enable = true;
       package = pkgs.nix;
       settings.trusted-users = [ "vladislavwohlrath" ];
       settings.experimental-features = [ "nix-command" "flakes" ];
 
-      linux-builder.enable = true;
+      #linux-builder.enable = true;
       buildMachines = [
         {
           sshUser = "root";
@@ -135,17 +136,17 @@ let
       #   { python = flake.inputs.python; }
       #   { sys = flake; }
       # ];
-      # registry = {
-      #   nixpkgs.flake = flake.inputs.nixpkgs;
-      #   python.flake = flake.inputs.python;
-      #   sys.flake = flake;
-      # };
+      registry = {
+        nixpkgs.flake = inputs.nixpkgs-2411;
+        #python.flake = flake.inputs.python;
+        #sys.flake = flake;
+      };
 
     };
 
 
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [ inputs.nixvim.overlays.default ];
+    nixpkgs.overlays = [ inputs.nixvim-2411.overlays.default ];
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
@@ -168,19 +169,19 @@ let
     home-manager.users.vladislavwohlrath = home;
 
     home-manager.sharedModules = [
-      inputs.nix-index-database-2405.hmModules.nix-index 
-      inputs.nixvim-2405.homeManagerModules.nixvim
+      inputs.nix-index-database-2411.hmModules.nix-index 
+      inputs.nixvim-2411.homeManagerModules.nixvim
       self.homeModules.default
     ];
 
     imports = [
       inputs.secrets.sf
-      inputs.home-manager-2405.darwinModules.home-manager
+      inputs.home-manager-2411.darwinModules.home-manager
     ];
   };
 
 in {
-  flake.darwinConfigurations.sf = inputs.nix-darwin-2405.lib.darwinSystem {
+  flake.darwinConfigurations.sf = inputs.nix-darwin-2411.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [ config ];
   };

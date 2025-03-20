@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     svatba = {
-      url = "github:jaroslavpesek/wedding-app?tag=0.4.2";
+      url = "github:jaroslavpesek/wedding-app?tag=0.4.3";
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     flake-parts = {
@@ -25,9 +25,9 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
-    nix-darwin-2405 = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-2405";
+    nix-darwin-2411 = {
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-2411";
     };
     home-manager-2405 = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -53,11 +53,15 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
-    nixvim-2405 = {
-      url = "github:nix-community/nixvim/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-2405";
-      inputs.home-manager.follows = "home-manager-2405";
-      inputs.nix-darwin.follows = "nix-darwin-2405";
+    nix-index-database-2411 = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs-2411";
+    };
+    nixvim-2411 = {
+      url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-2411";
+      inputs.home-manager.follows = "home-manager-2411";
+      inputs.nix-darwin.follows = "nix-darwin-2411";
     };
   };
 
