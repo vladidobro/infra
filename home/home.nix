@@ -7,8 +7,6 @@ let
 in {
   imports = [
     ./modules/nvim.nix
-    ./modules/duckdb.nix
-    ./modules/ipython.nix
     ./modules/rebuild.nix
   ];
 

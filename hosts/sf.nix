@@ -1,7 +1,19 @@
 { inputs, self, ... }:
 let 
 
-  home = { pkgs, ... }: {
+  home = { pkgs, ... }: 
+  let 
+    rebuild-sh = pkgs.writeShellScriptBin "rebuild.sh" ''
+      darwin-rebuild switch \
+        --flake git+file:/etc/nixos#sf
+    '';
+    deploy-kulich-sh = pkgs.writeShellScriptBin "deploy-kulich.sh" ''
+      nixos-rebuild switch \
+        --flake git+file:/etc/nixos#kulich \
+        --fast --build-host root@kulich --target-host root@kulich
+
+    '';
+  in {
     home.stateVersion = "23.11";
 
     home.username = "vladislavwohlrath";
@@ -30,11 +42,9 @@ let
         alias = "nixvim";
       };
 
-      rebuild = {
-        enable = true;
-        hostname = "sf";
-      };
     };
+
+
 
     home.shellAliases = {
       v = ". ~/venv/bin/activate";
@@ -44,6 +54,8 @@ let
 
     home.packages = with pkgs; [
       (pkgs.writeShellScriptBin "sf" ''exec "/users/vladislavwohlrath/src/lib/sf/.venv/bin/sf" "$@"'')
+      rebuild-sh
+      deploy-kulich-sh
       # utils
       nixos-rebuild
       #qemu
