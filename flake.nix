@@ -95,7 +95,7 @@
 
         config = mkIf cfg.enable {
           # TODO: port, local host
-          systemd.services."${cfg.host}" = {
+          systemd.services."backend-${cfg.host}" = {
             wantedBy = [ "multi-user.target" ];
             serviceConfig = {
               ExecStart = "${self.packages.x86_64-linux.default}/bin/vlada-dashboard ${cfg.mongoUri}";
