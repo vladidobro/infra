@@ -2,15 +2,15 @@ import streamlit as st
 import logging
 
 
-from utils.data_loader import load_data
-from utils.filters import guest_filters
-from utils.guest_barplots import (
+from vlada_dashboard.utils.data_loader import load_data
+from vlada_dashboard.utils.filters import guest_filters
+from vlada_dashboard.utils.guest_barplots import (
     plot_bar_children,
     plot_bar_accommodation,
     plot_bar_attendance,
 )
-from utils.code_gauge import plot_code_gauge
-from utils.cum_guests_arrival import plot_guest_arrivals
+from vlada_dashboard.utils.code_gauge import plot_code_gauge
+from vlada_dashboard.utils.cum_guests_arrival import plot_guest_arrivals
 
 
 # Get Streamlit logger
