@@ -1,5 +1,8 @@
 import streamlit as st
-from utils.data_loader import load_guests
+import logging
+
+
+from utils.data_loader import load_data
 from utils.filters import guest_filters
 from utils.guest_barplots import (
     plot_bar_children,
@@ -10,8 +13,14 @@ from utils.code_gauge import plot_code_gauge
 from utils.cum_guests_arrival import plot_guest_arrivals
 
 
+# Get Streamlit logger
+logger = logging.getLogger("streamlit")
+logger.setLevel(logging.INFO)
+
+
 def main():
-    df, raw_data = load_guests("data/mongo_dump.json")
+    df, raw_data = load_data(logger)
+
     st.set_page_config(page_title="Wedding Dashboard", layout="wide")
 
     st.title("💍 Wedding Registration Dashboard")
