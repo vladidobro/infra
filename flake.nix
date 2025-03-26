@@ -75,5 +75,32 @@
         ];
       };
       devShells."${system}".uv = pkgs.mkShell { packages = [ nixpkgs.legacyPackages."${system}".uv ]; };
+      nixosModules.default = { config, pkgs, lib, ... }: 
+      with lib;
+      let cfg = config.services.svatba.dashboard;
+      in {
+        options.services.svatba.dashboard = {
+          enable = mkEnableOption "Svatebni dashboard";
+          host = mkOption {
+            type = types.str;
+          };
+          port = mkOption {
+            type = types.port;
+            default = 2025;
+          };
+          mongoUrl = mkOption {
+            type = types.str;
+          };
+        };
+
+        config = mkIf cfg.enable {
+          systemd.services."${cfg.host}" = {
+            wantedBy = [ "multi-user.target" ];
+            serviceConfig = {
+              ExecStart = "${self.packages.x86_64-linux.default}/bin/vlada-dashboard ${cfg.mongoUrl}";
+            };
+          };
+        };
+      };
     };
 }
