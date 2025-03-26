@@ -1,7 +1,5 @@
-{ config, pkgs, ... }:
-
-{
-
+{ inputs, self, ... }:
+let vim = { config, pkgs, ... }: {
   config = {
     opts = {
       number = true;
@@ -105,6 +103,8 @@
         };
       };
     };
-
   };
+};
+in {
+  flake.nixvimModules.default = vim;
 }
