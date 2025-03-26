@@ -1,0 +1,7 @@
+# Ignore all Python bytecode caches
+__pycache__/
+**/__pycache__/
+
+# Ignore all files in mongo_dump and data directories
+mongo_dump/
+data/
