@@ -88,16 +88,17 @@
             type = types.port;
             default = 2025;
           };
-          mongoUrl = mkOption {
+          mongoUri = mkOption {
             type = types.str;
           };
         };
 
         config = mkIf cfg.enable {
+          # TODO: port, local host
           systemd.services."${cfg.host}" = {
             wantedBy = [ "multi-user.target" ];
             serviceConfig = {
-              ExecStart = "${self.packages.x86_64-linux.default}/bin/vlada-dashboard ${cfg.mongoUrl}";
+              ExecStart = "${self.packages.x86_64-linux.default}/bin/vlada-dashboard ${cfg.mongoUri}";
             };
           };
         };
