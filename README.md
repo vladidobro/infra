@@ -2,6 +2,11 @@
 
 Reads from json objects from DynamoDB and produces a dashboard in Streamlit.
 
+<p align="center">
+  <img src="imgs/test.png" alt="Showcasing the Dashboard" width="900"/>
+  <br/> 
+</p>
+
 ## Running the App
 
 ```

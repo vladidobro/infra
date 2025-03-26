@@ -9,6 +9,10 @@ from urllib.parse import urlparse
 
 
 def load_data(logger: logging.Logger):
+    """
+    Loads guest data from either a JSON file or a MongoDB instance.
+    Loads it only if it hasn't been loaded before.
+    """
     if "df" in st.session_state and "raw_data" in st.session_state:
         return st.session_state.df, st.session_state.raw_data
 
