@@ -3,13 +3,14 @@ let
 
   home = { pkgs, ... }: 
   let 
+    flake = "git+file:/Users/vladislavwohlrath/personal/infra";
     rebuild-sh = pkgs.writeShellScriptBin "rebuild.sh" ''
       darwin-rebuild switch \
-        --flake git+file:/etc/nixos#sf
+        --flake ${flake}#sf
     '';
     deploy-kulich-sh = pkgs.writeShellScriptBin "deploy-kulich.sh" ''
       nixos-rebuild switch \
-        --flake git+file:/etc/nixos#kulich \
+        --flake ${flake}#kulich \
         --fast --build-host root@kulich --target-host root@kulich
     '';
   in {
