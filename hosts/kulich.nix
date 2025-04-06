@@ -277,6 +277,11 @@ let
       backendHost = "api.svatba.maskova.wohlrath.cz";
       frontendHost = "svatba.maskova.wohlrath.cz";
       mongoUri = "mongodb://127.0.0.1:27017/svatba";
+      dashboard = {
+        enable = true;
+        host = "widgets.svatba.maskova.wohlrath.cz";
+        mongoUri = "mongodb://127.0.0.1:27017/svatba";
+      };
     };
 
     environment.systemPackages = with pkgs; [
@@ -291,6 +296,7 @@ let
       inputs.agenix-2405.nixosModules.default
       inputs.nixos-mailserver-2405.nixosModules.default
       inputs.svatba.nixosModules.default
+      inputs.svatba-dashboard.nixosModules.default
     ];
 
     home-manager.sharedModules = [

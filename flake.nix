@@ -10,8 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     svatba = {
-      url = "github:jaroslavpesek/wedding-app?tag=0.4.3";
+      url = "github:jaroslavpesek/wedding-app?tag=0.4.4";
       inputs.nixpkgs.follows = "nixpkgs-2405";
+    };
+    svatba-dashboard = {
+      url = "github:Danielwohlr/wedding_dashboard/nix";
+      # no follows, needs up-to-date uv
+      #inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

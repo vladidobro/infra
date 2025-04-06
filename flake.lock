@@ -595,6 +595,37 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1743012746,
+        "narHash": "sha256-8hj45kVI9Tp4AeKV6wHyHQ3iNod7rVd83p6L14Hbff4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e1f0c8be802db08a15584224fc505a740ae33caf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1725103162,
+        "narHash": "sha256-Ym04C5+qovuQDYL/rKWSR+WESseQBbNAe5DsXNx5trY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "12228ff1752d7b7624a54e9c1af4b222b3c1073b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim-2411": {
       "inputs": {
         "devshell": "devshell",
@@ -651,6 +682,56 @@
         "type": "github"
       }
     },
+    "pyproject-build-systems": {
+      "inputs": {
+        "nixpkgs": [
+          "svatba-dashboard",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "svatba-dashboard",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "svatba-dashboard",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743796969,
+        "narHash": "sha256-EtKARufQM9s7P62wvnNVLeQaSCNM6rwSE5bnrro6OX4=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "b0ba01335751048a6ffb3058eb09f7b76f2e57b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "svatba-dashboard",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743438845,
+        "narHash": "sha256-1GSaoubGtvsLRwoYwHjeKYq40tLwvuFFVhGrG8J9Oek=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "8063ec98edc459571d042a640b1c5e334ecfca1e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix-2405": "agenix-2405",
@@ -668,7 +749,8 @@
         "nixpkgs-2411": "nixpkgs-2411",
         "nixvim-2411": "nixvim-2411",
         "secrets": "secrets",
-        "svatba": "svatba"
+        "svatba": "svatba",
+        "svatba-dashboard": "svatba-dashboard"
       }
     },
     "secrets": {
@@ -694,16 +776,39 @@
         ]
       },
       "locked": {
-        "lastModified": 1742418454,
-        "narHash": "sha256-e9N3kXtCQ1lBT5hRT8v+iOCBwKE6Upwy25oGw2UpUpc=",
+        "lastModified": 1743944329,
+        "narHash": "sha256-eD4T3OeXKK9qAVUe8J+lre+v6uBeVqDymemo4LU5CBQ=",
         "owner": "jaroslavpesek",
         "repo": "wedding-app",
-        "rev": "a18f1172a98eb0dd5ae3a906ba8bfb88a2b88ae6",
+        "rev": "06837dc88e2d6b25712905f65c9bb69e807e679a",
         "type": "github"
       },
       "original": {
         "owner": "jaroslavpesek",
         "repo": "wedding-app",
+        "type": "github"
+      }
+    },
+    "svatba-dashboard": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "pyproject-build-systems": "pyproject-build-systems",
+        "pyproject-nix": "pyproject-nix",
+        "uv2nix": "uv2nix",
+        "uv2nix_hammer_overrides": "uv2nix_hammer_overrides"
+      },
+      "locked": {
+        "lastModified": 1743027037,
+        "narHash": "sha256-SOxk+QcSh1qxS1KAjXt8bmnbgcq7LvNz+9e4C7C3jkA=",
+        "owner": "Danielwohlr",
+        "repo": "wedding_dashboard",
+        "rev": "8273a7549d632743f0f04fb09df99387ed7520da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Danielwohlr",
+        "ref": "nix",
+        "repo": "wedding_dashboard",
         "type": "github"
       }
     },
@@ -797,6 +902,20 @@
         "type": "github"
       }
     },
+    "systems_7": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -810,6 +929,24 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "rev": "3d0579f5cc93436052d94b73925b48973a104204",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1725271838,
+        "narHash": "sha256-VcqxWT0O/gMaeWTTjf1r4MOyG49NaNxW4GHTO3xuThE=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "9fb342d14b69aefdf46187f6bb80a4a0d97007cd",
         "type": "github"
       },
       "original": {
@@ -833,6 +970,54 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "uv2nix": {
+      "inputs": {
+        "nixpkgs": [
+          "svatba-dashboard",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "svatba-dashboard",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742975782,
+        "narHash": "sha256-0b0I1E/WjZjkWPxb+BtVUxI3uxlu8DIdbPWW5WvzAZ0=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "edc060c2f299dbd2c55f23b9a1e9b2eb874929d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_hammer_overrides": {
+      "inputs": {
+        "nixpkgs": [
+          "svatba-dashboard",
+          "nixpkgs"
+        ],
+        "systems": "systems_7",
+        "treefmt-nix": "treefmt-nix_2"
+      },
+      "locked": {
+        "lastModified": 1742907313,
+        "narHash": "sha256-OdguFnLJuhl1i+Ha+pP1mqLoLmdI96QFfaxDYyz7jE8=",
+        "owner": "TyberiusPrime",
+        "repo": "uv2nix_hammer_overrides",
+        "rev": "a583ff5a32c581698538c902d6c3beb8dbe32b32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TyberiusPrime",
+        "repo": "uv2nix_hammer_overrides",
         "type": "github"
       }
     }
