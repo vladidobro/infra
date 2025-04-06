@@ -68,6 +68,9 @@
       inputs.home-manager.follows = "home-manager-2411";
       inputs.nix-darwin.follows = "nix-darwin-2411";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+    };
   };
 
   outputs = inputs@{ 
@@ -78,8 +81,12 @@
   {
     systems = [ "x86_64-linux" "aarch64-darwin" ];
     imports = [
-      ./hosts
-      ./home
+      ./home.nix
+      ./vim.nix
+      ./hosts/kulich.nix
+      ./hosts/myskus.nix
+      ./hosts/parok.nix
+      ./hosts/sf.nix
     ];
   });
 }
