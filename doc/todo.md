@@ -1,0 +1,3 @@
+- kulich
+  - [ ] tailscale
+  - [ ] git serve
