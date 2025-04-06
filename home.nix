@@ -7,10 +7,6 @@ let home = { config, pkgs, lib, ... }:
     cfg-dev = config.vladidobro.develop;
     cfg-nvim = config.vladidobro.nvim;
   in {
-    imports = [
-      ./modules/nvim.nix
-      ./modules/rebuild.nix
-    ];
 
 
     options.vladidobro = {
@@ -46,11 +42,11 @@ let home = { config, pkgs, lib, ... }:
 
       home.packages = with pkgs; 
       let nixvim = (
-        let vim = pkgs.nixvim.makeNixvimWithModule { module = ./nixvim.nix; };
+        let vim = pkgs.nixvim.makeNixvimWithModule { module = self.nixvimModules.default; };
         in pkgs.writeShellScriptBin cfg-nvim.nixvim.alias "exec -a $0 ${vim}/bin/nvim $@"
       );
       in [
-        nixvim
+        #nixvim
         unzip
         unrar-wrapper
         p7zip

@@ -11,7 +11,6 @@ let
       nixos-rebuild switch \
         --flake git+file:/etc/nixos#kulich \
         --fast --build-host root@kulich --target-host root@kulich
-
     '';
   in {
     home.stateVersion = "23.11";
