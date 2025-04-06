@@ -22,7 +22,8 @@ const registerGuest = async (req: Request, res: Response): Promise<any> => {
     }
 
     // Find the AccessCode document
-    const foundCode = await AccessCode.findOne({ code });
+    const lowerCaseCode = code.toLowerCase();
+    const foundCode = await AccessCode.findOne({ code: lowerCaseCode });
     if (!foundCode) {
       return res.status(401).json({ error: 'Invalid code' });
     }
