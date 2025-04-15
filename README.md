@@ -12,7 +12,7 @@ Reads from json objects from DynamoDB and produces a dashboard in Streamlit.
 ```
 uv venv
 uv sync
-streamlit run app.py -- "<MongoDbURI>"
+streamlit run vlada_dashboard/app.py -- "<MongoDbURI>"
 ```
 ### Sidequests 
 
