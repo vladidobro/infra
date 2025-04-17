@@ -1,4 +1,5 @@
 import streamlit as st
+import duckdb
 import sys
 import logging
 import json
@@ -8,7 +9,7 @@ from pymongo import MongoClient
 from urllib.parse import urlparse
 
 
-def load_data(logger: logging.Logger):
+def load_guest_data(logger: logging.Logger) -> tuple[pd.DataFrame, dict]:
     """
     Loads guest data from either a JSON file or a MongoDB instance.
     Loads it only if it hasn't been loaded before.
@@ -29,7 +30,7 @@ def load_data(logger: logging.Logger):
     return df, raw_data
 
 
-def load_guests_from_json(path):
+def load_guests_from_json(path: str) -> tuple[pd.DataFrame, dict]:
     """
     Load guest data from a JSON file
     """
@@ -38,7 +39,7 @@ def load_guests_from_json(path):
     return flatten_guest_data(data), data
 
 
-def load_guests_from_mongo(mongo_uri):
+def load_guests_from_mongo(mongo_uri: str) -> tuple[pd.DataFrame, dict]:
     """
     Load guest data from a MongoDB instance
     """
@@ -50,7 +51,16 @@ def load_guests_from_mongo(mongo_uri):
     return flatten_guest_data(dump), dump
 
 
-def flatten_guest_data(data):
+def flatten_guest_data(data: dict) -> pd.DataFrame:
+    """
+    Processes the raw data from MongoDB and returns a DataFrame with guest information.
+    This dataframe is the basis for "Guests with Accepted Applications" in the dashboard.
+
+    Args:
+        data (dict): Raw data from MongoDB, output of data_loader.load_data()
+    Returns:
+        pd.DataFrame: DataFrame with guest information
+    """
     guests = []
     for code_entry in data.get("codes", []):
         if "registration" in code_entry:
@@ -85,3 +95,14 @@ def flatten_guest_data(data):
                         }
                     )
     return pd.DataFrame(guests)
+
+
+@st.cache_data
+def load_duckdb_guests(db_path: str = "guests.duckdb") -> pd.DataFrame:
+    """
+    Load guests' names and codes from a DuckDB database
+    """
+    con = duckdb.connect(db_path)
+    df = con.execute("SELECT * FROM guests").fetchdf()
+    con.close()
+    return df
