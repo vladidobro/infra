@@ -18,6 +18,9 @@ let
 
     home.username = "vladislavwohlrath";
     home.homeDirectory = "/Users/vladislavwohlrath";
+    home.sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
 
     # comon configuration
