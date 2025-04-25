@@ -750,11 +750,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743993520,
-        "narHash": "sha256-DgQ/b7f7QIECEVYVIWrqYXl1iTzXTfibMhxp6QMsAwA=",
+        "lastModified": 1744599653,
+        "narHash": "sha256-nysSwVVjG4hKoOjhjvE6U5lIKA8sEr1d1QzEfZsannU=",
         "owner": "pyproject-nix",
         "repo": "build-system-pkgs",
-        "rev": "4470eb3e37dc5d2791b77b90c5228506d729800f",
+        "rev": "7dba6dbc73120e15b558754c26024f6c93015dd7",
         "type": "github"
       },
       "original": {
@@ -808,11 +808,11 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1744206217,
-        "narHash": "sha256-inmupjdwwFwtlOb8Z67g7NloPf8MTJXoATOte3BzGAk=",
+        "lastModified": 1745595087,
+        "narHash": "sha256-IJgvG4STHkQPqyW9dELmCXOty4BP5FwPpbaKOI7AtSI=",
         "ref": "refs/heads/main",
-        "rev": "d313d6c388eb671335b5198380c0ec1746f1f7b9",
-        "revCount": 16,
+        "rev": "5559eb767c72a91c14ce97b841e652a35e7e3832",
+        "revCount": 17,
         "type": "git",
         "url": "ssh://git@github.com/vladidobro/secrets.git"
       },

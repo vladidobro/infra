@@ -100,7 +100,7 @@ let
 
     programs.ssh.matchBlocks = {
       "*" = {
-        identityFile = "~/.ssh/id_rsa";
+        identityFile = "~/.ssh/id_ed25519";
       };
       "kulich" = {
         user = "vladidobro";
