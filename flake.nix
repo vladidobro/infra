@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     svatba = {
-      url = "github:jaroslavpesek/wedding-app?tag=0.4.4";
+      url = "github:jaroslavpesek/wedding-app?tag=0.5.0";
       inputs.nixpkgs.follows = "nixpkgs-2405";
     };
     svatba-dashboard = {
