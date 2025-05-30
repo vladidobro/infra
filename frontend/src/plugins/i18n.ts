@@ -47,6 +47,83 @@ Andrea and Vláďa`
       `Line-up bude doplněn. Stay tuned!`,
       `Line-up will be updated. Stay tuned!`
     ],
+    lineup_title: ['LINE UP', 'LINE UP'],
+    saturday: ['Sobota', 'Saturday'],
+    sunday: ['Neděle', 'Sunday'],
+    food_drink_title: ['JÍDLO A PITÍ BĚHEM FESTIVALU', 'FOOD AND DRINKS DURING THE FESTIVAL'],
+    food_title: ['JÍDLO', 'FOOD'],
+    food_description: [
+      'Během festivalu se sní to, co zbyde ze svatby, dále bude k dispozici prostší strava jako buřty, utopence, chleba či těstoviny.',
+      'During the festival, we will eat what is left from the wedding. Additionally, simpler food like sausages, pickled sausages, bread, or pasta will be available.'
+    ],
+    food_additional: [
+      'Pokud nám jídlo nevystačí, nebojte, nemusíte s sebou tahat zásoby. Ve vzdálenosti pár kilometrů se nachází několik obchodů (Billa, potraviny) a v okrese také funguje rozvoz (pizza, čína ap.).',
+      'If we run out of food, don\'t worry, you don\'t need to bring supplies. There are several stores (Billa, grocery) a few kilometers away, and food delivery (pizza, Chinese, etc.) is also available in the district.'
+    ],
+    drinks_title: ['PITÍ', 'DRINKS'],
+    drinks_description: [
+      'Pivo by nám snad mělo vystačit na celý víkend. Tvrdý a víno bude k dispozici podle toho, kolik zbyde ze svatby. Pokud máte strach, že zbytky nedokáží uspokojit vaši spotřebu, můžete s sebou přivézt vlastní zásoby nebo je během víkendu doplnit v nedalekých obchodech.',
+      'Beer should hopefully last us the whole weekend. Hard liquor and wine will be available depending on how much is left from the wedding. If you\'re worried that the leftovers won\'t satisfy your consumption, you can bring your own supplies or replenish them during the weekend at nearby stores.'
+    ],
+    coffee_available: [
+      'Káva bude k dispozici po dobu celé akce.',
+      'Coffee will be available throughout the entire event.'
+    ],
+    performers_title: ['O ÚČINKUJÍCÍCH', 'ABOUT THE PERFORMERS'],
+    performances: {
+      adam_capek: {
+        name: ['ADAM ČAPEK', 'ADAM CAPEK'],
+        description: [
+          'Adam Čapek, syn mnohem slavnějšího klavírního mistra, pedagoga, držitele pamětní medaile Vyznamenání rady města Lysé nad Labem a rodáka z Dobrušky Libora Čapka, se od dětství zabývá předválečnou klasickou hudbou. Mezi jeho oblíbené skladatele patří Sibelius, Kotzwara, Leibowitz a Glazunov, jejichž díla v sobotu neuslyšíte.',
+          'Adam Capek, son of the much more famous piano master, educator, holder of the memorial medal of the Honors of the Lysá nad Labem City Council and native of Dobruška Libor Capek, has been involved in pre-war classical music since childhood. His favorite composers include Sibelius, Kotzwara, Leibowitz, and Glazunov, whose works you will not hear on Saturday.'
+        ],
+        genre: ['klasika k obědu', 'classical music for lunch']
+      },
+      karaoke_party: {
+        name: ['KARAOKE PARTY', 'KARAOKE PARTY'],
+        genre: ['party sing‑along', 'party sing‑along']
+      },
+      chichimeku: {
+        name: ['CHICHIMEKÚ', 'CHICHIMEKU'],
+        description: [
+          'Legendární big band nestora české reggae scény Karla Babuljaka. Dred dred dredy dred dredy dredy dred, džamen fíl a makočuba singsong. To vše a mnohem víc.',
+          'Legendary big band of the nestor of the Czech reggae scene, Karel Babuljak. Dread dread dreads dread dreads dreads dread, jammin\' feel and makochuba singsong. All this and much more.'
+        ],
+        genre: ['reggae / staré rocksteady', 'reggae / old rocksteady']
+      },
+      stribrny_rafael: {
+        name: ['STŘÍBRNÝ RAFAEL', 'STRIBRNY RAFAEL'],
+        description: [
+          'Stříbrný hlas z Modřan od roku 2016 smývá hranice mezi rapem a alternativní hudbou. Grafomanské texty plné klukovin, ze kterých zároveň místy zamrazí. Multiinstrumentalista rapující do převážně vlastních produkcí, které vynikají barevností a zastoupením živých nástrojů. Nejlepší naživo s DJem Kazisvětem.',
+          'The silver voice from Modřany has been washing away the boundaries between rap and alternative music since 2016. Graphomaniac lyrics full of shenanigans that sometimes give you chills. A multi-instrumentalist rapping to mostly his own productions, which excel in colorfulness and representation of live instruments. Best live with DJ Kazisvět.'
+        ],
+        genre: ['momentálně rap', 'currently rap']
+      },
+      after_taborak: {
+        name: ['AFTER TÁBORÁK', 'AFTER CAMPFIRE'],
+        genre: ['', '']
+      },
+      dj_jaxx: {
+        name: ['DJ Masta JAXX', 'DJ Masta JAXX'],
+        description: [
+          'Když se něco má stát, tak se to stane. Tomu se říká osud. DJ Masta JAXX, známý svou podmanivou pódiovou energií a lyrickým projevem, začínal jako oceňovaný country písničkář. Zásadní proměnu svého stylu prodělal poté, co se seznámil s novými formami Tokijské klubové scény. Na jeho debutovou dýdžejskou party musela veřejnost počkat až do letošního roku, ale když se něco má stát, tak se to stane.',
+          'When something is meant to happen, it happens. That\'s called destiny. DJ Masta JAXX, known for his captivating stage energy and lyrical expression, started as an acclaimed country songwriter. He underwent a fundamental transformation of his style after discovering new forms of the Tokyo club scene. The public had to wait until this year for his debut DJ party, but when something is meant to happen, it happens.'
+        ],
+        genre: ['Wake up tech house', 'Wake up tech house']
+      },
+      gripozna_kokos: {
+        name: ['GRIPOZNA KOKOS', 'GRIPOZNA KOKOS'],
+        description: [
+          'Gripozna Kokos je česko-litevská avantgardně jazzcorová trojice, která debutovala v létě 2018 albem \'Sounds of Kokos\'. Nyní hraje ve složení Gripo (kytara, zpěv), Znak (basa) a Okos (klávesy) a Zoom.',
+          'Gripozna Kokos is a Czech-Lithuanian avant-garde jazzcore trio that debuted in the summer of 2018 with the album \'Sounds of Kokos\'. They now play with Gripo (guitar, vocals), Znak (bass), and Okos (keyboards) and Zoom.'
+        ],
+        genre: ['avantgarde jazzcore', 'avantgarde jazzcore']
+      },
+      taborak: {
+        name: ['TÁBORÁK PRO TY, KDO ZBYLI', 'CAMPFIRE FOR THOSE WHO REMAINED'],
+        genre: ['', '']
+      }
+    },
     detail: [
       `
       Pokud máte zájem vystoupit s vaším hudebním, 
@@ -62,7 +139,6 @@ Andrea and Vláďa`
       `Zatím se můžete těšit na esa jako Stříbrný Rafael, Gripozna Kokos nebo Chichimekú.`,
       `For now, you can look forward to such stars like Stribrny Rafael, Gripozna Kokos, or Chichimekú.`
     ]
-
   },
   register: {
     title: ['Registrační formulář', 'Register Form'],

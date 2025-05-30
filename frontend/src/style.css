@@ -9,11 +9,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.festival {
-  font-family: fantasy;
-}
-
-
 body {
   max-width: 800px;
   margin: 0 auto;
