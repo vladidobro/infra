@@ -134,6 +134,15 @@ let
 
     services.nginx = {
       virtualHosts = {
+        "pantombolar.cz" = {
+          forceSSL = true;
+          enableACME = true;
+          serverAliases = [ "www.pantombolar.cz" ];
+          root = pkgs.callPackage ../lib/pantombolar.cz {}; 
+          extraConfig = ''
+            try_files $uri $uri/ /index.html;
+          '';
+        };
         "vladislav.wohlrath.cz" = {
           forceSSL = true;
           enableACME = true;
