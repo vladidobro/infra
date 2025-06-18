@@ -5,10 +5,6 @@
     secrets = {
       url = "git+ssh://git@github.com/vladidobro/secrets.git";
     };
-    homepage = {
-      url = "github:vladidobro/homepage";
-      inputs.nixpkgs.follows = "nixpkgs-2405";
-    };
     svatba = {
       url = "github:jaroslavpesek/wedding-app?tag=0.5.0";
       inputs.nixpkgs.follows = "nixpkgs-2405";
@@ -81,8 +77,10 @@
   {
     systems = [ "x86_64-linux" "aarch64-darwin" ];
     imports = [
-      ./home.nix
-      ./vim.nix
+      ./lib/shell.nix
+      ./lib/deploy.nix
+      ./lib/home.nix
+      ./lib/vim.nix
       ./hosts/kulich.nix
       ./hosts/myskus.nix
       ./hosts/parok.nix

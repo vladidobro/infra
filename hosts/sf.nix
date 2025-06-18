@@ -107,6 +107,9 @@ let
         hostname = "wohlrath.cz";
         identityFile = "~/.ssh/id_private";
       };
+      "wohlrath.cz" = {
+        identityFile = "~/.ssh/id_private";
+      };
       "github.com" = {
         identityFile = "~/.ssh/id_private";
       };

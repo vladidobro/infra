@@ -6,6 +6,14 @@
   </p>
   <p>
     <b>A co cinknutá tombola pro přesně 100 tombolandů?</b>
-    Dle domluvy
+    Dle domluvy.
+  </p>
+  <p>
+    <b>Mohou se do tomboly dávat kočky?</b>
+    Jen mourovaté.
+  </p>
+  <p>
+    <b>Nesnáším zábavu, je pro mě tombola to pravé?</b>
+    Ano, tombola je ideální zábava pro každého.
   </p>
 </template>

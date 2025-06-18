@@ -138,50 +138,26 @@ let
           forceSSL = true;
           enableACME = true;
           serverAliases = [ "www.pantombolar.cz" ];
-          root = pkgs.callPackage ../lib/pantombolar.cz {}; 
+          root = pkgs.callPackage ../lib/http/pantombolar.cz {}; 
           extraConfig = ''
             try_files $uri $uri/ /index.html;
           '';
         };
-        "vladislav.wohlrath.cz" = {
-          forceSSL = true;
-          enableACME = true;
-          serverAliases = [ "www.vladislav.wohlrath.cz" ];
-          root = "${inputs.homepage.packages.x86_64-linux.default}/html/";
-          extraConfig = ''
-            index index.html;
-          '';
-        };
+        #"vladislav.wohlrath.cz" = {
+        #  forceSSL = true;
+        #  enableACME = true;
+        #  serverAliases = [ "www.vladislav.wohlrath.cz" ];
+        #  root = "${inputs.homepage.packages.x86_64-linux.default}/html/";
+        #  extraConfig = ''
+        #    index index.html;
+        #  '';
+        #};
         "wohlrath.cz" = {
           forceSSL = true;
           enableACME = true;
           serverAliases = [ "www.wohlrath.cz" ];
           locations."/" = {
             root = "/var/www/wohlrath.cz";
-          };
-        };
-        "martina.wohlrath.cz" = {
-          forceSSL = true;
-          enableACME = true;
-          serverAliases = [ "www.martina.wohlrath.cz" ];
-          locations."/" = {
-            root = "/var/www/martina.wohlrath.cz";
-          };
-        };
-        "daniel.wohlrath.cz" = {
-          forceSSL = true;
-          enableACME = true;
-          serverAliases = [ "www.daniel.wohlrath.cz" ];
-          locations."/" = {
-            root = "/var/www/daniel.wohlrath.cz";
-          };
-        };
-        "rea.wohlrath.cz" = {
-          forceSSL = true;
-          enableACME = true;
-          serverAliases = [ "www.rea.wohlrath.cz" ];
-          locations."/" = {
-            root = "/var/www/rea.wohlrath.cz";
           };
         };
         "dav.wohlrath.cz" = {
