@@ -46,7 +46,6 @@ let home = { config, pkgs, lib, ... }:
         in pkgs.writeShellScriptBin cfg-nvim.nixvim.alias "exec -a $0 ${vim}/bin/nvim $@"
       );
       in [
-        #nixvim
         unzip
         unrar-wrapper
         p7zip
@@ -60,13 +59,6 @@ let home = { config, pkgs, lib, ... }:
         unixtools.watch
         socat
       ]; 
-      # TODO
-      # + (mkIf (platform.isLinux && cfg.graphical) [
-      #   nerdfonts
-      #   poppler_utils
-      #   dmenu-rs
-      #   brave
-      # ]));
 
       home.shellAliases = mkIf cfg.aliases {
         g = "git";
@@ -85,13 +77,11 @@ let home = { config, pkgs, lib, ... }:
         enable = true;
         defaultEditor = true;
         extraLuaConfig = ''
-          --- system
           vim.opt.encoding = 'UTF-8'
           vim.opt.swapfile = true
           vim.opt.ttyfast = true
           vim.opt.autoread = true
 
-          --- behaviour
           vim.opt.autoindent = true
           vim.opt.mouse = 'a'
           vim.opt.scrolloff = 10
@@ -99,40 +89,29 @@ let home = { config, pkgs, lib, ... }:
           vim.opt.splitbelow = true
           vim.opt.foldmethod = 'indent'
 
-          --- searching
           vim.opt.showmatch = true
           vim.opt.ignorecase = true
           vim.opt.smartcase = true
           vim.opt.hlsearch = true
           vim.opt.incsearch = true
 
-          --- tabs
           vim.opt.shiftwidth = 4
           vim.opt.tabstop = 4
           vim.opt.softtabstop = 4
           vim.opt.expandtab = true
 
-          --- appearance
           vim.opt.cursorline = true
           vim.opt.wrap = true
           vim.opt.breakindent = true
           vim.opt.termguicolors = true
           vim.opt.background= 'dark'
 
-          --- line number
           vim.opt.number = true
           vim.opt.relativenumber = true
 
-          -- completion
-          -- vim.opt.completeopt = 'menu' TODO
-
-          -- leader
           vim.g.mapleader = " "
 
-          -- map
           vim.keymap.set('n', '<leader>h', '<cmd>nohl<cr>')
-
-          -- navigating buffers
           vim.keymap.set('n', '<leader>[', '<cmd>bprevious<cr>')
           vim.keymap.set('n', '<leader>]', '<cmd>bnext<cr>')
         '';
@@ -262,37 +241,26 @@ let home = { config, pkgs, lib, ... }:
 
               cmp.setup({
                 snippet = {
-                  -- REQUIRED - you must specify a snippet engine
                   expand = function(args)
                     vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-                    -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                    -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                    -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
                   end,
                 },
                 window = {
-                  -- completion = cmp.config.window.bordered(),
-                  -- documentation = cmp.config.window.bordered(),
                 },
                 mapping = cmp.mapping.preset.insert({
                   ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                   ['<C-f>'] = cmp.mapping.scroll_docs(4),
                   ['<C-Space>'] = cmp.mapping.complete(),
                   ['<C-e>'] = cmp.mapping.abort(),
-                  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                  ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 }),
                 sources = cmp.config.sources({
                   { name = 'nvim_lsp' },
-                  -- { name = 'vsnip' }, -- For vsnip users.
-                  -- { name = 'luasnip' }, -- For luasnip users.
-                  -- { name = 'ultisnips' }, -- For ultisnips users.
-                  -- { name = 'snippy' }, -- For snippy users.
                 }, {
                   { name = 'buffer' },
                 })
               })
 
-              -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
               cmp.setup.cmdline({ '/', '?' }, {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
@@ -300,7 +268,6 @@ let home = { config, pkgs, lib, ... }:
                 }
               })
 
-              -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
               cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
@@ -310,87 +277,10 @@ let home = { config, pkgs, lib, ... }:
                 })
               })
 
-              -- Set up lspconfig.
               local capabilities = require('cmp_nvim_lsp').default_capabilities()
               require('lspconfig')['pyright'].setup {
                 capabilities = capabilities
               }
-
-              --
-              -- cmp.setup({
-                -- snippet = {
-                  -- expand = function(args)
-                    -- luasnip.lsp_expand(args.body)
-                  -- end
-                -- },
-                -- sources = {
-                -- {name = 'path'},
-                -- {name = 'nvim_lsp', keyword_length = 3},
-                -- {name = 'buffer', keyword_length = 3},
-                -- {name = 'luasnip', keyword_length = 2},
-                -- },
-                -- window = {
-                  -- documentation = cmp.config.window.bordered()
-                -- },
-                -- formatting = {
-                  -- fields = {'menu', 'abbr', 'kind'},
-                  -- format = function(entry, item)
-                    -- local menu_icon = {
-                      -- nvim_lsp = 'λ',
-                      -- luasnip = '⋗',
-                      -- buffer = 'Ω',
-                      -- path = '🖫',
-                    -- }
-              -- 
-                    -- item.menu = menu_icon[entry.source.name]
-                    -- return item
-                  -- end,
-                -- },
-                -- mapping = {
-                  -- ['<CR>'] = cmp.mapping.confirm({select = false}),
-                  -- ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
-                  -- ['<Down>'] = cmp.mapping.select_next_item(select_opts),
-                  -- ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
-                  -- ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
-                  -- ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                  -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                  -- ['<C-e>'] = cmp.mapping.abort(),
-                  -- ['<C-d>'] = cmp.mapping(function(fallback)
-                    -- if luasnip.jumpable(1) then
-                      -- luasnip.jump(1)
-                    -- else
-                      -- fallback()
-                    -- end
-                  -- end, {'i', 's'}),
-                  -- ['<C-b>'] = cmp.mapping(function(fallback)
-                    -- if luasnip.jumpable(-1) then
-                      -- luasnip.jump(-1)
-                    -- else
-                      -- fallback()
-                    -- end
-                  -- end, {'i', 's'}),
-                  -- ['<Tab>'] = cmp.mapping(function(fallback)
-                    -- local col = vim.fn.col('.') - 1
-              -- 
-                    -- if cmp.visible() then
-                      -- cmp.select_next_item(select_opts)
-                    -- elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-                      -- fallback()
-                    -- else
-                      -- cmp.complete()
-                    -- end
-                  -- end, {'i', 's'}),
-                  -- ['<S-Tab>'] = cmp.mapping(function(fallback)
-                    -- if cmp.visible() then
-                      -- cmp.select_prev_item(select_opts)
-                    -- else
-                      -- fallback()
-                    -- end
-                  -- end, {'i', 's'}),
-                -- }
-              -- })
-              -- TODO
-
             '';
             type = "lua";
           }
@@ -820,11 +710,6 @@ let home = { config, pkgs, lib, ... }:
           };
         };
       };
-
-      # fonts.fontconfig.enable = mkIf (platform.isLinux && cfg.graphical) true;
-
-      # programs.nix-index-database.comma.enable = true;
-
     };
   };
 in {

@@ -1,30 +1,17 @@
 { inputs, self, ... }:
 let 
+  nixpkgs = inputs.nixpkgs-2505;
+  nix-darwin = inputs.nix-darwin-2505;
+  nixvim = inputs.nixvim-2505;
+  nix-index-database = inputs.nix-index-database-2505;
+  home-manager = inputs.home-manager-2505;
 
   home = { pkgs, ... }: 
-  let 
-    flake = "git+file:/Users/vladislavwohlrath/personal/infra";
-    rebuild-sh = pkgs.writeShellScriptBin "rebuild.sh" ''
-      darwin-rebuild switch \
-        --flake ${flake}#sf
-    '';
-    deploy-kulich-sh = pkgs.writeShellScriptBin "deploy-kulich.sh" ''
-      nixos-rebuild switch \
-        --flake ${flake}#kulich \
-        --fast --build-host root@kulich --target-host root@kulich
-    '';
-  in {
+  {
     home.stateVersion = "23.11";
-
     home.username = "vladislavwohlrath";
     home.homeDirectory = "/Users/vladislavwohlrath";
-    home.sessionPath = [
-      "$HOME/.local/bin"
-    ];
 
-
-
-    # comon configuration
     vladidobro = {
       enable = true;
       aliases = true;
@@ -48,55 +35,25 @@ let
 
     };
 
-
+    home.sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
     home.shellAliases = {
       v = ". ~/venv/bin/activate";
       V = "deactivate";
     };
 
-
     home.packages = with pkgs; [
-      (pkgs.writeShellScriptBin "sf" ''exec "/users/vladislavwohlrath/src/lib/sf/.venv/bin/sf" "$@"'')
-      rebuild-sh
-      deploy-kulich-sh
-      # utils
       nixos-rebuild
-      #qemu
-      #podman
-      #colima
+      qemu
       inetutils
       renameutils
       gnumake
-      #ninja
-      #duckdb
-
-      # meteo tools
-      #cdo
-      #eccodes
-
-      # python
       pyright
       poetry
       (python3.withPackages (ps: with ps; [ pip ]))
       ruff
-
-      # languages
-      #cargo
-      #rust-analyzer
-      #dhall
-      #cabal-install
-      #zig
-      #kotlin
-      #gradle
-      #openjdk
-      #maturin
-
-      # integration
-      #k9s
-      #kubelogin
-      #glab
-      #argocd
     ];
 
     programs.ssh.matchBlocks = {
@@ -116,10 +73,8 @@ let
       };
     };
 
-    # don't pollute common git projects
     programs.git.ignores = [ ".envrc" ".direnv" ];
 
-    # setup homebrew
     programs.zsh.initExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
@@ -127,9 +82,14 @@ let
   };
 
   config = { pkgs, ... }: {
+    imports = [
+      inputs.secrets.sf
+      home-manager.darwinModules.home-manager
+    ];
+
     system.stateVersion = 4;
     system.primaryUser = "vladislavwohlrath";
-    ids.gids.nixbld = 350;  # because nix was installed long ago when this was default
+    ids.gids.nixbld = 350;  # nix was installed when this was default
 
     nixpkgs.hostPlatform = "aarch64-darwin";
     #services.nix-daemon.enable = true;
@@ -151,58 +111,38 @@ let
           sshKey = "/users/vladislavwohlrath/.ssh/id_private";
         }
       ];
-
-      # nixPath = [
-      #   { nixpkgs = flake.inputs.nixpkgs; }
-      #   { python = flake.inputs.python; }
-      #   { sys = flake; }
-      # ];
       registry = {
-        nixpkgs.flake = inputs.nixpkgs-2505;
-        #python.flake = flake.inputs.python;
-        #sys.flake = flake;
+        nixpkgs.flake = nixpkgs;
       };
-
     };
-
-
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [ inputs.nixvim-2505.overlays.default ];
+    nixpkgs.overlays = [ nixvim.overlays.default ];
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
 
-    home-manager = {
-      useUserPackages = true;
-      useGlobalPkgs = true;
-    };
-
     homebrew = {
       enable = true;
       brews = [
-        "azure-cli"
-        "libiodbc"
       ];
     };
 
     users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
 
-    home-manager.users.vladislavwohlrath = home;
-
+    home-manager = {
+      useUserPackages = true;
+      useGlobalPkgs = true;
+    };
     home-manager.sharedModules = [
-      inputs.nix-index-database-2505.homeModules.nix-index 
-      inputs.nixvim-2505.homeManagerModules.nixvim
+      nix-index-database.homeModules.nix-index 
+      nixvim.homeManagerModules.nixvim
       self.homeModules.default
     ];
-
-    imports = [
-      inputs.secrets.sf
-      inputs.home-manager-2505.darwinModules.home-manager
-    ];
+    home-manager.users.vladislavwohlrath = home;
   };
 
 in {
-  flake.darwinConfigurations.sf = inputs.nix-darwin-2505.lib.darwinSystem {
+  flake.darwinConfigurations.sf = nix-darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [ config ];
   };
