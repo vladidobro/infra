@@ -493,6 +493,7 @@ let home = { config, pkgs, lib, ... }:
       programs.tmux = mkIf cfg.basic {
         enable = true;
         baseIndex = 1;
+        sensibleOnTop = false;
         escapeTime = 0;
         disableConfirmationPrompt = true;
         customPaneNavigationAndResize = true;

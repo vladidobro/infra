@@ -23,6 +23,7 @@ let
     ];
 
 
+
     # comon configuration
     vladidobro = {
       enable = true;
@@ -127,6 +128,8 @@ let
 
   config = { pkgs, ... }: {
     system.stateVersion = 4;
+    system.primaryUser = "vladislavwohlrath";
+    ids.gids.nixbld = 350;  # because nix was installed long ago when this was default
 
     nixpkgs.hostPlatform = "aarch64-darwin";
     #services.nix-daemon.enable = true;
@@ -155,7 +158,7 @@ let
       #   { sys = flake; }
       # ];
       registry = {
-        nixpkgs.flake = inputs.nixpkgs-2411;
+        nixpkgs.flake = inputs.nixpkgs-2505;
         #python.flake = flake.inputs.python;
         #sys.flake = flake;
       };
@@ -164,7 +167,7 @@ let
 
 
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [ inputs.nixvim-2411.overlays.default ];
+    nixpkgs.overlays = [ inputs.nixvim-2505.overlays.default ];
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
@@ -187,19 +190,19 @@ let
     home-manager.users.vladislavwohlrath = home;
 
     home-manager.sharedModules = [
-      inputs.nix-index-database-2411.hmModules.nix-index 
-      inputs.nixvim-2411.homeManagerModules.nixvim
+      inputs.nix-index-database-2505.homeModules.nix-index 
+      inputs.nixvim-2505.homeManagerModules.nixvim
       self.homeModules.default
     ];
 
     imports = [
       inputs.secrets.sf
-      inputs.home-manager-2411.darwinModules.home-manager
+      inputs.home-manager-2505.darwinModules.home-manager
     ];
   };
 
 in {
-  flake.darwinConfigurations.sf = inputs.nix-darwin-2411.lib.darwinSystem {
+  flake.darwinConfigurations.sf = inputs.nix-darwin-2505.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [ config ];
   };

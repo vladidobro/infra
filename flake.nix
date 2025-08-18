@@ -23,12 +23,15 @@
     nixpkgs-2411 = {
       url = "github:NixOS/nixpkgs/nixos-24.11";
     };
+    nixpkgs-2505 = {
+      url = "github:NixOS/nixpkgs/nixos-25.05";
+    };
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
-    nix-darwin-2411 = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-2411";
+    nix-darwin-2505 = {
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-2505";
     };
     home-manager-2405 = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -37,6 +40,10 @@
     home-manager-2411 = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-2411";
+    };
+    home-manager-2505 = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-2505";
     };
     agenix-2405 = {
       url = "github:ryantm/agenix";
@@ -58,11 +65,18 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-2411";
     };
+    nix-index-database-2505 = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs-2505";
+    };
     nixvim-2411 = {
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs-2411";
       inputs.home-manager.follows = "home-manager-2411";
-      inputs.nix-darwin.follows = "nix-darwin-2411";
+    };
+    nixvim-2505 = {
+      url = "github:nix-community/nixvim/nixos-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-2505";
     };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
