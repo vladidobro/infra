@@ -91,7 +91,6 @@
   {
     systems = [ "x86_64-linux" "aarch64-darwin" ];
     imports = [
-      ./lib/shell.nix
       ./lib/deploy.nix
       ./lib/home.nix
       ./lib/vim.nix
