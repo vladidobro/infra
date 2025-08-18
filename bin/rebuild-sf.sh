@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-darwin-rebuild switch \
+sudo darwin-rebuild switch \
     --flake ".#sf"

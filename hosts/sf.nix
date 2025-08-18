@@ -32,7 +32,6 @@ let
         enable = true;
         alias = "nixvim";
       };
-
     };
 
     home.sessionPath = [
