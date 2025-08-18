@@ -74,7 +74,7 @@ let
 
     programs.git.ignores = [ ".envrc" ".direnv" ];
 
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
     '';

@@ -460,7 +460,7 @@ let home = { config, pkgs, lib, ... }:
           py = "ipython";
           ".." = "cd ..";
         };
-        initExtra = ''
+        initContent = ''
           bindkey '^P' up-line-or-history
           bindkey '^N' down-line-or-history
           bindkey '^A' beginning-of-line
