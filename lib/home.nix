@@ -323,6 +323,7 @@ let home = { config, pkgs, lib, ... }:
           a = "add";
           aa = "add --all";
           ac = "! git add --all && git commit --verbose";
+          acp = "! git add --all && git commit --verbose --no-verify -m dev && git push";
 
           b = "branch";
           ba = "branch --all";
@@ -357,6 +358,7 @@ let home = { config, pkgs, lib, ... }:
           pt = "push --tags";
           pa = "push --all";
           pu = "push --set-upstream";
+          pf = "push --force-with-lease";
 
           ra = "remote add";
           rp = "remote prune";
