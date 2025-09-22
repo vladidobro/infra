@@ -63,6 +63,7 @@ let home = { config, pkgs, lib, ... }:
       home.shellAliases = mkIf cfg.aliases {
         g = "git";
         e = "nvim";
+
       };
       
       programs.ssh = mkIf cfg.minimal {
@@ -460,6 +461,7 @@ let home = { config, pkgs, lib, ... }:
           l = "ls -lah";
           f = "lfcd";
           py = "ipython";
+          kb = "kubectl";
           ".." = "cd ..";
         };
         initContent = ''
