@@ -7,7 +7,7 @@
 
 
     secrets.url = "git+ssh://git@github.com/vladidobro/secrets.git";
-    svatba.url = "github:jaroslavpesek/wedding-app?tag=0.5.0";
+    svatba.url = "github:jaroslavpesek/wedding-app/0.5.0";
     svatba.inputs.nixpkgs.follows = "nixpkgs-2405";
 
     # 24.05 - parok

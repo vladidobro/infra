@@ -1104,6 +1104,7 @@
       },
       "original": {
         "owner": "jaroslavpesek",
+        "ref": "0.5.0",
         "repo": "wedding-app",
         "type": "github"
       }
