@@ -632,9 +632,6 @@ let home = { config, pkgs, lib, ... }:
 
       programs.password-store.enable = mkIf cfg.basic true;
 
-      fonts.packages = mkIf cfg.graphical (with pkgs; [
-        nerd-fonts.noto
-      ]);
       programs.alacritty = mkIf cfg.graphical {
         enable = true;
         settings = {

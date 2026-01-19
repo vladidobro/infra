@@ -77,6 +77,9 @@ let
     nixpkgs.hostPlatform = "aarch64-darwin";
     nixpkgs.config.allowUnfree = true;
 
+    fonts.packages = mkIf cfg.graphical (with pkgs; [
+      nerd-fonts.noto
+    ]);
     system.primaryUser = "vladislavwohlrath";
     nix = {
       settings.trusted-users = [ "vladislavwohlrath" ];
