@@ -26,8 +26,6 @@ let
     networking.firewall.allowedTCPPorts = [
       80
       443
-      587  # SMPT
-      993  # IMAP
     ];
 
     services.openssh.enable = true;
@@ -41,14 +39,16 @@ let
       fqdn = "mail.wohlrath.cz";
       domains = [ "wohlrath.cz" ];
       certificateScheme = "acme-nginx";
-      enableImap = true;  # for roundcube, behind firewall
     };
 
     services.roundcube = {
       enable = true;
       hostName = "mail.wohlrath.cz";
+      # https://github.com/roundcube/roundcubemail/wiki/Configuration
       extraConfig = ''
-        $config['smtp_server'] = "tls://${config.mailserver.fqdn}";
+        $config['default_host'] = "ssl://${config.mailserver.fqdn}:993";
+        $config['default_port'] = "993";
+        $config['smtp_host'] = "ssl://${config.mailserver.fqdn}:465";
         $config['smtp_user'] = "%u";
         $config['smtp_pass'] = "%p";
       '';
