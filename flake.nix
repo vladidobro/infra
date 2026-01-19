@@ -40,12 +40,14 @@
     nix-index-database-2505.url = "github:nix-community/nix-index-database";
     nix-index-database-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
 
-    # 25.11 - kulich
+    # 25.11 - kulich, sf-new
     nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-darwin-2511.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
     nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
     home-manager-2511.url = "github:nix-community/home-manager/release-25.11";
     home-manager-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
+    nixvim-2511.url = "github:nix-community/nixvim/nixos-25.11";
+    nixvim-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
     nixos-mailserver-2511.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     nixos-mailserver-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
 
@@ -66,6 +68,7 @@
       ./hosts/myskus.nix
       ./hosts/parok.nix
       ./hosts/sf.nix
+      ./hosts/sf-new.nix
     ];
   });
 }
