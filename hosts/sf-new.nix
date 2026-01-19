@@ -93,6 +93,7 @@ let
     homebrew = {
       enable = true;
       brews = [
+        "pipx"
       ];
     };
 

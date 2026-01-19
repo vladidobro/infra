@@ -6,6 +6,12 @@ let home = { config, pkgs, lib, ... }:
     platform = pkgs.stdenv.hostPlatform;
     cfg-dev = config.vladidobro.develop;
     cfg-nvim = config.vladidobro.nvim;
+    nixvim =
+      let 
+        vim = pkgs.nixvim.makeNixvimWithModule 
+              { module = self.nixvimModules.default; };
+      in pkgs.writeShellScriptBin cfg-nvim.nixvim.alias 
+        "exec -a $0 ${vim}/bin/nvim $@";
   in {
 
 
@@ -40,12 +46,7 @@ let home = { config, pkgs, lib, ... }:
 
     config = mkIf cfg.enable {
 
-      home.packages = with pkgs; 
-      let nixvim = (
-        let vim = pkgs.nixvim.makeNixvimWithModule { module = self.nixvimModules.default; };
-        in pkgs.writeShellScriptBin cfg-nvim.nixvim.alias "exec -a $0 ${vim}/bin/nvim $@"
-      );
-      in [
+      home.packages = with pkgs; [
         unzip
         unrar-wrapper
         p7zip
@@ -460,6 +461,7 @@ let home = { config, pkgs, lib, ... }:
           la = "ls -a";
           l = "ls -lah";
           f = "lfcd";
+          p = "python";
           py = "ipython";
           kb = "kubectl";
           ".." = "cd ..";
@@ -505,23 +507,6 @@ let home = { config, pkgs, lib, ... }:
           }
         '';
       };
-      programs.helix = mkIf cfg.full {
-        enable = true;
-        defaultEditor = false;
-        settings = {
-          theme = "gruvbox";
-          editor = {
-            line-number = "relative";
-            lsp.display-messages = true;
-          };
-          keys.normal = {
-            Z = { 
-              Z = ":x";
-              Q = ":q!";
-            };
-          };
-        };
-      };
 
       programs.direnv = mkIf cfg.full {
         enable = true;
@@ -529,31 +514,6 @@ let home = { config, pkgs, lib, ... }:
         enableBashIntegration = true;
         enableZshIntegration = true;
         enableNushellIntegration = true;
-        stdlib = ''
-          layout_poetry() {
-            PYPROJECT_TOML="''${PYPROJECT_TOML:-pyproject.toml}"
-            if [[ ! -f "$PYPROJECT_TOML" ]]; then
-                log_status "No pyproject.toml found. Executing \`poetry init\` to create a \`$PYPROJECT_TOML\` first."
-                poetry init
-            fi
-
-            if [[ -d ".venv" ]]; then
-                VIRTUAL_ENV="$(pwd)/.venv"
-            else
-                VIRTUAL_ENV=$(poetry env info --path 2>/dev/null ; true)
-            fi
-
-            if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
-                log_status "No virtual environment exists. Executing \`poetry install\` to create one."
-                poetry install
-                VIRTUAL_ENV=$(poetry env info --path)
-            fi
-
-            PATH_add "$VIRTUAL_ENV/bin"
-            export POETRY_ACTIVE=1
-            export VIRTUAL_ENV
-          }
-        '';
       };
         
       programs.lf = mkIf cfg.full {
@@ -672,6 +632,9 @@ let home = { config, pkgs, lib, ... }:
 
       programs.password-store.enable = mkIf cfg.basic true;
 
+      fonts.packages = mkIf cfg.graphical with pkgs; [
+        nerd-fonts.noto
+      ];
       programs.alacritty = mkIf cfg.graphical {
         enable = true;
         settings = {
