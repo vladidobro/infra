@@ -17,20 +17,8 @@ let
       minimal = true;
       basic = true;
       full = true;
-      develop = {
-        enable = true;
-        c = true;
-        python = true;
-        rust = true;
-        haskell = false;
-      };
       graphical = true;
-
-      nvim.enable = true;
-      nvim.nixvim = {
-        enable = true;
-        alias = "nixvim";
-      };
+      nvim.enable = false;
     };
 
     home.sessionPath = [
@@ -47,7 +35,7 @@ let
       #qemu
       #inetutils
       #renameutils
-      pyright
+      #pyright
       #poetry
       #(python3.withPackages (ps: with ps; [ pip ]))
       #ruff
@@ -80,6 +68,9 @@ let
       user.signingkey = "~/.ssh/id_ed25519";
       commit.gpgsign = true;
     };
+
+    programs.nixvim.enable = true;
+    programs.nixvim.imports = [ self.nixvimModules.default ];
   };
 
   config = { pkgs, ... }: {
@@ -106,7 +97,7 @@ let
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
-    programs.zsh.initExtra = ''
+    programs.zsh.shellInit = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
 
@@ -124,7 +115,7 @@ let
       useGlobalPkgs = true;
     };
     home-manager.sharedModules = [
-      #nixvim.homeManagerModules.nixvim
+      nixvim.homeModules.nixvim
       self.homeModules.default
     ];
     home-manager.users.vladislavwohlrath = home;
