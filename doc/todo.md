@@ -1,3 +1,8 @@
 - kulich
-  - [ ] tailscale
   - [ ] git serve
+  - upgrade to 25.11
+    - [ ] roundcube connects to imap - disable it, an configure to use imaps
+    - [ ] smtp doesnt work - but ok because email is coming in, just not out
+    - [x] svatba ok
+    - [x] mongo ok
+    - [x] postgres ok

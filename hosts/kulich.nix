@@ -41,6 +41,7 @@ let
       fqdn = "mail.wohlrath.cz";
       domains = [ "wohlrath.cz" ];
       certificateScheme = "acme-nginx";
+      enableImap = true;  # for roundcube, behind firewall
     };
 
     services.roundcube = {
