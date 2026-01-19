@@ -82,7 +82,7 @@ let
   config = { pkgs, ... }: {
     imports = [
       #inputs.secrets.sf
-      #home-manager.darwinModules.home-manager
+      home-manager.darwinModules.home-manager
     ];
 
     system.stateVersion = 6;  # 25.11
@@ -90,7 +90,6 @@ let
     nixpkgs.config.allowUnfree = true;
 
     system.primaryUser = "vladislavwohlrath";
-    #services.nix-daemon.enable = true;
     nix = {
       settings.trusted-users = [ "vladislavwohlrath" ];
       settings.experimental-features = [ "nix-command" "flakes" ];
@@ -103,25 +102,23 @@ let
     programs.bash.enable = true;
     programs.zsh.enable = true;
 
-    #homebrew = {
-    #  enable = true;
-    #  brews = [
-    #  ];
-    #};
+    homebrew = {
+      enable = true;
+      brews = [
+      ];
+    };
 
     users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
 
-    #home-manager = {
-    #  useUserPackages = true;
-    #  useGlobalPkgs = true;
-    #};
-    #home-manager.sharedModules = [
-    #  nixvim.homeManagerModules.nixvim
+    home-manager = {
+      useUserPackages = true;
+      useGlobalPkgs = true;
+    };
+    home-manager.sharedModules = [
+      #nixvim.homeManagerModules.nixvim
       #self.homeModules.default
-    #];
+    ];
     #home-manager.users.vladislavwohlrath = home;
-
-    environment.systemPackages = [ pkgs.vim ];
   };
 
 in {
