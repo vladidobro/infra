@@ -7,31 +7,31 @@ let
 
   home = { pkgs, ... }: 
   {
-    home.stateVersion = "23.11";
+    home.stateVersion = "25.11";
     home.username = "vladislavwohlrath";
     home.homeDirectory = "/Users/vladislavwohlrath";
 
-#     vladidobro = {
-#       enable = true;
-#       aliases = true;
-#       minimal = true;
-#       basic = true;
-#       full = true;
-#       develop = {
-#         enable = true;
-#         c = true;
-#         python = true;
-#         rust = true;
-#         haskell = true;
-#       };
-#       graphical = true;
-# 
-#       nvim.enable = true;
-#       nvim.nixvim = {
-#         enable = true;
-#         alias = "nixvim";
-#       };
-#     };
+    vladidobro = {
+      enable = true;
+      aliases = true;
+      minimal = true;
+      basic = true;
+      full = true;
+      develop = {
+        enable = true;
+        c = true;
+        python = true;
+        rust = true;
+        haskell = false;
+      };
+      graphical = true;
+
+      nvim.enable = true;
+      nvim.nixvim = {
+        enable = true;
+        alias = "nixvim";
+      };
+    };
 
     home.sessionPath = [
       "$HOME/.local/bin"
@@ -61,22 +61,10 @@ let
       "kulich" = {
         user = "vladidobro";
         hostname = "wohlrath.cz";
-        identityFile = "~/.ssh/id_private";
-      };
-      "wohlrath.cz" = {
-        identityFile = "~/.ssh/id_private";
-      };
-      "github.com" = {
-        identityFile = "~/.ssh/id_private";
       };
     };
 
     programs.git.ignores = [ ".envrc" ".direnv" ];
-
-    programs.zsh.initContent = ''
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-      export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
-    '';
   };
 
   config = { pkgs, ... }: {
@@ -116,9 +104,9 @@ let
     };
     home-manager.sharedModules = [
       #nixvim.homeManagerModules.nixvim
-      #self.homeModules.default
+      self.homeModules.default
     ];
-    #home-manager.users.vladislavwohlrath = home;
+    home-manager.users.vladislavwohlrath = home;
 
     environment.systemPackages = with pkgs; [ 
       vim
