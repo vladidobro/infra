@@ -146,12 +146,11 @@ let home = { config, pkgs, lib, ... }:
           {
             plugin = nvim-lspconfig;
             config = ''
-              local lspconfig = vim.lsp.config
 
-              lspconfig.pyright.setup {}
-              lspconfig.rust_analyzer.setup {}
-              lspconfig.hls.setup {}
-              lspconfig.nushell.setup {}
+              vim.lsp.enable('pyright')
+              vim.lsp.enable('rust_analyzer')
+              -- vim.lsp.enable('hls')
+              -- vim.lsp.enable('nushell')
 
               vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
               vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -280,9 +279,9 @@ let home = { config, pkgs, lib, ... }:
               })
 
               local capabilities = require('cmp_nvim_lsp').default_capabilities()
-              require('lspconfig')['pyright'].setup {
+              vim.lsp.config('pyright', {
                 capabilities = capabilities
-              }
+              })
             '';
             type = "lua";
           }
@@ -293,11 +292,11 @@ let home = { config, pkgs, lib, ... }:
             plugin = nvim-navbuddy;
             config = ''
               local navbuddy = require("nvim-navbuddy")
-              require("lspconfig").pyright.setup {
+              vim.lsp.config('pyright', {
                   on_attach = function(client, bufnr)
                       navbuddy.attach(client, bufnr)
                   end
-              }
+              })
               vim.keymap.set('n', '<leader>s', '<cmd>Navbuddy<cr>')
             '';
             type = "lua";

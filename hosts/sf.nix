@@ -47,7 +47,7 @@ let
       #qemu
       #inetutils
       #renameutils
-      #pyright
+      pyright
       #poetry
       #(python3.withPackages (ps: with ps; [ pip ]))
       #ruff
