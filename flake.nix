@@ -69,6 +69,8 @@
       ./hosts/parok.nix
       ./hosts/sf.nix
       ./hosts/sf-new.nix
+
+      ./lib/darwin-flake-module.nix
     ];
   });
 }

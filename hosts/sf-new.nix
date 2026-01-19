@@ -11,27 +11,27 @@ let
     home.username = "vladislavwohlrath";
     home.homeDirectory = "/Users/vladislavwohlrath";
 
-    vladidobro = {
-      enable = true;
-      aliases = true;
-      minimal = true;
-      basic = true;
-      full = true;
-      develop = {
-        enable = true;
-        c = true;
-        python = true;
-        rust = true;
-        haskell = true;
-      };
-      graphical = true;
-
-      nvim.enable = true;
-      nvim.nixvim = {
-        enable = true;
-        alias = "nixvim";
-      };
-    };
+#     vladidobro = {
+#       enable = true;
+#       aliases = true;
+#       minimal = true;
+#       basic = true;
+#       full = true;
+#       develop = {
+#         enable = true;
+#         c = true;
+#         python = true;
+#         rust = true;
+#         haskell = true;
+#       };
+#       graphical = true;
+# 
+#       nvim.enable = true;
+#       nvim.nixvim = {
+#         enable = true;
+#         alias = "nixvim";
+#       };
+#     };
 
     home.sessionPath = [
       "$HOME/.local/bin"
@@ -43,15 +43,15 @@ let
     };
 
     home.packages = with pkgs; [
-      nixos-rebuild
-      qemu
-      inetutils
-      renameutils
-      gnumake
-      pyright
-      poetry
-      (python3.withPackages (ps: with ps; [ pip ]))
-      ruff
+      #nixos-rebuild
+      #qemu
+      #inetutils
+      #renameutils
+      #gnumake
+      #pyright
+      #poetry
+      #(python3.withPackages (ps: with ps; [ pip ]))
+      #ruff
     ];
 
     programs.ssh.matchBlocks = {
