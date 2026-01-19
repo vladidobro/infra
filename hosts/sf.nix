@@ -1,14 +1,13 @@
 { inputs, self, ... }:
 let 
-  nixpkgs = inputs.nixpkgs-2505;
-  nix-darwin = inputs.nix-darwin-2505;
-  nixvim = inputs.nixvim-2505;
-  nix-index-database = inputs.nix-index-database-2505;
-  home-manager = inputs.home-manager-2505;
+  nixpkgs = inputs.nixpkgs-2511;
+  nix-darwin = inputs.nix-darwin-2511;
+  home-manager = inputs.home-manager-2511;
+  nixvim = inputs.nixvim-2511;
 
   home = { pkgs, ... }: 
   {
-    home.stateVersion = "23.11";
+    home.stateVersion = "25.11";
     home.username = "vladislavwohlrath";
     home.homeDirectory = "/Users/vladislavwohlrath";
 
@@ -23,7 +22,7 @@ let
         c = true;
         python = true;
         rust = true;
-        haskell = true;
+        haskell = false;
       };
       graphical = true;
 
@@ -45,77 +44,65 @@ let
 
     home.packages = with pkgs; [
       nixos-rebuild
-      qemu
-      inetutils
-      renameutils
-      gnumake
-      pyright
-      poetry
-      (python3.withPackages (ps: with ps; [ pip ]))
-      ruff
+      #qemu
+      #inetutils
+      #renameutils
+      #pyright
+      #poetry
+      #(python3.withPackages (ps: with ps; [ pip ]))
+      #ruff
     ];
 
+    programs.ssh.enableDefaultConfig = false;
     programs.ssh.matchBlocks = {
       "*" = {
+        forwardAgent = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        compression = false;
+        addKeysToAgent = "no";
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
         identityFile = "~/.ssh/id_ed25519";
       };
       "kulich" = {
         user = "vladidobro";
         hostname = "wohlrath.cz";
-        identityFile = "~/.ssh/id_private";
-      };
-      "wohlrath.cz" = {
-        identityFile = "~/.ssh/id_private";
-      };
-      "github.com" = {
-        identityFile = "~/.ssh/id_private";
       };
     };
 
     programs.git.ignores = [ ".envrc" ".direnv" ];
-
-    programs.zsh.initContent = ''
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-      export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib/
-    '';
+    programs.git.settings = {
+      gpg.format = "ssh";
+      user.signingkey = "~/.ssh/id_ed25519";
+      commit.gpgsign = true;
+    };
   };
 
   config = { pkgs, ... }: {
     imports = [
-      inputs.secrets.sf
       home-manager.darwinModules.home-manager
     ];
 
-    system.stateVersion = 4;
-    system.primaryUser = "vladislavwohlrath";
-    ids.gids.nixbld = 350;  # nix was installed when this was default
-
+    system.stateVersion = 6;  # 25.11
     nixpkgs.hostPlatform = "aarch64-darwin";
-    #services.nix-daemon.enable = true;
+    nixpkgs.config.allowUnfree = true;
+
+    fonts.packages = with pkgs; [
+      nerd-fonts.noto
+    ];
+    system.primaryUser = "vladislavwohlrath";
     nix = {
-      enable = true;
-      package = pkgs.nix;
       settings.trusted-users = [ "vladislavwohlrath" ];
       settings.experimental-features = [ "nix-command" "flakes" ];
-
-      #linux-builder.enable = true;
-      buildMachines = [
-        {
-          sshUser = "root";
-          hostName = "wohlrath.cz";
-          protocol = "ssh";
-          system = "x86_64-linux";
-          maxJobs = 8;
-          publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU9MMFNQUjlZTDJWL1FxTjFCZEttOURuL3JxbXVLWmFVSG50cUwwVWZEVUYgcm9vdEBuaXhvcwo=";
-          sshKey = "/users/vladislavwohlrath/.ssh/id_private";
-        }
-      ];
       registry = {
         nixpkgs.flake = nixpkgs;
       };
     };
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [ nixvim.overlays.default ];
+    #nixpkgs.overlays = [ nixvim.overlays.default ];
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
@@ -123,6 +110,7 @@ let
     homebrew = {
       enable = true;
       brews = [
+        "pipx"
       ];
     };
 
@@ -133,16 +121,20 @@ let
       useGlobalPkgs = true;
     };
     home-manager.sharedModules = [
-      nix-index-database.homeModules.nix-index 
-      nixvim.homeManagerModules.nixvim
+      #nixvim.homeManagerModules.nixvim
       self.homeModules.default
     ];
     home-manager.users.vladislavwohlrath = home;
+
+    environment.systemPackages = with pkgs; [ 
+      vim
+      git
+    ];
   };
 
 in {
   flake.darwinConfigurations.sf = nix-darwin.lib.darwinSystem {
     system = "aarch64-darwin";
-    modules = [ config ];
+    modules = [ config inputs.secrets.sf ];
   };
 }

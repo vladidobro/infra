@@ -29,18 +29,7 @@
     agenix-2411.url = "github:ryantm/agenix";
     agenix-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
 
-    # 25.05 - sf
-    nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nix-darwin-2505.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-    nix-darwin-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
-    home-manager-2505.url = "github:nix-community/home-manager/release-25.05";
-    home-manager-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
-    nixvim-2505.url = "github:nix-community/nixvim/nixos-25.05";
-    nixvim-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
-    nix-index-database-2505.url = "github:nix-community/nix-index-database";
-    nix-index-database-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
-
-    # 25.11 - kulich, sf-new
+    # 25.11 - kulich, sf
     nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-darwin-2511.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
     nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
@@ -68,7 +57,6 @@
       ./hosts/myskus.nix
       ./hosts/parok.nix
       ./hosts/sf.nix
-      ./hosts/sf-new.nix
 
       ./lib/darwin-flake-module.nix
     ];

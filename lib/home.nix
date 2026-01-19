@@ -146,7 +146,7 @@ let home = { config, pkgs, lib, ... }:
           {
             plugin = nvim-lspconfig;
             config = ''
-              local lspconfig = require('lspconfig')
+              local lspconfig = vim.lsp.config
 
               lspconfig.pyright.setup {}
               lspconfig.rust_analyzer.setup {}
@@ -307,21 +307,22 @@ let home = { config, pkgs, lib, ... }:
         ];
       };
 
+      programs.delta.enable = mkIf cfg.full true;
+
       programs.git = mkIf cfg.minimal {
         enable = mkDefault true;
 
-        userName = mkDefault "Vladislav Wohlrath";
+        settings.user.name = mkDefault "Vladislav Wohlrath";
 
-        extraConfig = mkIf cfg.basic {
-          init.defaultBranch = mkDefault "main";
-          pager.branch = mkDefault false;
-          push.autoSetupRemote = mkDefault true;
-          push.default = mkDefault "current";
-        };
+        #settings = mkIf cfg.basic {
+        #  init.defaultBranch = mkDefault "main";
+        #  pager.branch = mkDefault false;
+        #  push.autoSetupRemote = mkDefault true;
+        #  push.default = mkDefault "current";
+        #};
 
-        delta.enable = mkIf cfg.full true;
 
-        aliases = mkIf cfg.aliases {
+        settings.alias = mkIf cfg.aliases {
           a = "add";
           aa = "add --all";
           ac = "! git add --all && git commit --verbose";
