@@ -10,7 +10,7 @@
     svatba.url = "github:jaroslavpesek/wedding-app?tag=0.5.0";
     svatba.inputs.nixpkgs.follows = "nixpkgs-2405";
 
-    # 24.05 - kulich, parok
+    # 24.05 - parok
     nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     home-manager-2405.url = "github:nix-community/home-manager/release-24.05";
     home-manager-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
@@ -40,7 +40,7 @@
     nix-index-database-2505.url = "github:nix-community/nix-index-database";
     nix-index-database-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
 
-    # 25.11
+    # 25.11 - kulich
     nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-darwin-2511.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
     nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";

@@ -5,4 +5,4 @@
     - [ ] smtp doesnt work - but ok because email is coming in, just not out
     - [x] svatba ok
     - [x] mongo ok
-    - [x] postgres ok
+    - [ ] postgres
