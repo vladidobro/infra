@@ -106,6 +106,9 @@ let
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
+    programs.zsh.initExtra = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    '';
 
     homebrew = {
       enable = true;
