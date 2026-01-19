@@ -101,8 +101,6 @@ let
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
-    programs.git.enable = true;
-    programs.vim.enable = true;
 
     homebrew = {
       enable = true;
@@ -121,6 +119,11 @@ let
       #self.homeModules.default
     ];
     #home-manager.users.vladislavwohlrath = home;
+
+    environment.systemPackages = with pkgs; [ 
+      vim
+      git
+    ];
   };
 
 in {
