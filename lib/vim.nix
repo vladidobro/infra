@@ -17,13 +17,6 @@ vim = { lib, config, pkgs, ... }: {
   ];
 
   plugins = {
-    #navbuddy.enable = true;
-    #nvim-surround
-    #nvim-cmp
-    #plenary-nvim
-    #nvim-navic
-    #nui-nvim
-
     web-devicons.enable = true;
     lualine.enable = true;
     nvim-tree = {
@@ -118,9 +111,6 @@ vim = { lib, config, pkgs, ... }: {
       };
     };
 
-    # - [ ] lsp
-    #   - [ ] python
-    #   - [ ] rust  
     # - [ ] cmp
     #   - [ ] lsp
     #   - [ ] path

@@ -105,6 +105,12 @@ let
       enable = true;
       brews = [
         "pipx"
+	"azure-cli"
+	"kubectl"
+	"kubelogin"
+	"colima"
+	"uv"
+	"k9s"
       ];
     };
 
