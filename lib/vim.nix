@@ -1,33 +1,5 @@
 { inputs, self, ... }:
 let 
-lsp = {
-    enable = true;
-    servers = {
-      pyright.enable = true;
-      #ruff.enable = true;
-      #ruff-lsp.enable = true;
-      #rust-analyzer.enable = true;
-      #rust-analyzer.installCargo = false;
-      #rust-analyzer.installRustc = false;
-    };
-    keymaps = {
-      lspBuf = {
-        gd = "definition";
-        gr = "references";
-        gD = "declaration";
-        gI = "implementation";
-        gT = "type_definition";
-        K = "hover";
-        "<leader>cw" = "workspace_symbol";
-        "<leader>cr" = "rename";
-      };
-      diagnostic = {
-        "<leader>cd" = "open_float";
-        "[d" = "goto_next";
-        "]d" = "goto_prev";
-      };
-    };
-  };
 vim = { lib, config, pkgs, ... }: {
   opts = {
     number = true;
@@ -37,9 +9,6 @@ vim = { lib, config, pkgs, ... }: {
   globals = {
     mapleader = " ";
   };
-  keymaps = [
-    { mode = "n"; key = "<leader>mk"; action = "<cmd>!make<cr>"; }
-  ];
 
   colorschemes.gruvbox.enable = true;
 
@@ -48,26 +17,120 @@ vim = { lib, config, pkgs, ... }: {
   ];
 
   plugins = {
-    lualine.enable = true;
-    treesitter.enable = true;
-    treesitter-textobjects.enable = true;
-    nvim-tree.enable = true;
-    luasnip.enable = true;
-    #toggleterm-nvim.enable = true;
-    #telescope-nvim.enable = true;
     #navbuddy.enable = true;
-    #undotree.enable = true;
     #nvim-surround
-    #nvim-tree-lua
-    #tmux-nvim
     #nvim-cmp
-    #nvim-dap{,-ui,-python}
     #plenary-nvim
     #nvim-navic
     #nui-nvim
-    dap.enable = true;
-    lsp-format.enable = true;         # autoformat
-    lsp = lsp;
+
+    web-devicons.enable = true;
+    lualine.enable = true;
+    nvim-tree = {
+      enable = true;
+      openOnSetup = true;
+      luaConfig.post = ''
+        vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
+      '';
+    };
+    lsp = {
+      enable = true;
+      servers = {
+        pyright.enable = true;
+      };
+      keymaps = {
+        lspBuf = {
+          gd = "definition";
+          gr = "references";
+          gD = "declaration";
+          gI = "implementation";
+          gT = "type_definition";
+          K = "hover";
+          "<leader>cw" = "workspace_symbol";
+          "<leader>cr" = "rename";
+        };
+        diagnostic = {
+          "<leader>cd" = "open_float";
+          "[d" = "goto_next";
+          "]d" = "goto_prev";
+        };
+      };
+    };
+    toggleterm = {
+      enable = true;
+      settings = {
+        open_mapping = "'<C-g>'";
+        direction = "horizontal";
+      };
+    };
+    tmux-navigator = {
+      enable = true;
+      keymaps = [
+        { action = "left"; key = "<A-h>"; }
+        { action = "down"; key = "<A-j>"; }
+        { action = "up"; key = "<A-k>"; }
+        { action = "right"; key = "<A-l>"; } 
+      ];
+      settings = {
+        no_mappings = 1;
+      };
+    };
+    telescope = {
+      enable = true;
+      keymaps = {
+        "<leader>fg" = "live_grep";
+        "<leader>ff" = "git_files";
+        "<leader>fh" = "find_files";
+        "<leader>fb" = "buffers";
+      };
+    };
+
+    treesitter.enable = true;
+    treesitter-textobjects = {
+      enable = true;
+      settings = {
+        select = {
+          enable = true;
+          lookahead = true;
+          keymaps = {
+            "af" = "@function.outer";
+            "if" = "@function.inner";
+            "ac" = "@class.outer";
+            "ic" = "@class.inner";
+          };
+          selection_modes = {
+            "@function.outer" = "V";
+            "@class.outer" = "V";
+          };
+        };
+        move = {
+          enable = true;
+          set_jumps = true;
+          goto_next_start = {
+            "]f" = "@function.outer";
+            "]c" = "@class.outer";
+          };
+          goto_previous_start = {
+            "[f" = "@function.outer";
+            "[c" = "@class.outer";
+          };
+        };
+      };
+    };
+
+    # - [ ] lsp
+    #   - [ ] python
+    #   - [ ] rust  
+    # - [ ] cmp
+    #   - [ ] lsp
+    #   - [ ] path
+    #   - [ ] buffer
+    #   - [ ] cmdline
+    # - [ ] extras
+    #   - [ ] plenary
+    #   - [ ] navic
+    #   - [ ] nui
+    #   - [ ] navbuddy
   };
 };
 in {
