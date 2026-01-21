@@ -113,7 +113,11 @@ let
 	"k9s"
 	"argocd"
 	"glab"
+	#"msodbcsql18"
       ];
+      #taps = [
+      #  { name = "microsoft/mssql-release"; clone_target="https://github.com/Microsoft/homebrew-mssql-release"; }
+      #];
     };
 
     users.users.vladislavwohlrath.home = "/Users/vladislavwohlrath";
