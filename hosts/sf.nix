@@ -111,6 +111,8 @@ let
 	"colima"
 	"uv"
 	"k9s"
+	"argocd"
+	"glab"
       ];
     };
 

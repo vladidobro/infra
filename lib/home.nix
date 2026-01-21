@@ -6,12 +6,6 @@ let home = { config, pkgs, lib, ... }:
     platform = pkgs.stdenv.hostPlatform;
     cfg-dev = config.vladidobro.develop;
     cfg-nvim = config.vladidobro.nvim;
-    nixvim =
-      let 
-        vim = pkgs.nixvim.makeNixvimWithModule 
-              { module = self.nixvimModules.default; };
-      in pkgs.writeShellScriptBin cfg-nvim.nixvim.alias 
-        "exec -a $0 ${vim}/bin/nvim $@";
   in {
 
 
@@ -29,18 +23,8 @@ let home = { config, pkgs, lib, ... }:
         rust = mkEnableOption "rust";
         haskell = mkEnableOption "haskell";
       };
-      data = {
-        duckdb = mkEnableOption "duckdb";
-      };
       nvim = {
         enable = mkEnableOption "nvim";
-        nixvim = {
-          enable = mkEnableOption "nixvim";
-          alias = mkOption {
-            type = types.str;
-            default = "nvim";
-          };
-        };
       };
     };
 
