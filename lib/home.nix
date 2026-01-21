@@ -295,77 +295,76 @@ let home = { config, pkgs, lib, ... }:
       programs.git = mkIf cfg.minimal {
         enable = mkDefault true;
 
-        settings.user.name = mkDefault "Vladislav Wohlrath";
 
-        #settings = mkIf cfg.basic {
-        #  init.defaultBranch = mkDefault "main";
-        #  pager.branch = mkDefault false;
-        #  push.autoSetupRemote = mkDefault true;
-        #  push.default = mkDefault "current";
-        #};
+        settings = mkIf cfg.basic {
+	  user.name = mkDefault "Vladislav Wohlrath";
+          init.defaultBranch = mkDefault "main";
+          pager.branch = mkDefault false;
+          push.autoSetupRemote = mkDefault true;
+          push.default = mkDefault "current";
+	  alias = {
+	    a = "add";
+	    aa = "add --all";
+	    ac = "! git add --all && git commit --verbose";
+	    acd = "! git add --all && git commit --verbose --no-verify -m dev";
+	    acp = "! git add --all && git commit --verbose --no-verify -m dev && git push";
 
+	    b = "branch";
+	    ba = "branch --all";
+	    bd = "branch --delete";
+	    bdd = "branch --delete --force";
+	    bu = "branch --set-upstream-to";
+	    bm = "branch --move";
 
-        settings.alias = mkIf cfg.aliases {
-          a = "add";
-          aa = "add --all";
-          ac = "! git add --all && git commit --verbose";
-          acp = "! git add --all && git commit --verbose --no-verify -m dev && git push";
+	    c = "commit --verbose";
+	    ca = "commit --amend --verbose";
 
-          b = "branch";
-          ba = "branch --all";
-          bd = "branch --delete";
-          bdd = "branch --delete --force";
-          bu = "branch --set-upstream-to";
-          bm = "branch -m";
+	    co = "checkout";
+	    cb = "checkout -b";
 
-          c = "commit --verbose";
-          ca = "commit --amend --verbose";
+	    d = "diff";
+	    dc = "diff --cached";
+	    ds = "diff --compact-summary";
+	    dcs = "diff --cached --compact-summary";
 
-          co = "checkout";
-          cb = "checkout -b";
+	    f = "fetch";
+	    fa = "fetch --all";
 
-          d = "diff";
-          dc = "diff --cached";
-          ds = "diff --compact-summary";
-          dcs = "diff --cached --compact-summary";
+	    l = "pull";
 
-          f = "fetch";
-          fa = "fetch --all";
+	    lg = "log --oneline --decorate --graph";
+	    lga = "log --oneline --decorate --graph --all";
 
-          l = "pull";
+	    m = "merge";
+	    ma = "merge --abort";
 
-          lg = "log --oneline --decorate --graph";
-          lga = "log --oneline --decorate --graph --all";
+	    p = "push";
+	    pt = "push --tags";
+	    pa = "push --all";
+	    pu = "push --set-upstream";
+	    pf = "push --force-with-lease";
 
-          m = "merge";
-          ma = "merge --abort";
+	    ra = "remote add";
+	    rp = "remote prune";
+	    rpo = "remote prune origin";
 
-          p = "push";
-          pt = "push --tags";
-          pa = "push --all";
-          pu = "push --set-upstream";
-          pf = "push --force-with-lease";
+	    s = "status";
+	    ss = "status --short";
 
-          ra = "remote add";
-          rp = "remote prune";
-          rpo = "remote prune origin";
+	    st = "stash push";
+	    sta = "stash apply";
+	    stp = "stash pop";
+	    stc = "stash clear";
+	    std = "stash drop";
+	    stl = "stash list";
+	    sts = "stash show";
 
-          s = "status";
-          ss = "status --short";
+	    t = "tag";
+	    ta = "tag --annotate";
 
-          st = "stash push";
-          sta = "stash apply";
-          stp = "stash pop";
-          stc = "stash clear";
-          std = "stash drop";
-          stl = "stash list";
-          sts = "stash show";
-
-          t = "tag";
-          ta = "tag --annotate";
-
-          alias = "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
-        };
+	    alias = "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
+	  };
+	};
       };
 
       programs.tmux = mkIf cfg.basic {
