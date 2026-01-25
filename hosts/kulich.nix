@@ -1,33 +1,38 @@
 { inputs, self, ... }: 
 let 
+  nixpkgs = inputs.nixpkgs-2511;
+  home-manager = inputs.home-manager-2511;
+  nixos-mailserver = inputs.nixos-mailserver-2511;
 
   config = { config, pkgs, lib, ... }: {
     system.stateVersion = "23.11";
 
     imports = [
       inputs.secrets.kulich
-      inputs.home-manager-2511.nixosModules.home-manager
-      inputs.nixos-mailserver-2511.nixosModules.default
+      home-manager.nixosModules.home-manager
+      nixos-mailserver.nixosModules.default
       inputs.svatba.nixosModules.default
       self.nixosModules.vpsfree
     ];
 
+    # === System ===
+
+    time.timeZone = "UTC";
     nix = {
       package = pkgs.nix;
       settings.experimental-features = [ "nix-command" "flakes" ];
+      registry = {
+        nixpkgs.flake = nixpkgs;
+      };
     };
     nixpkgs.config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
-
-    time.timeZone = "UTC";
-
     networking.firewall.allowedTCPPorts = [
       80
       443
     ];
-
     services.openssh.enable = true;
     services.openssh.settings.PermitRootLogin = "yes";
 
@@ -114,19 +119,23 @@ let
       in pkgs.mongodb-ce;
     };
 
-    # === Users ===
+
+
+    # === Packages ===
 
     environment.systemPackages = with pkgs; [
       mongosh
     ];
 
-    home-manager.sharedModules = [
-      self.homeModules.default
-    ];
+    # === Users ===
+
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
     };
+    home-manager.sharedModules = [
+      self.homeModules.default
+    ];
 
     users.users.vladidobro = {
       isNormalUser = true;
@@ -164,11 +173,10 @@ let
       isNormalUser = true;
       extraGroups = [ "podman" ];
     };
-
   };
 
 in { 
-  flake.nixosConfigurations.kulich = inputs.nixpkgs-2511.lib.nixosSystem {
+  flake.nixosConfigurations.kulich = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [ config ];
   };
