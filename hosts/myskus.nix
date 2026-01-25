@@ -56,7 +56,7 @@ let
       };
     };
     swapDevices = [ { device = "/swap/swapfile"; } ];
-    networking.useDHCP = true;
+    networking.useDHCP = lib.mkDefault true;
     nixpkgs.hostPlatform = "x86_64-linux";
     hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
     services.printing.enable = true;
@@ -83,7 +83,7 @@ let
     i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
-      keyMap = "us";
+      keyMap = lib.mkDefault "us";
       useXkbConfig = true;
     };
     nix = {
@@ -93,6 +93,7 @@ let
         nixpkgs.flake = nixpkgs;
       };
     };
+    security.polkit.enable = true;
     services.openssh.enable = true;
     services.xserver = {
       enable = true;
@@ -101,6 +102,15 @@ let
       windowManager.xmonad.enable = true;
     };
     fonts.packages = with pkgs; [ nerd-fonts.noto ];
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
+          user = "greeter";
+        };
+      };
+    };
 
     # === Packages ===
 
@@ -140,7 +150,7 @@ let
         basic = true;
         full = true;
         graphical = true;
-        nvim.enable = true;
+        nvim.enable = false;
       };
 
       programs.ssh.enableDefaultConfig = false;
@@ -166,6 +176,10 @@ let
 
       programs.nixvim.enable = true;
       programs.nixvim.imports = [ self.nixvimModules.default ];
+
+      wayland.windowManager.sway = {
+        enable = true;
+      };
     };
   };
 
