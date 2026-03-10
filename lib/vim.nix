@@ -26,11 +26,13 @@ vim = { lib, config, pkgs, ... }: {
         vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
       '';
     };
+
     lsp = {
-      enable = true;
       servers = {
-        pyright.enable = true;
+	basedpyright.enable = true;
+	ruff.enable = false;
       };
+      enable = true;
       keymaps = {
         lspBuf = {
           gd = "definition";
@@ -39,16 +41,28 @@ vim = { lib, config, pkgs, ... }: {
           gI = "implementation";
           gT = "type_definition";
           K = "hover";
-          "<leader>cw" = "workspace_symbol";
-          "<leader>cr" = "rename";
+          "<leader>lw" = "workspace_symbol";
+          "<leader>lr" = "rename";
+	  "<leader>ls" = "signature_help";
         };
         diagnostic = {
-          "<leader>cd" = "open_float";
-          "[d" = "goto_next";
-          "]d" = "goto_prev";
+          "<leader>d" = "open_float";
+          "[d" = "goto_prev";
+          "]d" = "goto_next";
         };
       };
     };
+  
+    cmp = {
+      enable = true;
+      autoEnableSources = true;
+      settings.sources = [
+	{ name = "nvim_lsp"; }
+	{ name = "path"; }
+	{ name = "buffer"; }
+      ];
+    };
+
     toggleterm = {
       enable = true;
       settings = {

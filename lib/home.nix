@@ -320,7 +320,8 @@ let home = { config, pkgs, lib, ... }:
 	    ca = "commit --amend --verbose";
 
 	    co = "checkout";
-	    cb = "checkout -b";
+	    cob = "checkout -b";
+	    cod = "checkout --detach";
 
 	    d = "diff";
 	    dc = "diff --cached";
@@ -339,7 +340,8 @@ let home = { config, pkgs, lib, ... }:
 	    ma = "merge --abort";
 
 	    p = "push";
-	    pt = "push --tags";
+	    pto = "push origin --tag";
+	    pta = "push --tags";
 	    pa = "push --all";
 	    pu = "push --set-upstream";
 	    pf = "push --force-with-lease";

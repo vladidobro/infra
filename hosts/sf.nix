@@ -109,6 +109,8 @@ let
 	"kubectl"
 	"kubelogin"
 	"colima"
+	"docker"
+	"qemu"
 	"uv"
 	"k9s"
 	"argocd"
