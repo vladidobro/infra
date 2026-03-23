@@ -70,6 +70,7 @@ let
     };
 
     programs.nixvim.enable = true;
+    programs.nixvim.defaultEditor = true;
     programs.nixvim.imports = [ self.nixvimModules.default ];
   };
 

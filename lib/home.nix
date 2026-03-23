@@ -48,7 +48,6 @@ let home = { config, pkgs, lib, ... }:
       home.shellAliases = mkIf cfg.aliases {
         g = "git";
         e = "nvim";
-
       };
       
       programs.ssh = mkIf cfg.minimal {
