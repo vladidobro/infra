@@ -99,7 +99,7 @@ let
       enable = true;
       xkb.layout = "us";
       xkb.options = "caps:escape";
-      windowManager.xmonad.enable = true;
+      desktopManager.xfce.enable = true;
     };
     fonts.packages = with pkgs; [ nerd-fonts.noto ];
     services.greetd = {
@@ -180,6 +180,16 @@ let
       wayland.windowManager.sway = {
         enable = true;
       };
+    };
+
+    users.users.rea = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
+    home-manager.users.rea = {
+      home.stateVersion = "25.11";
+      home.username = "rea";
+      home.homeDirectory = "/home/rea";
     };
   };
 
