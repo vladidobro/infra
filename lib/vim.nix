@@ -29,7 +29,7 @@ vim = { lib, config, pkgs, ... }: {
 
     lsp = {
       servers = {
-	basedpyright.enable = true;
+	pyright.enable = true;
 	ruff.enable = false;
       };
       enable = true;
