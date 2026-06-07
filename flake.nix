@@ -40,6 +40,17 @@
     nixos-mailserver-2511.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     nixos-mailserver-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
 
+    # 26.05 - myskus
+    nixpkgs-2605.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nix-darwin-2605.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
+    nix-darwin-2605.inputs.nixpkgs.follows = "nixpkgs-2605";
+    home-manager-2605.url = "github:nix-community/home-manager/release-26.05";
+    home-manager-2605.inputs.nixpkgs.follows = "nixpkgs-2605";
+    nixvim-2605.url = "github:nix-community/nixvim/nixos-26.05";
+    nixvim-2605.inputs.nixpkgs.follows = "nixpkgs-2605";
+    #nixos-mailserver-2605.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-26.05";
+    #nixos-mailserver-2605.inputs.nixpkgs.follows = "nixpkgs-2605";
+
     # unstable
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
