@@ -113,7 +113,7 @@ let
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --sessions ${pkgs.sway}/share/wayland-sessions:${pkgs.xfce4-session}/share/xsessions";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --user-menu --sessions ${pkgs.sway}/share/wayland-sessions:${pkgs.xfce4-session}/share/xsessions";
           user = "greeter";
         };
       };
@@ -132,6 +132,7 @@ let
       brightnessctl
       playerctl
       uv
+      xorg.xinit
     ];
 
     # === Users ===
@@ -147,7 +148,7 @@ let
 
     users.users.vladidobro = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "lp" ];
+      extraGroups = [ "wheel" "input" "lp" ];
     };
     home-manager.users.vladidobro = {
       home.stateVersion = "24.11";
@@ -220,7 +221,7 @@ let
 
     users.users.rea = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "input" "lp" ];
     };
     home-manager.users.rea = {
       home.stateVersion = "25.11";
