@@ -89,12 +89,22 @@ vim = { lib, config, pkgs, ... }: {
     cmp = {
       enable = true;
       autoEnableSources = true;
-      settings.sources = [
-	{ name = "nvim_lsp"; }
-	{ name = "luasnip"; }
-	{ name = "path"; }
-	{ name = "buffer"; }
-      ];
+      settings = {
+        sources = [
+	    { name = "nvim_lsp"; priority = 1000; }
+	    { name = "luasnip"; priority = 750; }
+	    { name = "path"; priority = 500; }
+	    { name = "buffer"; priority = 250; }
+	];
+
+	#snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+
+	# mapping = {
+	#   "<C-n>" = "cmp.mapping.select_next_item()";
+	#   "<C-p>" = "cmp.mapping.select_prev_item()";
+	#   "<C-l>" = "cmp.mapping.config({ select = true })";
+	# };
+      };
     };
 
     toggleterm = {
