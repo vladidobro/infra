@@ -6,6 +6,10 @@
 1. keep up to date list of which host is on which version
    in comment in flake inputs, so that old ones can be deleted
 
+It can happen that NetworkManager is stopped during the activation script,
+and then the update fails. In that case, do only `nixos-rebuild boot`,
+so that it is not immediately activated.
+
 ## Services that need migration
 
 ### Mailserver
