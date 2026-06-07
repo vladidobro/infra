@@ -119,6 +119,26 @@ let
       };
     };
     programs.nix-ld.enable = true;
+    services.upower = {
+      enable = true;
+      percentageLow = 15;
+      percentageCritical = 5;
+      percentageAction = 3;
+      criticalPowerAction = "Hibernate";
+    };
+    services.logind = {
+      lidSwitch = "suspend";
+      lidSwitchExternalPower = "lock";
+    };
+    services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+	START_CHARGE_THRESH_BAT0 = 20;
+	STOP_CHARGE_THRESH_BAT0 = 80;
+      };
+    };
 
     # === Packages ===
 
@@ -196,6 +216,17 @@ let
       programs.nixvim.vimdiffAlias = true;
       programs.nixvim.imports = [ self.nixvimModules.default ];
 
+      programs.swaylock.enable = true;
+      services.swayidle = {
+        enable = true;
+	timeouts = [
+	  { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock -f"; }
+	  { timeout = 600; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+	];
+	events = [
+	  { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
+	];
+      };
       wayland.windowManager.sway = {
         enable = true;
 	config = {
@@ -229,6 +260,7 @@ let
       home.homeDirectory = "/home/rea";
 
       home.packages = with pkgs; [
+	xfce.xfce4-power-manager
 	brave
       ];
     };
