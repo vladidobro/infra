@@ -59,7 +59,10 @@ let
     networking.useDHCP = lib.mkDefault true;
     nixpkgs.hostPlatform = "x86_64-linux";
     hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
-    services.printing.enable = true;
+    services.printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];  # HP LaserJet P1102
+    };
     services.pipewire = {
       enable = true;
       pulse.enable = true;
@@ -157,6 +160,11 @@ let
         nvim.enable = false;
       };
 
+      home.packages = with pkgs; [
+        zotero
+      ];
+
+      programs.zathura.enable = true;
       programs.ssh.enableDefaultConfig = false;
       programs.ssh.settings = {
         "*" = {
