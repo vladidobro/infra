@@ -102,6 +102,9 @@ vim = { lib, config, pkgs, ... }: {
 	mapping = {
 	  "<C-n>" = "cmp.mapping.select_next_item()";
 	  "<C-p>" = "cmp.mapping.select_prev_item()";
+	  "<Tab>" = "cmp.mapping.select_next_item()";
+	  "<S-Tab>" = "cmp.mapping.select_prev_item()";
+	  "<CR>" = "cmp.mapping.confirm({ select = true })";
 	  "<C-l>" = "cmp.mapping.confirm({ select = true })";
 	  "<C-d>" = "cmp.mapping.scroll_docs(4)";
 	  "<C-u>" = "cmp.mapping.scroll_docs(-4)";
