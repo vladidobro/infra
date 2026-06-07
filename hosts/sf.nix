@@ -42,7 +42,7 @@ let
     ];
 
     programs.ssh.enableDefaultConfig = false;
-    programs.ssh.matchBlocks = {
+    programs.ssh.settings = {
       "*" = {
         forwardAgent = false;
         serverAliveInterval = 0;
