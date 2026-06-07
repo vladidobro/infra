@@ -113,7 +113,7 @@ let
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --sessions ${pkgs.sway}/share/wayland-sessions:${pkgs.xfce4-session}/share/xsessions";
           user = "greeter";
         };
       };
@@ -226,6 +226,10 @@ let
       home.stateVersion = "25.11";
       home.username = "rea";
       home.homeDirectory = "/home/rea";
+
+      home.packages = with pkgs; [
+	brave
+      ];
     };
   };
 
