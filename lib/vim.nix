@@ -16,9 +16,20 @@ vim = { lib, config, pkgs, ... }: {
     gruvbox
   ];
 
+  keymaps = [
+    { mode = "n"; key = "<leader>db"; action = "<cmd>DapToggleBreakpoint<cr>"; options.desc = "Toggle breakpoint"; }
+    { mode = "n"; key = "<leader>dc"; action = "<cmd>DapContinue<cr>"; options.desc = "Continue/Start"; }
+    { mode = "n"; key = "<leader>ds"; action = "<cmd>DapStepInto<cr>"; options.desc = "Step into"; }
+    { mode = "n"; key = "<leader>dn"; action = "<cmd>DapStepOver<cr>"; options.desc = "Step over"; }
+    { mode = "n"; key = "<leader>du"; action = "<cmd>DapStepOut<cr>"; options.desc = "Step out"; }
+    { mode = "n"; key = "<leader>dt"; action = "<cmd>DapTerminate<cr>"; options.desc = "Terminate"; }
+    { mode = "n"; key = "<leader>di"; action = "<cmd>lua require('dapui').toggle()<cr>"; options.desc = "Toggle UI"; }
+  ];
+
   plugins = {
     web-devicons.enable = true;
     lualine.enable = true;
+    which-key.enable = true;
     nvim-tree = {
       enable = true;
       openOnSetup = true;
@@ -68,17 +79,19 @@ vim = { lib, config, pkgs, ... }: {
       };
     };
 
-    dap = {
-      enable = true;
-      extensions.dap-python.enable = true;
-      extensions.dap-ui.enable = true;
-    };
+    comment.enable = true;
+    luasnip.enable = true;
+
+    dap.enable = true;
+    dap-python.enable = true;
+    dap-ui.enable = true;
   
     cmp = {
       enable = true;
       autoEnableSources = true;
       settings.sources = [
 	{ name = "nvim_lsp"; }
+	{ name = "luasnip"; }
 	{ name = "path"; }
 	{ name = "buffer"; }
       ];
