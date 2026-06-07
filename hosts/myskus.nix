@@ -184,6 +184,8 @@ let
       wayland.windowManager.sway = {
         enable = true;
 	config = {
+	  modifier = "Mod4";
+	  terminal = "alacritty";
 	  input = {
 	    "*" = {
 	      xkb_layout = "us";
@@ -191,11 +193,8 @@ let
 	    };
 	  };
 	  keybindings = lib.mkOptionDefault {
-	    # Brightness
 	    "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
 	    "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-
-	    # Volume (using pactl for PipeWire/PulseAudio)
 	    "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
 	    "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
 	    "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
