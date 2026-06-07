@@ -17,13 +17,13 @@ vim = { lib, config, pkgs, ... }: {
   ];
 
   keymaps = [
-    { mode = "n"; key = "<leader>db"; action = "<cmd>DapToggleBreakpoint<cr>"; options.desc = "Toggle breakpoint"; }
-    { mode = "n"; key = "<leader>dc"; action = "<cmd>DapContinue<cr>"; options.desc = "Continue/Start"; }
-    { mode = "n"; key = "<leader>ds"; action = "<cmd>DapStepInto<cr>"; options.desc = "Step into"; }
-    { mode = "n"; key = "<leader>dn"; action = "<cmd>DapStepOver<cr>"; options.desc = "Step over"; }
-    { mode = "n"; key = "<leader>du"; action = "<cmd>DapStepOut<cr>"; options.desc = "Step out"; }
-    { mode = "n"; key = "<leader>dt"; action = "<cmd>DapTerminate<cr>"; options.desc = "Terminate"; }
-    { mode = "n"; key = "<leader>di"; action = "<cmd>lua require('dapui').toggle()<cr>"; options.desc = "Toggle UI"; }
+    { mode = "n"; key = "<leader>bb"; action = "<cmd>DapToggleBreakpoint<cr>"; options.desc = "Toggle breakpoint"; }
+    { mode = "n"; key = "<leader>bc"; action = "<cmd>DapContinue<cr>"; options.desc = "Continue/Start"; }
+    { mode = "n"; key = "<leader>bs"; action = "<cmd>DapStepInto<cr>"; options.desc = "Step into"; }
+    { mode = "n"; key = "<leader>bn"; action = "<cmd>DapStepOver<cr>"; options.desc = "Step over"; }
+    { mode = "n"; key = "<leader>bu"; action = "<cmd>DapStepOut<cr>"; options.desc = "Step out"; }
+    { mode = "n"; key = "<leader>bt"; action = "<cmd>DapTerminate<cr>"; options.desc = "Terminate"; }
+    { mode = "n"; key = "<leader>bi"; action = "<cmd>lua require('dapui').toggle()<cr>"; options.desc = "Toggle UI"; }
   ];
 
   plugins = {
@@ -99,11 +99,14 @@ vim = { lib, config, pkgs, ... }: {
 
 	#snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
 
-	# mapping = {
-	#   "<C-n>" = "cmp.mapping.select_next_item()";
-	#   "<C-p>" = "cmp.mapping.select_prev_item()";
-	#   "<C-l>" = "cmp.mapping.config({ select = true })";
-	# };
+	mapping = {
+	  "<C-n>" = "cmp.mapping.select_next_item()";
+	  "<C-p>" = "cmp.mapping.select_prev_item()";
+	  "<C-l>" = "cmp.mapping.confirm({ select = true })";
+	  "<C-d>" = "cmp.mapping.scroll_docs(4)";
+	  "<C-u>" = "cmp.mapping.scroll_docs(-4)";
+	  "<C-e>" = "cmp.mapping.close()";
+	 };
       };
     };
 
