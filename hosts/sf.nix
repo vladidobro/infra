@@ -104,7 +104,7 @@ let
       # >>> SF CLAUDE NODE_EXTRA_CA_CERTS >>>
       # Managed by Jamf. Do not edit this block manually.
       if [ -z "''${NODE_EXTRA_CA_CERTS:-}" ] && [ -r "/Library/Application Support/SecondFoundation/certs/sf-root-ca.crt" ]; then
-	export NODE_EXTRA_CA_CERTS="/Library/Application Support/SecondFoundation/certs/sf-root-ca.crt"
+        export NODE_EXTRA_CA_CERTS="/Library/Application Support/SecondFoundation/certs/sf-root-ca.crt"
       fi
       # <<< SF CLAUDE NODE_EXTRA_CA_CERTS <<<
     '';
