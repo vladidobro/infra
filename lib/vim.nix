@@ -140,6 +140,6 @@ vim = { lib, config, pkgs, ... }: {
 in {
   flake.nixvimModules.default = vim;
   perSystem = { config, pkgs, inputs', ... }: {
-    packages.nvim = inputs'.nixvim-2505.legacyPackages.makeNixvim vim;
+    packages.nvim = inputs'.nixvim-2605.legacyPackages.makeNixvim vim;
   };
 }

@@ -111,6 +111,7 @@ let
         };
       };
     };
+    programs.nix-ld.enable = true;
 
     # === Packages ===
 
@@ -123,6 +124,7 @@ let
       neovim
       brightnessctl
       playerctl
+      uv
     ];
 
     # === Users ===
