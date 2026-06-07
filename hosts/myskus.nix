@@ -58,10 +58,14 @@ let
     swapDevices = [ { device = "/swap/swapfile"; } ];
     networking.useDHCP = lib.mkDefault true;
     nixpkgs.hostPlatform = "x86_64-linux";
+    nixpkgs.config.allowUnfree = true;
     hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
     services.printing = {
       enable = true;
-      drivers = [ pkgs.hplip ];  # HP LaserJet P1102
+      drivers = [  # HP LaserJet P1102
+        pkgs.hplipWithPlugin  # proprietary
+        # pkgs.foo2zjs  # free, but doesnt work with my printer
+      ];
     };
     services.pipewire = {
       enable = true;
@@ -143,7 +147,7 @@ let
 
     users.users.vladidobro = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "lp" ];
     };
     home-manager.users.vladidobro = {
       home.stateVersion = "24.11";
