@@ -1,9 +1,9 @@
 { inputs, self, ... }:
 let 
-  nixpkgs = inputs.nixpkgs-2511;
-  nix-darwin = inputs.nix-darwin-2511;
-  home-manager = inputs.home-manager-2511;
-  nixvim = inputs.nixvim-2511;
+  nixpkgs = inputs.nixpkgs-2605;
+  nix-darwin = inputs.nix-darwin-2605;
+  home-manager = inputs.home-manager-2605;
+  nixvim = inputs.nixvim-2605;
 
   home = { pkgs, ... }: 
   {

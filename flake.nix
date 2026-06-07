@@ -17,19 +17,7 @@
     nixos-mailserver-2405.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     nixos-mailserver-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
 
-    # 24.11 - myskus
-    nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
-    home-manager-2411.url = "github:nix-community/home-manager/release-24.11";
-    home-manager-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
-    nixvim-2411.url = "github:nix-community/nixvim/nixos-24.11";
-    nixvim-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
-    nixvim-2411.inputs.home-manager.follows = "home-manager-2411";
-    nix-index-database-2411.url = "github:nix-community/nix-index-database";
-    nix-index-database-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
-    agenix-2411.url = "github:ryantm/agenix";
-    agenix-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
-
-    # 25.11 - kulich, sf
+    # 25.11 - kulich
     nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-darwin-2511.url = "github:LnL7/nix-darwin/nix-darwin-25.11";
     nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
@@ -40,7 +28,7 @@
     nixos-mailserver-2511.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     nixos-mailserver-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
 
-    # 26.05 - myskus
+    # 26.05 - myskus, sf
     nixpkgs-2605.url = "github:NixOS/nixpkgs/nixos-26.05";
     nix-darwin-2605.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     nix-darwin-2605.inputs.nixpkgs.follows = "nixpkgs-2605";
