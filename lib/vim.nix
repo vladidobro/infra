@@ -30,7 +30,7 @@ vim = { lib, config, pkgs, ... }: {
     lsp = {
       servers = {
 	pyright.enable = true;
-	ruff.enable = false;
+	ruff.enable = true;
       };
       enable = true;
       keymaps = {
@@ -44,6 +44,8 @@ vim = { lib, config, pkgs, ... }: {
           "<leader>lw" = "workspace_symbol";
           "<leader>lr" = "rename";
 	  "<leader>ls" = "signature_help";
+	  "<leader>la" = "code_action";
+	  "<leader>lf" = "format";
         };
         diagnostic = {
           "<leader>d" = "open_float";
@@ -51,6 +53,25 @@ vim = { lib, config, pkgs, ... }: {
           "]d" = "goto_next";
         };
       };
+    };
+
+    conform-nvim = {
+      enable = true;
+      settings = {
+        formatters_by_ft = {
+	  python = [ "ruff_format" ];
+	};
+	format_on_save = {
+	  lsp_fallback = true;
+	  timeout_ms = 500;
+	};
+      };
+    };
+
+    dap = {
+      enable = true;
+      extensions.dap-python.enable = true;
+      extensions.dap-ui.enable = true;
     };
   
     cmp = {
