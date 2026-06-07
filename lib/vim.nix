@@ -14,6 +14,7 @@ vim = { lib, config, pkgs, ... }: {
 
   extraPlugins = with pkgs.vimPlugins; [
     gruvbox
+    friendly-snippets
   ];
 
   keymaps = [
@@ -80,7 +81,15 @@ vim = { lib, config, pkgs, ... }: {
     };
 
     comment.enable = true;
-    luasnip.enable = true;
+    luasnip = {
+      enable = true;
+      fromVscode = [
+        { lazyLoad = true; }
+      ];
+      fromLua = [
+        { paths = ./luasnip; }
+      ];
+    };
 
     dap.enable = true;
     dap-python.enable = true;
