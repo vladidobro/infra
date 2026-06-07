@@ -182,6 +182,12 @@ let
       wayland.windowManager.sway = {
         enable = true;
 	config = {
+	  input = {
+	    "*" = {
+	      xkb_layout = "us";
+	      xkb_options = "caps:escape";
+	    };
+	  };
 	  keybindings = lib.mkOptionDefault {
 	    # Brightness
 	    "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
