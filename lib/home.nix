@@ -614,8 +614,6 @@ let home = { config, pkgs, lib, ... }:
         enable = true;
       };
 
-      programs.password-store.enable = mkIf cfg.basic true;
-
       programs.alacritty = mkIf cfg.graphical {
         enable = true;
         settings = {
