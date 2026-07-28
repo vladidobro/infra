@@ -438,6 +438,14 @@ let home = { config, pkgs, lib, ... }:
         enable = true;
         defaultKeymap = "viins";
         syntaxHighlighting.enable = true;
+        completionInit = ''
+          autoload -Uz compinit
+          if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+            compinit
+          else
+            compinit -C
+          fi
+        '';
         shellAliases = mkIf cfg.aliases {
           _ = "sudo ";
           ls = "ls --color=auto";

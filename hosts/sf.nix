@@ -98,6 +98,7 @@ let
 
     programs.bash.enable = true;
     programs.zsh.enable = true;
+    programs.zsh.enableCompletion = false;  # Disable slow global compinit, use home-manager's cached version instead
     programs.zsh.shellInit = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
 
