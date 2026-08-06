@@ -88,11 +88,20 @@ let
     ];
     system.primaryUser = "vladislavwohlrath";
     nix = {
+      # `configurable-impure-env` lets fixed-output derivations receive the JFrog
+      # token through the `impure-env` setting, so the powernix flake can fetch
+      # from the private index. Only honoured for users in trusted-users below.
       settings.trusted-users = [ "vladislavwohlrath" ];
-      settings.experimental-features = [ "nix-command" "flakes" ];
+      settings.experimental-features = [ "nix-command" "flakes" "configurable-impure-env" ];
       registry = {
         nixpkgs.flake = nixpkgs;
       };
+
+      # No `nix.linux-builder` here on purpose. It is not needed for
+      # `nix develop` (the powernix dev shell is pure aarch64-darwin), and
+      # container images are built on Linux — see powernix/NIX.md. Enabling it
+      # with a customised `config` cannot bootstrap: the VM would have to be
+      # built from source, which needs the Linux builder that does not exist yet.
     };
     #nixpkgs.overlays = [ nixvim.overlays.default ];
 
